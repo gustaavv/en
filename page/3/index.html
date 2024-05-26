@@ -281,7 +281,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>In my previous post, I successfully set up a LANraragi server and shared it with other devices in my home LAN. However, new issues arose:</p>
+          <h1>Preface</h1>
+<p>In my previous post, I successfully set up a LANraragi server and shared it with other devices in my home LAN. However, new issues arose:</p>
 <ul>
 <li>LANraragi could be accessed without logging in.</li>
 <li>Even if LANraragi had a login feature, it still used HTTP plaintext transmission, which is equivalent to no password protection.</li>
@@ -363,11 +364,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -400,12 +401,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>Recently, I’ve been looking into home media libraries, and most tutorials focus on NAS, but most of the applications actually run on Docker.</p>
-<p>Now, I have the following demands for reading manga&#x2F;doujinshi:</p>
+          <h1>Preface</h1>
+<p>Recently, I’ve been looking into home media libraries, and most tutorials focus on NAS, but most of the applications actually run on Docker.</p>
+<p>Now, I have the following demands for reading manga/doujinshi:</p>
 <ul>
 <li>I have a large collection of manga archives on my computer and want various devices able to access these resources. —— A server capable of transmitting images via HTTP.</li>
 <li>I want to manage the manga directory according to my preferences, not the rules of the server software.</li>
-<li>When browsing manga on my phone&#x2F;tablet, I want an easy-to-use interface. —— A user-friendly client or a Web UI.</li>
+<li>When browsing manga on my phone/tablet, I want an easy-to-use interface. —— A user-friendly client or a Web UI.</li>
 <li>The client should have a random manga selection feature. —— Due to the abundance of collected manga, randomly picking one for leisure is the most convenient.</li>
 </ul>
 <p>Considering these, I chose <a target="_blank" rel="noopener" href="https://github.com/Difegue/LANraragi">LANraragi</a>. Although <a target="_blank" rel="noopener" href="https://komga.org/">Komga</a>, <a target="_blank" rel="noopener" href="https://www.kavitareader.com/#home">Kavita</a>, and <a target="_blank" rel="noopener" href="https://github.com/Suwayomi/Tachidesk-Sorayomi">Tachidesk (Sorayomi)</a> are also open-source manga servers, they didn’t quite meet my expectations.</p>
@@ -517,13 +519,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h1><ol>
-<li><p>Install <code>script-house</code>, version <code>0.0.2</code>.</p>
+          <h1>pip</h1>
+<ol>
+<li>
+<p>Install <code>script-house</code>, version <code>0.0.2</code>.</p>
  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install script-house==0.0.2</span><br></pre></td></tr></table></figure>
-
-<p> If you want to install the latest version by default, you can omit <code>==0.0.2</code>.</p>
-<p> To install multiple dependencies in one line:</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install script-house==0.0.2 pydantic==2.5.3 pymongo==4.6.1</span><br></pre></td></tr></table></figure></li>
+<p>If you want to install the latest version by default, you can omit <code>==0.0.2</code>.</p>
+<p>To install multiple dependencies in one line:</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install script-house==0.0.2 pydantic==2.5.3 pymongo==4.6.1</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
           <!--noindex-->
             <div class="post-button">
@@ -628,7 +632,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>The Remote SSH extension in VS Code provides the functionality to connect to other remote hosts. While the basic way of connection requires a username and password, using a key allows for direct login without the effort to type the password every time.</p>
+          <h1>Preface</h1>
+<p>The Remote SSH extension in VS Code provides the functionality to connect to other remote hosts. While the basic way of connection requires a username and password, using a key allows for direct login without the effort to type the password every time.</p>
 <p>However, it’s crucial to understand that VS Code merely provides a GUI, and how to use a SSH key to login is a separate matter. These two aspects should not be confused.</p>
 <p>This article will primarily explain how to configure SSH keys on both the local machine and the remote machine. Subsequently, it will delve into the usage of the VS Code Remote SSH extension.</p>
           <!--noindex-->
@@ -734,12 +739,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>Python is renowned for its rich set of modules. However, unlike in Java development where Maven uses group Id, artifact Id, and version to uniquely identify a dependency, in practice, most Python projects differentiate modules <strong>solely</strong> by their names. Run <code>pip install &lt;module&gt;</code>, and you’ve got the module. But what about the module version? Most project requirements do not specify versions, leading to constant errors for those who run the project later.</p>
+          <h1>Preface</h1>
+<p>Python is renowned for its rich set of modules. However, unlike in Java development where Maven uses group Id, artifact Id, and version to uniquely identify a dependency, in practice, most Python projects differentiate modules <strong>solely</strong> by their names. Run <code>pip install &lt;module&gt;</code>, and you’ve got the module. But what about the module version? Most project requirements do not specify versions, leading to constant errors for those who run the project later.</p>
 <p>Hence, the concept of a weakened version number undoubtedly does more harm than good. How to solve this issue? By using venv (virtual environment).</p>
 <p>If you directly use <code>pip install</code>, all Python projects share these modules, leading to potential compatibility issues. Venv copies the original Python environment. The virtual environment runs only on the copied Python, and the installed modules exist only in that virtual environment. Multiple virtual environments are isolated from each other.</p>
-<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><p>1️⃣Create venv:</p>
+<h1>Usage</h1>
+<p>1️⃣Create venv:</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python <span class="literal">-m</span> venv C:\Users\Gustav\Desktop\test\venv</span><br></pre></td></tr></table></figure>
-
 <p>The directory <code>C:\Users\Gustav\Desktop\test\venv</code> is the virtual environment.</p>
           <!--noindex-->
             <div class="post-button">

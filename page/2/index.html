@@ -281,11 +281,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>Recently, I’ve been using Python to write web crawlers for downloading manga (see <a href="/en/tags/LANraragi/">previous posts on LANraragi</a>). A typical page of a manga like this:</p>
+          <h1>Preface</h1>
+<p>Recently, I’ve been using Python to write web crawlers for downloading manga (see <a href="/en/tags/LANraragi/">previous posts on LANraragi</a>). A typical page of a manga like this:</p>
 <img src="/MarkDownImages/image-20240329132644183.png" alt="image-20240329132644183" style="zoom: 33%;" />
-
 <p>All the data on this webpage can be retrieved using BeautifulSoup, and only one communication is needed per page. However, downloading images is different: each image requires a separate communication, and the response body is often quite large. Obviously, images don’t need to be downloaded sequentially, otherwise, it would waste a lot of time.</p>
-<p>AIOHTTP is an asynchronous HTTP client&#x2F;server module, which is very suitable for this scenario. Through asynchronous programming, it can maximize the performance of the network (and the server). This article focuses on introducing the basic usage of AIOHTTP, without going into details about how it works.</p>
+<p>AIOHTTP is an asynchronous HTTP client/server module, which is very suitable for this scenario. Through asynchronous programming, it can maximize the performance of the network (and the server). This article focuses on introducing the basic usage of AIOHTTP, without going into details about how it works.</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/en/2024/03/29/python-aiohttp-use/#more" rel="contents">
@@ -385,7 +385,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h1><blockquote>
+          <h1>Problem</h1>
+<blockquote>
 <p>Problem Source：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal">889. Construct Binary Tree from Preorder and Postorder Traversal</a>(Daily Challenge)</p>
 </blockquote>
 <blockquote>
@@ -463,11 +464,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -500,8 +501,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>I have been using LANraragi for a while and encountered some issues. I managed to resolve them, and I thought it would be a good idea to document my experience in a post. You can refer to my <a href="/en/2024/01/25/LANraragi-manga-server/">previous article on installing LANraragi</a> first.</p>
-<h1 id="Issue-1-Mounting-Thumbnail-Directory-Causes-Thumbnail-Generation-Failure"><a href="#Issue-1-Mounting-Thumbnail-Directory-Causes-Thumbnail-Generation-Failure" class="headerlink" title="Issue 1: Mounting Thumbnail Directory Causes Thumbnail Generation Failure"></a>Issue 1: Mounting Thumbnail Directory Causes Thumbnail Generation Failure</h1>
+          <h1>Preface</h1>
+<p>I have been using LANraragi for a while and encountered some issues. I managed to resolve them, and I thought it would be a good idea to document my experience in a post. You can refer to my <a href="/en/2024/01/25/LANraragi-manga-server/">previous article on installing LANraragi</a> first.</p>
+<h1>Issue 1: Mounting Thumbnail Directory Causes Thumbnail Generation Failure</h1>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/en/2024/02/20/LANraragi-Using-Experience/#more" rel="contents">
@@ -572,11 +574,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -609,7 +611,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
+          <h1>Preface</h1>
+<p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
 <p>To fit this demand, I have created a script using <a target="_blank" rel="noopener" href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> to batch rename all media in a specific media library. Additionally, this article explores some previous solutions, none of which were satisfactory in my opinion.</p>
           <!--noindex-->
             <div class="post-button">
@@ -681,11 +684,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -718,7 +721,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><blockquote>
+          <h1>Preface</h1>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://jellyfin.org/">Jellyfin</a> is an open-source media server. Here is my way of using Jellyfin: download anime using qBittorrent, start Jellyfin, and then watch the anime on iPad through the client.</p>
 </blockquote>
 <p>Previously, I have installed the portable version of Jellyfin on Windows because a Linux virtual machine can not utilize the graphics card for hardware transcoding. However, I discovered that the Android and iOS clients support most codecs, eliminating the need for server-side transcoding. Since I am already familiar with Jellyfin’s usage and configuration, I decided to migrate it to Docker.</p>

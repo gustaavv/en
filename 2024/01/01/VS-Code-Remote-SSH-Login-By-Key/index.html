@@ -22,16 +22,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"gustaavv.github.io","root":"/en/","images":"/en/images","scheme":"Gemini","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#008000","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/en/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/en/js/config.js"></script>
 
-    <meta name="description" content="PrefaceThe Remote SSH extension in VS Code provides the functionality to connect to other remote hosts. While the basic way of connection requires a username and password, using a key allows for direc">
+    <meta name="description" content="Preface The Remote SSH extension in VS Code provides the functionality to connect to other remote hosts. While the basic way of connection requires a username and password, using a key allows for dire">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VS Code Remote SSH Login By Key">
 <meta property="og:url" content="https://gustaavv.github.io/en/2024/01/01/VS-Code-Remote-SSH-Login-By-Key/index.html">
 <meta property="og:site_name" content="Gustav&#39;s blog">
-<meta property="og:description" content="PrefaceThe Remote SSH extension in VS Code provides the functionality to connect to other remote hosts. While the basic way of connection requires a username and password, using a key allows for direc">
+<meta property="og:description" content="Preface The Remote SSH extension in VS Code provides the functionality to connect to other remote hosts. While the basic way of connection requires a username and password, using a key allows for dire">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240101130622357.png">
-<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240101130733756.png">
-<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240101130804525.png">
+<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240101130622357.png">
+<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240101130733756.png">
+<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240101130804525.png">
 <meta property="article:published_time" content="2024-01-01T04:27:56.000Z">
 <meta property="article:modified_time" content="2024-01-01T04:27:56.000Z">
 <meta property="article:author" content="Gustav">
@@ -39,7 +39,7 @@
 <meta property="article:tag" content="VS Code">
 <meta property="article:tag" content="SSH">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240101130622357.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20240101130622357.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2024/01/01/VS-Code-Remote-SSH-Login-By-Key/">
@@ -153,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Environment"><span class="nav-number">2.</span> <span class="nav-text">Environment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Local-SSH-Configuration"><span class="nav-number">3.</span> <span class="nav-text">Local SSH Configuration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Remote-Host-SSH-Configuration"><span class="nav-number">4.</span> <span class="nav-text">Remote Host SSH Configuration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VS-Code-Configuration"><span class="nav-number">6.</span> <span class="nav-text">VS Code Configuration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Environment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Local SSH Configuration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Remote Host SSH Configuration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">VS Code Configuration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -320,34 +320,39 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>The Remote SSH extension in VS Code provides the functionality to connect to other remote hosts. While the basic way of connection requires a username and password, using a key allows for direct login without the effort to type the password every time.</p>
+    <div class="post-body" itemprop="articleBody"><h1>Preface</h1>
+<p>The Remote SSH extension in VS Code provides the functionality to connect to other remote hosts. While the basic way of connection requires a username and password, using a key allows for direct login without the effort to type the password every time.</p>
 <p>However, it’s crucial to understand that VS Code merely provides a GUI, and how to use a SSH key to login is a separate matter. These two aspects should not be confused.</p>
 <p>This article will primarily explain how to configure SSH keys on both the local machine and the remote machine. Subsequently, it will delve into the usage of the VS Code Remote SSH extension.</p>
 <span id="more"></span>
-
-<h1 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h1><ul>
+<h1>Environment</h1>
+<ul>
 <li>Local Machine: Windows 10</li>
 <li>Remote Machine: Local virtual machine CentOS 8, root user</li>
 </ul>
-<h1 id="Local-SSH-Configuration"><a href="#Local-SSH-Configuration" class="headerlink" title="Local SSH Configuration"></a>Local SSH Configuration</h1><p>Using the <code>ssh-keygen</code> command will create the RSA public-private key pair for the <strong>local</strong> machine in the <code>C:\users\&lt;user&gt;\.ssh</code> directory:</p>
+<h1>Local SSH Configuration</h1>
+<p>Using the <code>ssh-keygen</code> command will create the RSA public-private key pair for the <strong>local</strong> machine in the <code>C:\users\&lt;user&gt;\.ssh</code> directory:</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Gustav\.ssh&gt; <span class="built_in">dir</span></span><br><span class="line">    Directory: C:\Users\Gustav\.ssh</span><br><span class="line">Mode                 LastWriteTime         Length Name</span><br><span class="line"><span class="literal">----</span>                 <span class="literal">-------------</span>         <span class="literal">------</span> <span class="literal">----</span></span><br><span class="line"><span class="literal">-a----</span>          <span class="number">2024</span>/<span class="number">1</span>/<span class="number">1</span>     <span class="number">12</span>:<span class="number">26</span>             <span class="number">91</span> config</span><br><span class="line"><span class="literal">-a----</span>         <span class="number">2023</span>/<span class="number">9</span>/<span class="number">30</span>     <span class="number">18</span>:<span class="number">03</span>           <span class="number">2610</span> id_rsa</span><br><span class="line"><span class="literal">-a----</span>         <span class="number">2023</span>/<span class="number">9</span>/<span class="number">30</span>     <span class="number">18</span>:<span class="number">03</span>            <span class="number">576</span> id_rsa.pub</span><br><span class="line"><span class="literal">-a----</span>        <span class="number">2023</span>/<span class="number">12</span>/<span class="number">18</span>     <span class="number">20</span>:<span class="number">42</span>           <span class="number">1398</span> known_hosts</span><br><span class="line"><span class="literal">-a----</span>         <span class="number">2023</span>/<span class="number">9</span>/<span class="number">30</span>     <span class="number">18</span>:<span class="number">03</span>             <span class="number">92</span> known_hosts.old</span><br></pre></td></tr></table></figure>
-
 <p><code>id_rsa</code> is the private key, and <code>id_rsa.pub</code> is the public key.</p>
-<h1 id="Remote-Host-SSH-Configuration"><a href="#Remote-Host-SSH-Configuration" class="headerlink" title="Remote Host SSH Configuration"></a>Remote Host SSH Configuration</h1><p>Upload the <strong>local</strong> <code>id_rsa.pub</code> to the <code>~/ssh</code> directory on the Linux remote host and rename it to <code>authorized_keys</code>:</p>
+<h1>Remote Host SSH Configuration</h1>
+<p>Upload the <strong>local</strong> <code>id_rsa.pub</code> to the <code>~/ssh</code> directory on the Linux remote host and rename it to <code>authorized_keys</code>:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS100 .ssh]<span class="comment"># ll</span></span><br><span class="line">total 16</span><br><span class="line">-rw-r--r--. 1 root root 576 Jan  1 11:50 authorized_keys</span><br><span class="line">-rw-------. 1 root root 411 Jul  1  2023 id_ed25519</span><br><span class="line">-rw-r--r--. 1 root root  96 Jul  1  2023 id_ed25519.pub</span><br><span class="line">-rw-r--r--. 1 root root 880 Dec 18 21:07 known_hosts</span><br></pre></td></tr></table></figure>
-
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>The steps above complete the configuration needed for SSH key login. Open PowerShell on the local machine and test the connection using <code>ssh &lt;user&gt;@&lt;ip&gt;</code>. It should allow direct login without entering a password.</p>
+<h1>测试</h1>
+<p>The steps above complete the configuration needed for SSH key login. Open PowerShell on the local machine and test the connection using <code>ssh &lt;user&gt;@&lt;ip&gt;</code>. It should allow direct login without entering a password.</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Gustav&gt; ssh root@CentOS100</span><br><span class="line">Activate the web console with: systemctl enable <span class="literal">--now</span> cockpit.socket</span><br><span class="line"></span><br><span class="line">Last login: Mon Jan  <span class="number">1</span> <span class="number">12</span>:<span class="number">26</span>:<span class="number">15</span> <span class="number">2024</span> from &lt;ip&gt;</span><br><span class="line">[<span class="type">root</span>@<span class="type">CentOS100</span> ~]<span class="comment"># pwd</span></span><br><span class="line">/root</span><br></pre></td></tr></table></figure>
-
-<h1 id="VS-Code-Configuration"><a href="#VS-Code-Configuration" class="headerlink" title="VS Code Configuration"></a>VS Code Configuration</h1><ol>
-<li><p>Install the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">Remote - SSH</a> extension:</p>
-<p> <img src="/en/MarkDownImages/image-20240101130622357.png" alt="image-20240101130622357"></p>
+<h1>VS Code Configuration</h1>
+<ol>
+<li>
+<p>Install the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">Remote - SSH</a> extension:</p>
+<p><img src="/MarkDownImages/image-20240101130622357.png" alt="image-20240101130622357"></p>
 </li>
-<li><p>Click these three buttons sequentially to access the configuration file:</p>
-<p> <img src="/en/MarkDownImages/image-20240101130733756.png" alt="image-20240101130733756"></p>
+<li>
+<p>Click these three buttons sequentially to access the configuration file:</p>
+<p><img src="/MarkDownImages/image-20240101130733756.png" alt="image-20240101130733756"></p>
 </li>
-<li><p>Fill in the configuration file (this file is essentially the SSH configuration for the host):</p>
-<p> <img src="/en/MarkDownImages/image-20240101130804525.png" alt="image-20240101130804525"></p>
+<li>
+<p>Fill in the configuration file (this file is essentially the SSH configuration for the host):</p>
+<p><img src="/MarkDownImages/image-20240101130804525.png" alt="image-20240101130804525"></p>
 <ul>
 <li><code>Host</code>: an ID for this remote connection; you can choose any name.</li>
 <li><code>HostName</code>: Domain name or IP address of the remote host.</li>
@@ -362,7 +367,8 @@
 <li>In this case, <code>IdentityFile</code> is not necessary because <code>authorized_keys</code> is the local machine’s public key, and SSH defaults to using the local machine’s private key for connection attempts.</li>
 <li>Generally, <code>authorized_keys</code> won’t be the local machine’s public key, and in such cases, <code>IdentityFile</code> must be configured; otherwise, a password will be required.</li>
 </ul>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<h1>References</h1>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://medium.com/@sean4deepak/using-ssh-key-authentication-in-visual-studio-codes-remote-ssh-extension-4e5b922448e7">Using SSH Key Authentication in Visual Studio Code’ s Remote SSH Extension</a></li>
 <li><a target="_blank" rel="noopener" href="https://adamtheautomator.com/add-ssh-key-to-vs-code/">Add SSH Key to VS Code and Connect to a Host</a></li>
 <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/48328446/id-rsa-pub-file-ssh-error-invalid-format">id_rsa.pub file SSH Error: invalid format</a></li>

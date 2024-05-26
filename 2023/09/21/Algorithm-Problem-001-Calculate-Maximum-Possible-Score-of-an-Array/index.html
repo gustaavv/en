@@ -148,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Examples"><span class="nav-number">2.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-1"><span class="nav-number">2.1.</span> <span class="nav-text">Example 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-number">2.2.</span> <span class="nav-text">Example 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Approach"><span class="nav-number">3.</span> <span class="nav-text">Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rereading-the-Problem"><span class="nav-number">3.1.</span> <span class="nav-text">Rereading the Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-1-Sorting"><span class="nav-number">3.2.</span> <span class="nav-text">Observation 1: Sorting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-2-Finding-a-Pattern"><span class="nav-number">3.3.</span> <span class="nav-text">Observation 2: Finding a Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-3-Sliding-Window"><span class="nav-number">3.4.</span> <span class="nav-text">Observation 3: Sliding Window</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-number">4.</span> <span class="nav-text">Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">4.1.</span> <span class="nav-text">Java</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-1"><span class="nav-number">2.1.</span> <span class="nav-text">Example 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-number">2.2.</span> <span class="nav-text">Example 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rereading-the-Problem"><span class="nav-number">3.1.</span> <span class="nav-text">Rereading the Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-1-Sorting"><span class="nav-number">3.2.</span> <span class="nav-text">Observation 1: Sorting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-2-Finding-a-Pattern"><span class="nav-number">3.3.</span> <span class="nav-text">Observation 2: Finding a Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-3-Sliding-Window"><span class="nav-number">3.4.</span> <span class="nav-text">Observation 3: Sliding Window</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">4.1.</span> <span class="nav-text">Java</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -325,8 +325,9 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h1><blockquote>
-<p> Problem Source: NowCoder Online Test</p>
+    <div class="post-body" itemprop="articleBody"><h1>Problem</h1>
+<blockquote>
+<p>Problem Source: NowCoder Online Test</p>
 </blockquote>
 <p>Given an array $nums$ indexing from $0$ and a non-negative integer $k$.</p>
 <p>In one operation, you can perform the following:</p>
@@ -338,38 +339,38 @@
 <p>The array’s <strong>score</strong> is defined as the “maximum number of repeated elements in the array”.</p>
 <p>Note that you can only apply the operation <strong>once</strong> for each index.</p>
 <span id="more"></span>
-
-
-
-<h1 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h1><h2 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h2><p>Input:</p>
+<h1>Examples</h1>
+<h2 id="Example-1">Example 1</h2>
+<p>Input:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
-
 <p>Output:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
-
 <p>Explanation:</p>
 <p>In this example, we perform the following operations:</p>
 <ul>
-<li>Choose index 1, replace it with 4 (range [4, 8]), nums &#x3D; [4,4,1,2].</li>
-<li>Choose index 3, replace it with 4 (range [0, 4]), nums &#x3D; [4,4,1,4].</li>
+<li>Choose index 1, replace it with 4 (range [4, 8]), nums = [4,4,1,2].</li>
+<li>Choose index 3, replace it with 4 (range [0, 4]), nums = [4,4,1,4].</li>
 </ul>
 <p>After applying these operations, the score of array nums is 3 (subsequence composed of indices 0, 1, and 3). It can be proved that 3 is the maximum possible length we can achieve.</p>
-<h2 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2"></a>Example 2</h2><p>Input:</p>
+<h2 id="Example-2">Example 2</h2>
+<p>Input:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span></span><br><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
-
 <p>Output:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span><br></pre></td></tr></table></figure>
-
 <p>Explanation:</p>
 <p>In this example, no operations are needed.</p>
 <p>The score of array nums is 4 (the entire array).</p>
-<h1 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h1><h2 id="Rereading-the-Problem"><a href="#Rereading-the-Problem" class="headerlink" title="Rereading the Problem"></a>Rereading the Problem</h2><p>Let’s restate the problem:</p>
+<h1>Approach</h1>
+<h2 id="Rereading-the-Problem">Rereading the Problem</h2>
+<p>Let’s restate the problem:</p>
 <p>Given an array $nums$ and a natural number $k$.</p>
 <p>For any index $i$, we can replace the element $nums[i]$ with any integer in the range $[nums[i] - k, nums[i] + k]$. An index can only be operated on once, or not at all.</p>
 <p>Return the maximum possible count of repeated elements in the array $nums$ after any times of operations.</p>
-<h2 id="Observation-1-Sorting"><a href="#Observation-1-Sorting" class="headerlink" title="Observation 1: Sorting"></a>Observation 1: Sorting</h2><p>To maximize the number of repeated elements, we need to operate on elements that are <strong>close in value</strong> to make them equal.</p>
+<h2 id="Observation-1-Sorting">Observation 1: Sorting</h2>
+<p>To maximize the number of repeated elements, we need to operate on elements that are <strong>close in value</strong> to make them equal.</p>
 <p>How to find elements that are close in value? — Sorting</p>
-<h2 id="Observation-2-Finding-a-Pattern"><a href="#Observation-2-Finding-a-Pattern" class="headerlink" title="Observation 2: Finding a Pattern"></a>Observation 2: Finding a Pattern</h2><p>Assume, after sorting, we attempt to make elements in the interval $[i, j]$ equal after operations. What conditions should $i$ and $j$ satisfy?</p>
+<h2 id="Observation-2-Finding-a-Pattern">Observation 2: Finding a Pattern</h2>
+<p>Assume, after sorting, we attempt to make elements in the interval $[i, j]$ equal after operations. What conditions should $i$ and $j$ satisfy?</p>
 <ul>
 <li>After sorting, we know that $nums[i] \le nums[i + 1] \le \cdots \le nums[j - 1] \le nums[j]$.</li>
 <li>The replacement range for $nums[i]$ is $[nums[i] - k, nums[i] + k]$, and for $nums[j]$ is $[nums[j] - k, nums[j] + k]$.</li>
@@ -377,15 +378,17 @@
 <li>Simplifying, we get <strong>$0 \le nums[j] - nums[i] \le 2k$</strong>.</li>
 </ul>
 <p>It can be seen that when $i$ is fixed, to maximize the range $j - i + 1$, we need to find a $j$ such that $nums[j] - nums[i]$ is as close to $2k$ as possible. This way, the interval range $j - i + 1$ could be the desired answer.</p>
-<h2 id="Observation-3-Sliding-Window"><a href="#Observation-3-Sliding-Window" class="headerlink" title="Observation 3: Sliding Window"></a>Observation 3: Sliding Window</h2><p>After our analysis, this problem becomes:</p>
+<h2 id="Observation-3-Sliding-Window">Observation 3: Sliding Window</h2>
+<p>After our analysis, this problem becomes:</p>
 <ul>
 <li>For a sorted array $nums$ and a natural number $k$.</li>
 <li>When index $i$ is fixed, we need to find the maximum index $j$ such that $0 \le nums[j] - nums[i] \le 2k$.</li>
 <li>Among all possible intervals $[i, j]$, the maximum $j - i + 1$ is the answer.</li>
 </ul>
 <p>Now, using the <strong>sliding window</strong> algorithm can reduce the time complexity from $O(n^2)$ (brute-force) to $O(n)$.</p>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maximumScore</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line"></span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// sliding window</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; n &amp;&amp; nums[j] &lt;= nums[i] + <span class="number">2</span> * k) j++;</span><br><span class="line">            ans = Math.max(ans, j - i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h1>Code</h1>
+<h2 id="Java">Java</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maximumScore</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line"></span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// sliding window</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; n &amp;&amp; nums[j] &lt;= nums[i] + <span class="number">2</span> * k) j++;</span><br><span class="line">            ans = Math.max(ans, j - i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
