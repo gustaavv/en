@@ -77,67 +77,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Algorithm Problem 002: Spiral Matrix II</title>
-    <url>/en/2023/10/03/Algorithm-Problem-002-spiral-matrix-ii/</url>
-    <content><![CDATA[<h1>Problem</h1>
-<blockquote>
-<p>Problem Source：<a href="https://leetcode.cn/problems/spiral-matrix-ii/">59. Spiral Matrix II</a></p>
-</blockquote>
-<blockquote>
-<p><strong>Problem Description</strong>：</p>
-<p>Given a positive integer <code>n</code>, generate an <code>n x n</code> <code>matrix</code> filled with elements from <code>1</code> to <code>n^2</code> in spiral order.</p>
-</blockquote>
-<blockquote>
-<p><strong>Example 1:</strong>
-<img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 3</span><br><span class="line">Output: [[1,2,3],[8,9,4],[7,6,5]]</span><br></pre></td></tr></table></figure>
-</blockquote>
-<span id="more"></span>
-<blockquote>
-<p><strong>Example 2:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 1</span><br><span class="line">Output: [[1]]</span><br></pre></td></tr></table></figure>
-<p><strong>Constraints:</strong></p>
-<ul>
-<li><code>1 &lt;= n &lt;= 20</code></li>
-</ul>
-</blockquote>
-<h1>Approach</h1>
-<p>This problem is a typical simulation problem where we need to traverse the entire matrix as described.</p>
-<h2 id="Approach-1">Approach 1</h2>
-<p>My approach is to divide the matrix into layers and traverse each layer one by one. For example, when $n = 3$, the matrix is:</p>
-<p><img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
-<p>Here, we define the first layer as <code>layer = 0</code>, which contains numbers 1 to 8. The second layer is <code>layer = 1</code>, containing the number 9.</p>
-<p>While traversing each layer, write the loop codes for moving right (1, 2), moving down (3, 4), moving left (5, 6), and moving up (7, 8).</p>
-<p>The key to this approach is to find the mathematical pattern for the relationship between <code>layer</code> and the length of the current row/column being traversed.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="type">int</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">layer</span> <span class="operator">=</span> <span class="number">0</span>; layer &lt;= n / <span class="number">2</span>; layer++) &#123;</span><br><span class="line">            <span class="comment">// Move right</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> layer; j &lt; n - layer - <span class="number">1</span>; ++j, ++counter) &#123;</span><br><span class="line">                ans[layer][j] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move down</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> layer; i &lt; n - layer - <span class="number">1</span>; ++i, ++counter) &#123;</span><br><span class="line">                ans[i][n - layer - <span class="number">1</span>] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move left</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> n - layer - <span class="number">1</span>; j &gt; layer; --j, ++counter) &#123;</span><br><span class="line">                ans[n - layer - <span class="number">1</span>][j] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move up</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n - layer - <span class="number">1</span>; i &gt; layer; --i, ++counter) &#123;</span><br><span class="line">                ans[i][layer] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// For square matrices with odd length, manually handle the center element</span></span><br><span class="line">        <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">            ans[n / <span class="number">2</span>][n / <span class="number">2</span>] = counter;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Clearly, this approach is error-prone as finding the pattern is tedious.</strong></p>
-<p>Some experts on LeetCode provide an alternative solution that avoids finding the pattern, such as <a href="https://leetcode.cn/problems/spiral-matrix-ii/solutions/12594/spiral-matrix-ii-mo-ni-fa-she-ding-bian-jie-qing-x/">Krahets’s solution</a>：manually control the four boundaries (up, down, left, right), and when reaching a boundary, turn to the next direction.</p>
-<h2 id="Approach-2">Approach 2</h2>
-<p>Since we are dealing with a matrix (a <strong>regular</strong> shape), we tend to control the traversal from a <strong>macro</strong> perspective, as in Approach 1. Macro means understanding the global picture, as seen in my approach of finding mathematical patterns and the experts’ approach of controlling the four boundaries.</p>
-<p>Now, let’s approach the problem from a <strong>micro</strong> perspective: what if we stand on a <strong>huge</strong> chessboard with <strong>invisible boundaries</strong> and need to fill in these numbers, how would we do it? We can <strong>only see the numbers on the surrounding squares</strong>. At this point, the macro approach is no longer effective, so what should we do?</p>
-<p><img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
-<p>Suppose we stand on square 1 (facing right) and move forward, filling in the numbers along the path. When we reach square 3, we find that there is no way forward. Since we want to fill in the numbers clockwise, let’s turn right (facing down), and now the square we are facing is where we should fill in the number 4.</p>
-<p>Similarly, when we reach square 8 (facing up), the squares in front have already been filled with number 1. Let’s turn right again (facing right), and now the square we are facing is where we should fill in the number 9.</p>
-<p>Therefore, in the code, let’s <strong>focus only on the current coordinates of the agent</strong> and make it <strong>keep moving in one direction</strong> until it reaches a boundary or the square has already been filled with a number. When this happens, we <strong>turn right</strong>.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="comment">// (dx[k], dy[k]) represents the direction to move, in the order of right, down, left, up, right ...</span></span><br><span class="line">        <span class="type">int</span>[] dx = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="type">int</span>[] dy = &#123;<span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// (x, y) is the agent&#x27;s coordinates;</span></span><br><span class="line">        <span class="comment">// dir represents the current direction to move, it is the index of the dx, dy arrays</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>, y = <span class="number">0</span>, dir = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// Loop variables, and the condition for the loop to exit</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="number">1</span>, limit = n * n;</span><br><span class="line">        <span class="keyword">while</span> (counter &lt;= limit) &#123;</span><br><span class="line">            <span class="comment">// Current coordinates are within the boundaries, and the current square is not filled with a number</span></span><br><span class="line">            <span class="keyword">while</span> (<span class="number">0</span> &lt;= x &amp;&amp; x &lt; n &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n &amp;&amp; ans[x][y] == <span class="number">0</span>) &#123;</span><br><span class="line">                ans[x][y] = counter;</span><br><span class="line">                counter++;</span><br><span class="line">                <span class="comment">// keep moving</span></span><br><span class="line">                x += dx[dir];</span><br><span class="line">                y += dy[dir];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Step back one square</span></span><br><span class="line">            x -= dx[dir];</span><br><span class="line">            y -= dy[dir];</span><br><span class="line">            <span class="comment">// Turn right</span></span><br><span class="line">            dir = (dir + <span class="number">1</span>) % dx.length;</span><br><span class="line">            <span class="comment">// After moving forward one step, the position (x, y) is the first square to be processed in the next while loop</span></span><br><span class="line">            x += dx[dir];</span><br><span class="line">            y += dy[dir];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1>Reflection</h1>
-<p>I came up with Approach 2 because I recently solved a problem that required filling numbers clockwise in an isosceles right-angled triangle (with the right angle parallel to the coordinate axes).</p>
-<p>For example, when <code>n = 4</code>, we need to fill in the numbers as follows:</p>
-<img src="/MarkDownImages/image-20231003171918667.png" alt="image-20231003171918667" style="zoom:67%;" />
-<p>For the macro approach that finds patterns from a high-level perspective, I really didn’t bother and found it cumbersome.</p>
-<p>With Approach 2, the so-called clockwise filling is essentially cycling through these directions: up, down-right, left. So, at the code level:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[] dx = &#123;-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span>[] dy = &#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
-<p>A slight modification to the code for Approach 2 is all that is needed.</p>
-]]></content>
-      <categories>
-        <category>Algorithm Problems</category>
-      </categories>
-      <tags>
-        <tag>Simulation</tag>
-        <tag>Array</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Algorithm Problem 003: Diagonal Traverse II</title>
     <url>/en/2023/10/29/Algorithm-Problem-003-diagonal-traverse-ii/</url>
     <content><![CDATA[<h1>Problem</h1>
@@ -206,6 +145,129 @@
       <tags>
         <tag>Simulation</tag>
         <tag>Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Algorithm Problem 002: Spiral Matrix II</title>
+    <url>/en/2023/10/03/Algorithm-Problem-002-spiral-matrix-ii/</url>
+    <content><![CDATA[<h1>Problem</h1>
+<blockquote>
+<p>Problem Source：<a href="https://leetcode.cn/problems/spiral-matrix-ii/">59. Spiral Matrix II</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Problem Description</strong>：</p>
+<p>Given a positive integer <code>n</code>, generate an <code>n x n</code> <code>matrix</code> filled with elements from <code>1</code> to <code>n^2</code> in spiral order.</p>
+</blockquote>
+<blockquote>
+<p><strong>Example 1:</strong>
+<img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 3</span><br><span class="line">Output: [[1,2,3],[8,9,4],[7,6,5]]</span><br></pre></td></tr></table></figure>
+</blockquote>
+<span id="more"></span>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 1</span><br><span class="line">Output: [[1]]</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 20</code></li>
+</ul>
+</blockquote>
+<h1>Approach</h1>
+<p>This problem is a typical simulation problem where we need to traverse the entire matrix as described.</p>
+<h2 id="Approach-1">Approach 1</h2>
+<p>My approach is to divide the matrix into layers and traverse each layer one by one. For example, when $n = 3$, the matrix is:</p>
+<p><img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
+<p>Here, we define the first layer as <code>layer = 0</code>, which contains numbers 1 to 8. The second layer is <code>layer = 1</code>, containing the number 9.</p>
+<p>While traversing each layer, write the loop codes for moving right (1, 2), moving down (3, 4), moving left (5, 6), and moving up (7, 8).</p>
+<p>The key to this approach is to find the mathematical pattern for the relationship between <code>layer</code> and the length of the current row/column being traversed.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="type">int</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">layer</span> <span class="operator">=</span> <span class="number">0</span>; layer &lt;= n / <span class="number">2</span>; layer++) &#123;</span><br><span class="line">            <span class="comment">// Move right</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> layer; j &lt; n - layer - <span class="number">1</span>; ++j, ++counter) &#123;</span><br><span class="line">                ans[layer][j] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move down</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> layer; i &lt; n - layer - <span class="number">1</span>; ++i, ++counter) &#123;</span><br><span class="line">                ans[i][n - layer - <span class="number">1</span>] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move left</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> n - layer - <span class="number">1</span>; j &gt; layer; --j, ++counter) &#123;</span><br><span class="line">                ans[n - layer - <span class="number">1</span>][j] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move up</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n - layer - <span class="number">1</span>; i &gt; layer; --i, ++counter) &#123;</span><br><span class="line">                ans[i][layer] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// For square matrices with odd length, manually handle the center element</span></span><br><span class="line">        <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">            ans[n / <span class="number">2</span>][n / <span class="number">2</span>] = counter;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Clearly, this approach is error-prone as finding the pattern is tedious.</strong></p>
+<p>Some experts on LeetCode provide an alternative solution that avoids finding the pattern, such as <a href="https://leetcode.cn/problems/spiral-matrix-ii/solutions/12594/spiral-matrix-ii-mo-ni-fa-she-ding-bian-jie-qing-x/">Krahets’s solution</a>：manually control the four boundaries (up, down, left, right), and when reaching a boundary, turn to the next direction.</p>
+<h2 id="Approach-2">Approach 2</h2>
+<p>Since we are dealing with a matrix (a <strong>regular</strong> shape), we tend to control the traversal from a <strong>macro</strong> perspective, as in Approach 1. Macro means understanding the global picture, as seen in my approach of finding mathematical patterns and the experts’ approach of controlling the four boundaries.</p>
+<p>Now, let’s approach the problem from a <strong>micro</strong> perspective: what if we stand on a <strong>huge</strong> chessboard with <strong>invisible boundaries</strong> and need to fill in these numbers, how would we do it? We can <strong>only see the numbers on the surrounding squares</strong>. At this point, the macro approach is no longer effective, so what should we do?</p>
+<p><img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
+<p>Suppose we stand on square 1 (facing right) and move forward, filling in the numbers along the path. When we reach square 3, we find that there is no way forward. Since we want to fill in the numbers clockwise, let’s turn right (facing down), and now the square we are facing is where we should fill in the number 4.</p>
+<p>Similarly, when we reach square 8 (facing up), the squares in front have already been filled with number 1. Let’s turn right again (facing right), and now the square we are facing is where we should fill in the number 9.</p>
+<p>Therefore, in the code, let’s <strong>focus only on the current coordinates of the agent</strong> and make it <strong>keep moving in one direction</strong> until it reaches a boundary or the square has already been filled with a number. When this happens, we <strong>turn right</strong>.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="comment">// (dx[k], dy[k]) represents the direction to move, in the order of right, down, left, up, right ...</span></span><br><span class="line">        <span class="type">int</span>[] dx = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="type">int</span>[] dy = &#123;<span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// (x, y) is the agent&#x27;s coordinates;</span></span><br><span class="line">        <span class="comment">// dir represents the current direction to move, it is the index of the dx, dy arrays</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>, y = <span class="number">0</span>, dir = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// Loop variables, and the condition for the loop to exit</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="number">1</span>, limit = n * n;</span><br><span class="line">        <span class="keyword">while</span> (counter &lt;= limit) &#123;</span><br><span class="line">            <span class="comment">// Current coordinates are within the boundaries, and the current square is not filled with a number</span></span><br><span class="line">            <span class="keyword">while</span> (<span class="number">0</span> &lt;= x &amp;&amp; x &lt; n &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n &amp;&amp; ans[x][y] == <span class="number">0</span>) &#123;</span><br><span class="line">                ans[x][y] = counter;</span><br><span class="line">                counter++;</span><br><span class="line">                <span class="comment">// keep moving</span></span><br><span class="line">                x += dx[dir];</span><br><span class="line">                y += dy[dir];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Step back one square</span></span><br><span class="line">            x -= dx[dir];</span><br><span class="line">            y -= dy[dir];</span><br><span class="line">            <span class="comment">// Turn right</span></span><br><span class="line">            dir = (dir + <span class="number">1</span>) % dx.length;</span><br><span class="line">            <span class="comment">// After moving forward one step, the position (x, y) is the first square to be processed in the next while loop</span></span><br><span class="line">            x += dx[dir];</span><br><span class="line">            y += dy[dir];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>Reflection</h1>
+<p>I came up with Approach 2 because I recently solved a problem that required filling numbers clockwise in an isosceles right-angled triangle (with the right angle parallel to the coordinate axes).</p>
+<p>For example, when <code>n = 4</code>, we need to fill in the numbers as follows:</p>
+<img src="/MarkDownImages/image-20231003171918667.png" alt="image-20231003171918667" style="zoom:67%;" />
+<p>For the macro approach that finds patterns from a high-level perspective, I really didn’t bother and found it cumbersome.</p>
+<p>With Approach 2, the so-called clockwise filling is essentially cycling through these directions: up, down-right, left. So, at the code level:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[] dx = &#123;-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span>[] dy = &#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>A slight modification to the code for Approach 2 is all that is needed.</p>
+]]></content>
+      <categories>
+        <category>Algorithm Problems</category>
+      </categories>
+      <tags>
+        <tag>Simulation</tag>
+        <tag>Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Algorithm Problem 006: Construct Binary Tree from Preorder and Postorder Traversal</title>
+    <url>/en/2024/02/22/Algorithm-Problem-006-construct-binary-tree-from-preorder-and-postorder-traversal/</url>
+    <content><![CDATA[<h1>Problem</h1>
+<blockquote>
+<p>Problem Source：<a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal">889. Construct Binary Tree from Preorder and Postorder Traversal</a>(Daily Challenge)</p>
+</blockquote>
+<blockquote>
+<p><strong>Problem Description</strong>：</p>
+<p>Given two integer arrays, <code>preorder</code> and <code>postorder</code> where <code>preorder</code> is the preorder traversal of a binary tree of <strong>distinct</strong> values and <code>postorder</code> is the postorder traversal of the same tree, reconstruct and return <em>the binary tree</em>.</p>
+<p>If there exist multiple answers, you can <strong>return any</strong> of them.</p>
+</blockquote>
+<span id="more"></span>
+<blockquote>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/07/24/lc-prepost.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]</span><br><span class="line">Output: [1,2,3,4,5,6,7]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: preorder = [1], postorder = [1]</span><br><span class="line">Output: [1]</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= preorder.length &lt;= 30</code></li>
+<li><code>1 &lt;= preorder[i] &lt;= preorder.length</code></li>
+<li>All the values of <code>preorder</code> are <strong>unique</strong>.</li>
+<li><code>postorder.length == preorder.length</code></li>
+<li><code>1 &lt;= postorder[i] &lt;= postorder.length</code></li>
+<li>All the values of <code>postorder</code> are <strong>unique</strong>.</li>
+<li>It is guaranteed that <code>preorder</code> and <code>postorder</code> are the preorder traversal and postorder traversal of the same binary tree.</li>
+</ul>
+</blockquote>
+<h1>Approach</h1>
+<p>Firstly, it is important to note that <strong>the binary tree constructed from preorder and postorder traversals is not unique</strong>, and therefore, there is no deterministic rule. In contrast, ‘inorder and preorder’ as well as ‘inorder and postorder’ correspond uniquely to a binary tree. These rules are clear, making coding straightforward. Hence, we need to define our own rules.</p>
+<p>Recall that when constructing a binary tree from ‘inorder and preorder’, we sequentially traverse the preorder list. For each value, we create a corresponding node and then determine its subtree based on the inorder traversal. This can be understood as creating the preorder and verifying with the inorder.</p>
+<p>Similarly, in this problem, we also ‘sequentially traverse the preorder list, creating a corresponding node’ but determine the <strong>position of the node</strong> (instead of its subtree) based on the postorder traversal. This is creating the preorder and verifying with the postorder.</p>
+<p>In preorder, the sequence is “root - left - right”, and for each node in preorder, we can try placing it as the left child. In postorder, the sequence is “left - right - root”. <strong>If a node A in postorder is after node B, then A cannot be in the left subtree of B.</strong></p>
+<p>For example, consider node <code>5</code> in Example 1. While sequentially traversing the preorder list, we can try placing <code>5</code> as the left child of <code>4</code>. However, in the postorder list, since <code>5</code> comes after <code>4</code>, this attempt is not allowed. <strong><code>5</code> can only be in the right subtree of one of the ancestors of <code>4</code></strong>, in this case, the right child of <code>2</code>.</p>
+<p>Therefore, we need to keep track of the <strong>path from the root to the last traversed node</strong> and store them in a stack.</p>
+<ul>
+<li>As long as the current node and the top node of the stack do not satisfy the postorder constraint mentioned above, we pop the stack until it is satisfied. At this point, the current node becomes the right child of the top node.</li>
+<li>If the constraint is already satisfied, the current node directly becomes the left child of the top node.</li>
+</ul>
+<h1>Code</h1>
+<p>The above approach is a rough description, and we should pay attention to details.</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">constructFromPrePost</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; preorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = preorder.<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// Only operate on the vector&#x27;s tail, equivalent to a stack</span></span><br><span class="line">        vector&lt;TreeNode*&gt; ve;</span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; mp;</span><br><span class="line">        <span class="comment">// Just like &#x27;inorder and preorder&#x27;, store &lt;element, index&gt; in the hash table for validation</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            mp[postorder[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> v: preorder) &#123;</span><br><span class="line">            TreeNode* cur = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(v);</span><br><span class="line">            <span class="comment">// Only the first element (root) will trigger this condition</span></span><br><span class="line">            <span class="keyword">if</span> (ve.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                ve.<span class="built_in">push_back</span>(cur);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">bool</span> popped = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>((!ve.<span class="built_in">empty</span>()) &amp;&amp; (mp[v] &gt; mp[ve.<span class="built_in">back</span>()-&gt;val])) &#123;</span><br><span class="line">                ve.<span class="built_in">pop_back</span>();</span><br><span class="line">                popped = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!popped) &#123;</span><br><span class="line">                ve.<span class="built_in">back</span>()-&gt;left = cur;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ve.<span class="built_in">back</span>()-&gt;right = cur;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Store the current node for the validation of the next node</span></span><br><span class="line">            ve.<span class="built_in">push_back</span>(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// The first node is always the root node and will never be popped</span></span><br><span class="line">        <span class="keyword">return</span> ve.<span class="built_in">front</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Time Complexity: $O(n)$</p>
+<ul>
+<li>Sequentially traverse <code>preorder</code> and <code>postorder</code>.</li>
+<li>Each node enters and exits <code>ve</code> only once.</li>
+</ul>
+<p>Space Complexity: $O(n)$</p>
+<ul>
+<li><code>mp</code> stores the values and their indices of all $n$ nodes.</li>
+<li>In the worst case, all nodes are in <code>ve</code>.</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Algorithm Problems</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
       </tags>
   </entry>
   <entry>
@@ -454,68 +516,6 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
-    <title>Algorithm Problem 006: Construct Binary Tree from Preorder and Postorder Traversal</title>
-    <url>/en/2024/02/22/Algorithm-Problem-006-construct-binary-tree-from-preorder-and-postorder-traversal/</url>
-    <content><![CDATA[<h1>Problem</h1>
-<blockquote>
-<p>Problem Source：<a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal">889. Construct Binary Tree from Preorder and Postorder Traversal</a>(Daily Challenge)</p>
-</blockquote>
-<blockquote>
-<p><strong>Problem Description</strong>：</p>
-<p>Given two integer arrays, <code>preorder</code> and <code>postorder</code> where <code>preorder</code> is the preorder traversal of a binary tree of <strong>distinct</strong> values and <code>postorder</code> is the postorder traversal of the same tree, reconstruct and return <em>the binary tree</em>.</p>
-<p>If there exist multiple answers, you can <strong>return any</strong> of them.</p>
-</blockquote>
-<span id="more"></span>
-<blockquote>
-<p><strong>Example 1:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2021/07/24/lc-prepost.jpg" alt="img"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]</span><br><span class="line">Output: [1,2,3,4,5,6,7]</span><br></pre></td></tr></table></figure>
-<p><strong>Example 2:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: preorder = [1], postorder = [1]</span><br><span class="line">Output: [1]</span><br></pre></td></tr></table></figure>
-<p><strong>Constraints:</strong></p>
-<ul>
-<li><code>1 &lt;= preorder.length &lt;= 30</code></li>
-<li><code>1 &lt;= preorder[i] &lt;= preorder.length</code></li>
-<li>All the values of <code>preorder</code> are <strong>unique</strong>.</li>
-<li><code>postorder.length == preorder.length</code></li>
-<li><code>1 &lt;= postorder[i] &lt;= postorder.length</code></li>
-<li>All the values of <code>postorder</code> are <strong>unique</strong>.</li>
-<li>It is guaranteed that <code>preorder</code> and <code>postorder</code> are the preorder traversal and postorder traversal of the same binary tree.</li>
-</ul>
-</blockquote>
-<h1>Approach</h1>
-<p>Firstly, it is important to note that <strong>the binary tree constructed from preorder and postorder traversals is not unique</strong>, and therefore, there is no deterministic rule. In contrast, ‘inorder and preorder’ as well as ‘inorder and postorder’ correspond uniquely to a binary tree. These rules are clear, making coding straightforward. Hence, we need to define our own rules.</p>
-<p>Recall that when constructing a binary tree from ‘inorder and preorder’, we sequentially traverse the preorder list. For each value, we create a corresponding node and then determine its subtree based on the inorder traversal. This can be understood as creating the preorder and verifying with the inorder.</p>
-<p>Similarly, in this problem, we also ‘sequentially traverse the preorder list, creating a corresponding node’ but determine the <strong>position of the node</strong> (instead of its subtree) based on the postorder traversal. This is creating the preorder and verifying with the postorder.</p>
-<p>In preorder, the sequence is “root - left - right”, and for each node in preorder, we can try placing it as the left child. In postorder, the sequence is “left - right - root”. <strong>If a node A in postorder is after node B, then A cannot be in the left subtree of B.</strong></p>
-<p>For example, consider node <code>5</code> in Example 1. While sequentially traversing the preorder list, we can try placing <code>5</code> as the left child of <code>4</code>. However, in the postorder list, since <code>5</code> comes after <code>4</code>, this attempt is not allowed. <strong><code>5</code> can only be in the right subtree of one of the ancestors of <code>4</code></strong>, in this case, the right child of <code>2</code>.</p>
-<p>Therefore, we need to keep track of the <strong>path from the root to the last traversed node</strong> and store them in a stack.</p>
-<ul>
-<li>As long as the current node and the top node of the stack do not satisfy the postorder constraint mentioned above, we pop the stack until it is satisfied. At this point, the current node becomes the right child of the top node.</li>
-<li>If the constraint is already satisfied, the current node directly becomes the left child of the top node.</li>
-</ul>
-<h1>Code</h1>
-<p>The above approach is a rough description, and we should pay attention to details.</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">constructFromPrePost</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; preorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = preorder.<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// Only operate on the vector&#x27;s tail, equivalent to a stack</span></span><br><span class="line">        vector&lt;TreeNode*&gt; ve;</span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; mp;</span><br><span class="line">        <span class="comment">// Just like &#x27;inorder and preorder&#x27;, store &lt;element, index&gt; in the hash table for validation</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            mp[postorder[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> v: preorder) &#123;</span><br><span class="line">            TreeNode* cur = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(v);</span><br><span class="line">            <span class="comment">// Only the first element (root) will trigger this condition</span></span><br><span class="line">            <span class="keyword">if</span> (ve.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                ve.<span class="built_in">push_back</span>(cur);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">bool</span> popped = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>((!ve.<span class="built_in">empty</span>()) &amp;&amp; (mp[v] &gt; mp[ve.<span class="built_in">back</span>()-&gt;val])) &#123;</span><br><span class="line">                ve.<span class="built_in">pop_back</span>();</span><br><span class="line">                popped = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!popped) &#123;</span><br><span class="line">                ve.<span class="built_in">back</span>()-&gt;left = cur;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ve.<span class="built_in">back</span>()-&gt;right = cur;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Store the current node for the validation of the next node</span></span><br><span class="line">            ve.<span class="built_in">push_back</span>(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// The first node is always the root node and will never be popped</span></span><br><span class="line">        <span class="keyword">return</span> ve.<span class="built_in">front</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>Time Complexity: $O(n)$</p>
-<ul>
-<li>Sequentially traverse <code>preorder</code> and <code>postorder</code>.</li>
-<li>Each node enters and exits <code>ve</code> only once.</li>
-</ul>
-<p>Space Complexity: $O(n)$</p>
-<ul>
-<li><code>mp</code> stores the values and their indices of all $n$ nodes.</li>
-<li>In the worst case, all nodes are in <code>ve</code>.</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Algorithm Problems</category>
-      </categories>
-      <tags>
-        <tag>Tree</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Dashy Installation and Config</title>
     <url>/en/2024/04/04/Dashy-install-and-config/</url>
     <content><![CDATA[<h1>Preface</h1>
@@ -572,6 +572,36 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
+    <title>Hexo自定义404页面</title>
+    <url>/en/2023/07/04/Hexo-custom-404/</url>
+    <content><![CDATA[<h1>自定义 404 页面</h1>
+<p>首先，创建一个名为 <code>404</code> 的 post</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new <span class="number">404</span></span><br></pre></td></tr></table></figure>
+<p>在对应的 md 文件中，我们可以自定义 404 页面。由于 Hexo 框架的特性，我们可以编写 JS 脚本，让页面动起来。</p>
+<p>这里给出<a href="/404" target="_blank">我的 404 页面</a>。可以看到，上面有一个倒计时。当倒计时为 0 时，会自动跳转到首页。当然，用户也可以手动点击，从而返回首页。</p>
+<p>下面是对应的代码，直接放在 md 文件中即可：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./../js/jquery-3.3.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>您正在访问一个不存在的地址🤔<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>系统会在 <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;seconds&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span> 秒后自动跳转到首页,<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span> 您也可以点此 <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_self&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span> &gt;</span>链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>, 手动跳转!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="built_in">setInterval</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> seconds = $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript">            $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>(--seconds);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (seconds == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                location.<span class="property">href</span> = <span class="string">&quot;/&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我选择将 jQuery 代码放在本地，这样页面响应更快。</p>
+<p>jQuery 在这里只是用于获取 DOM 对象，因此也完全可以用原生 JS 函数来写。</p>
+<h1>如何让网站跳转到自定义页面？</h1>
+<span id="more"></span>
+<p>注意：以下方法仅限于 Github Pages，其他平台的方式可能不同。</p>
+<p>在<code>front-matter</code>中添加如下内容，Github Pages 就能设置该页面为 404 页面</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">permalink:</span> <span class="string">/404.html</span></span><br></pre></td></tr></table></figure>
+<p>不妨随机访问一个不存在的网页？看看效果如何：▶ <a href="/hsfh/40u235u/jasdlafn" target="_blank">点我</a></p>
+<h1>参考文章</h1>
+<p><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site">Creating a custom 404 page for your GitHub Pages site</a></p>
+<p><a href="https://theme-next.js.org/docs/theme-settings/custom-pages.html#Custom-404-Page">theme-next: custom-pages</a></p>
+]]></content>
+      <categories>
+        <category>softwares</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Install Glances in Docker</title>
     <url>/en/2024/04/08/Glances-Docker/</url>
     <content><![CDATA[<h1>Introduction to Glances</h1>
@@ -609,33 +639,453 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
-    <title>Hexo自定义404页面</title>
-    <url>/en/2023/07/04/Hexo-custom-404/</url>
-    <content><![CDATA[<h1>自定义 404 页面</h1>
-<p>首先，创建一个名为 <code>404</code> 的 post</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new <span class="number">404</span></span><br></pre></td></tr></table></figure>
-<p>在对应的 md 文件中，我们可以自定义 404 页面。由于 Hexo 框架的特性，我们可以编写 JS 脚本，让页面动起来。</p>
-<p>这里给出<a href="/404" target="_blank">我的 404 页面</a>。可以看到，上面有一个倒计时。当倒计时为 0 时，会自动跳转到首页。当然，用户也可以手动点击，从而返回首页。</p>
-<p>下面是对应的代码，直接放在 md 文件中即可：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./../js/jquery-3.3.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>您正在访问一个不存在的地址🤔<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>系统会在 <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;seconds&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span> 秒后自动跳转到首页,<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span> 您也可以点此 <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_self&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span> &gt;</span>链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>, 手动跳转!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="built_in">setInterval</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> seconds = $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript">            $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>(--seconds);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (seconds == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                location.<span class="property">href</span> = <span class="string">&quot;/&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我选择将 jQuery 代码放在本地，这样页面响应更快。</p>
-<p>jQuery 在这里只是用于获取 DOM 对象，因此也完全可以用原生 JS 函数来写。</p>
-<h1>如何让网站跳转到自定义页面？</h1>
+    <title>Deploying Nginx in Docker and Configuring SSL Certificate for Local Network</title>
+    <url>/en/2024/01/31/Docker-Nginx-SSL-Local-Network/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>In my previous post, I successfully set up a LANraragi server and shared it with other devices in my home LAN. However, new issues arose:</p>
+<ul>
+<li>LANraragi could be accessed without logging in.</li>
+<li>Even if LANraragi had a login feature, it still used HTTP plaintext transmission, which is equivalent to no password protection.</li>
+</ul>
+<p>The root cause of these issues was that devices like smartphones and smart home devices, connected to the LAN, were not trustworthy. They could potentially have backdoors (or ‘users voluntarily transmitting private data to improve service’). Anyway, these issues needed urgent resolution.</p>
+<p>The solution is Nginx:</p>
+<ul>
+<li>Use Nginx’s built-in basic authentication to allow access only with a correct username and password.</li>
+<li>Utilize Nginx’s reverse proxy feature. Once Nginx is configured with HTTPS, any software being proxied can use the encrypted transmission.</li>
+</ul>
+<p>Therefore, the key lies in the configuration of Nginx and SSL certificates. The challenge is that I need to request a certificate for an internal IP address without a corresponding domain name. This article explores these solutions, marking my first encounter with Nginx and SSL certificate configuration.</p>
 <span id="more"></span>
-<p>注意：以下方法仅限于 Github Pages，其他平台的方式可能不同。</p>
-<p>在<code>front-matter</code>中添加如下内容，Github Pages 就能设置该页面为 404 页面</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">permalink:</span> <span class="string">/404.html</span></span><br></pre></td></tr></table></figure>
-<p>不妨随机访问一个不存在的网页？看看效果如何：▶ <a href="/hsfh/40u235u/jasdlafn" target="_blank">点我</a></p>
-<h1>参考文章</h1>
-<p><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site">Creating a custom 404 page for your GitHub Pages site</a></p>
-<p><a href="https://theme-next.js.org/docs/theme-settings/custom-pages.html#Custom-404-Page">theme-next: custom-pages</a></p>
+<h1>Nginx Container</h1>
+<h2 id="Obtain-the-Default-Configuration-File">Obtain the Default Configuration File</h2>
+<p>Create a temporary container, copy the <code>nginx.conf</code> from it:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker run --name tmp-nginx-container -d nginx:1.24</span><br><span class="line">docker <span class="built_in">cp</span> tmp-nginx-container:/etc/nginx/nginx.conf /opt/nginx.conf</span><br><span class="line">docker <span class="built_in">rm</span> -f tmp-nginx-container</span><br></pre></td></tr></table></figure>
+<h2 id="Docker-Compose">Docker Compose</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:1.24</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/nginx_ssl:/etc/nginx/ssl/:ro</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">bridge</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50443</span><span class="string">:443</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Besides the configuration file, map a directory to store SSL private key and certificate.</li>
+<li>Choose the bridge network mode; otherwise, other containers cannot be accessed.</li>
+<li>Only map the <code>443</code> port, while I have no intention to open the <code>80</code> port.</li>
+</ul>
+<h1>SSL Certificate</h1>
+<h2 id="Create-a-CA">Create a CA</h2>
+<p>Create a CA key <code>myCAPK.key</code> and a (self-signed) certificate <code>myCACertificate.crt</code>:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl req -x509 -sha256 -nodes -days 3650 -newkey rsa:4096 -keyout myCAPK.key -out myCACertificate.crt</span><br></pre></td></tr></table></figure>
+<p>The private key and certificate generated by this command can be directly used for Nginx server. However, if another server also needs an SSL certificate, client devices need to manually trust the new certificate, which is troublesome.</p>
+<p>If this certificate is used as a CA certificate, as long as devices trust this certificate, all other certificates signed by this CA will be automatically trusted. Therefore, devices only need to manually add the CA certificate only once.</p>
+<h2 id="Check-Certificate-Information">Check Certificate Information</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl x509 -text -noout -<span class="keyword">in</span> myCACertificate.crt</span><br></pre></td></tr></table></figure>
+<h2 id="Trust-the-CA">Trust the CA</h2>
+<p>As this CA certificate is self-created, the system won’t recognize it, so it needs to be installed.</p>
+<p>Without this step, the browser can still establish an HTTPS connection but will prompt that the connection is not secure.</p>
+<h3 id="Windows">Windows</h3>
+<p>Control Panel | Internet Options | Content | Certificates</p>
+<p><img src="/MarkDownImages/image-20240131172736021.png" alt="image-20240131172736021"></p>
+<p>Trust the CA as a root certificate authority.</p>
+<p><img src="/MarkDownImages/image-20240131172831043.png" alt="image-20240131172831043"></p>
+<h3 id="Android">Android</h3>
+<p>Different systems have different locations for installing certificates, but the basic options are the same. Here’s an example for Samsung:</p>
+<p>Either choose ‘CA certificates’ or ‘VPN and app user certificates’. Do not choose ‘WLAN certificates’; it does not work.</p>
+<p><img src="/MarkDownImages/Screenshot_20240201_113254_Settings.png" alt="Screenshot_20240201_113254_Settings"></p>
+<h3 id="IOS">IOS</h3>
+<blockquote>
+<p>Using iPadOS 15.7 as an example</p>
+</blockquote>
+<ol>
+<li>
+<p>Open your email, send the CA certificate as an attachment to yourself.</p>
+</li>
+<li>
+<p>Using the Safari browser, log in to your email, click the attachment, and select “Download Profile” (a prompt will appear:  ‘go to settings to confirm installation’).</p>
+</li>
+<li>
+<p>Go to settings, select “Install Profile,” enter your lock screen password.</p>
+</li>
+<li>
+<p>Settings | General | About | Certificate Trust Settings: Enable full trust.</p>
+<p><img src="/MarkDownImages/IMG_2032.PNG" alt="IMG_2032"></p>
+</li>
+</ol>
+<hr>
+<p>According to Apple’s <a href="https://support.apple.com/en-us/102028">new policy</a>，server’s certificate cannot exceed 398 days, otherwise SSL connection errors occur（<code>NET::ERR_CERT_VALIDITY_TOO_LONG</code>.</p>
+<h2 id="Create-Server-Key">Create Server Key</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl genrsa -out nginx_server.key 4096</span><br></pre></td></tr></table></figure>
+<h2 id="Create-Server-CSR-Certificate-Signing-Request">Create Server CSR (Certificate Signing Request)</h2>
+<p>Create <code>openssl.cnf</code> with the following content:</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">authorityKeyIdentifier</span>=<span class="string">keyid,issuer</span></span><br><span class="line"><span class="attr">basicConstraints</span>=<span class="string">CA:FALSE</span></span><br><span class="line"><span class="attr">subjectAltName</span> = <span class="string">@alt_names</span></span><br><span class="line"><span class="attr">[alt_names]</span></span><br><span class="line"><span class="comment"># 虚拟机</span></span><br><span class="line"><span class="attr">DNS.1</span> = <span class="string">CentOS100</span></span><br><span class="line"><span class="attr">IP.1</span> = <span class="string">192.168.169.132</span></span><br><span class="line"><span class="comment"># 主机</span></span><br><span class="line"><span class="attr">IP.2</span> = <span class="string">192.168.0.105</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>The configuration file can be more complex, but for this case, these few configurations are sufficient.</p>
+</blockquote>
+<ul>
+<li><code>DNS.x</code> corresponds to hostname/domain.</li>
+<li><code>IP.x</code> corresponds to IP addresses.</li>
+</ul>
+<blockquote>
+<p><code>x</code> is a positive integer.</p>
+</blockquote>
+<p>The only purpose of this file is to bind the server’s domain name and IP with the certificate during CA signing, indicating that the certificate indeed belongs to that server and not someone else pretending. Without this configuration, the browser would show an error: <code>NET::ERR_CERT_COMMON_NAME_INVALID</code>.</p>
+<p>Use the following command to create the CSR:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl req -new -key nginx_server.key -out nginx_server.csr</span><br></pre></td></tr></table></figure>
+<h2 id="CA-Signing">CA Signing</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl x509 -req -extfile openssl.cnf  -<span class="keyword">in</span> nginx_server.csr -CA /opt/MyOwnCA/myCACertificate.crt -CAkey /opt/MyOwnCA/myCAPK.key -CAcreateserial -out nginx_server.crt -days 3650</span><br></pre></td></tr></table></figure>
+<p>After signing, you will get the private key <code>nginx_server.key</code> and certificate <code>nginx_server.crt</code> ready to be used in Nginx.</p>
+<h1>Nginx Configuration</h1>
+<h2 id="SSL">SSL</h2>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> default_server ssl http2;</span><br><span class="line">    <span class="attribute">listen</span> [::]:<span class="number">443</span> ssl http2;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span> /etc/nginx/ssl/nginx_server.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/nginx/ssl/nginx_server.key;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> /... &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> ...;  </span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>This is just the basic configuration; there are more SSL directives in practice, but these are sufficient for now.</p>
+</blockquote>
+<h2 id="Basic-Authentication">Basic Authentication</h2>
+<p>1️⃣First, create a username and password:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Create the file if it doesn&#x27;t exist</span></span><br><span class="line"><span class="built_in">touch</span> /opt/docker/nginx_auth/.htpasswd-lanraragi</span><br><span class="line"><span class="comment"># Add user alpha to this configuration file</span></span><br><span class="line">htpasswd /opt/docker/nginx_auth/.htpasswd-lanraragi alpha</span><br></pre></td></tr></table></figure>
+<p>Then, the system will prompt to set a password for the <code>alpha</code> user. To add multiple users, use the same command:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">htpasswd /opt/docker/nginx_auth/.htpasswd-lanraragi beta</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>On CentOS, the <code>htpasswd</code> command belongs to <code>httpd-tools</code>. If not installed, the system will prompt to install it.</p>
+</blockquote>
+<hr>
+<p>2️⃣Configure in Nginx：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> /api &#123;</span><br><span class="line">    <span class="attribute">auth_basic</span>           <span class="string">&quot;Administrator’s Area&quot;</span>;</span><br><span class="line">    <span class="attribute">auth_basic_user_file</span> /etc/nginx/.htpasswd; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>auth_basic</code> prompts a message to user on the login page；</li>
+<li><code>auth_basic_user_file</code> points to the previously created <code>.htpasswd</code>；</li>
+</ul>
+<p>It can also be enabled globally and disabled for specific URLs:</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="attribute">auth_basic</span>           <span class="string">&quot;Administrator’s Area&quot;</span>;</span><br><span class="line">    <span class="attribute">auth_basic_user_file</span> conf/.htpasswd;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> /public/ &#123;</span><br><span class="line">      <span class="attribute">auth_basic</span> <span class="literal">off</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>Example: Lanraragi</h1>
+<p>Let’s come back to the initial demand: reverse proxy Lanraragi and provide a login feature.</p>
+<p>Docker compose:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:1.24</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">nginx-lanraragi</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/nginx_conf/nginx-lanraragi.conf:/etc/nginx/nginx.conf:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/nginx_ssl:/etc/nginx/ssl/:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/nginx_auth:/etc/nginx/auth/:ro</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">43000</span><span class="string">:443</span></span><br><span class="line">  <span class="attr">lanraragi:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">difegue/lanraragi:v.0.9.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">lanraragi</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/mnt/hgfs/doujinshiArchives:/home/koyomi/lanraragi/content:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">lanraragi-database:/home/koyomi/lanraragi/database</span></span><br><span class="line">    <span class="attr">depends_on:</span> </span><br><span class="line">      <span class="bullet">-</span> <span class="string">nginx</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">lanraragi-database:</span></span><br></pre></td></tr></table></figure>
+<p>Nginx configuration:</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">user</span>  nginx;</span><br><span class="line"><span class="attribute">worker_processes</span>  auto;</span><br><span class="line"></span><br><span class="line"><span class="attribute">error_log</span>  /var/log/nginx/<span class="literal">error</span>.log <span class="literal">notice</span>;</span><br><span class="line"><span class="attribute">pid</span>        /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       /etc/nginx/mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">log_format</span>  main  <span class="string">&#x27;<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$request</span>&quot; &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> &quot;<span class="variable">$http_referer</span>&quot; &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;&quot;<span class="variable">$http_user_agent</span>&quot; &quot;<span class="variable">$http_x_forwarded_for</span>&quot;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">access_log</span>  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">443</span> default_server ssl http2;</span><br><span class="line">        <span class="attribute">listen</span> [::]:<span class="number">443</span> ssl http2;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">ssl_certificate</span> /etc/nginx/ssl/nginx_server.crt;</span><br><span class="line">        <span class="attribute">ssl_certificate_key</span> /etc/nginx/ssl/nginx_server.key;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">auth_basic</span>           <span class="string">&quot;Login to view any content&quot;</span>;</span><br><span class="line">        <span class="attribute">auth_basic_user_file</span> /etc/nginx/auth/.htpasswd-lanraragi;</span><br><span class="line"></span><br><span class="line">        <span class="section">location</span> / &#123;</span><br><span class="line">            <span class="comment"># Access directly through service name in the same network</span></span><br><span class="line">            <span class="comment"># No need to map any port for lanraragi</span></span><br><span class="line">            <span class="attribute">proxy_pass</span> http://lanraragi:3000;</span><br><span class="line">            <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">            <span class="attribute">http2_push_preload</span> <span class="literal">on</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Lanraragi’s own routing strategy cannot be changed, which means <code>/</code> must be mapped as-is to Lanraragi’s URI. In other words, Lanraragi needs a separate Nginx instance.</p>
+<p>From a computational resources perspective, this isn’t a big deal, as one Nginx instance uses less than 20 MB of memory.</p>
+<p>If each existing software gets its own Nginx, these Nginx instances can share a single SSL certificate. After all, when accessing the Linux host, it tells Nginx instances from each other by port, and the certificate is bound to IP/domain. Although this is a solution, I’m not sure if it’s the best practice. However, in a home LAN scenario, it is clearly sufficient.</p>
+<h1>References</h1>
+<ul>
+<li>ChatGPT</li>
+<li><a href="https://mindsers.blog/en/post/https-using-nginx-certbot-docker/">HTTPS using Nginx and Let’s encrypt in Docker</a></li>
+<li><a href="https://www.baeldung.com/openssl-self-signed-cert">Creating a Self-Signed Certificate With OpenSSL</a></li>
+<li><a href="https://hub.docker.com/_/nginx">Nginx Docker hub</a></li>
+<li><a href="https://www.tangyuecan.com/2021/12/17/%E5%B1%80%E5%9F%9F%E7%BD%91%E5%86%85%E6%90%AD%E5%BB%BA%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%AF%E4%BF%A1%E4%BB%BB%E7%9A%84ssl%E8%AF%81%E4%B9%A6/">局域网内搭建浏览器可信任的SSL证书</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04">How To Create a Self-Signed SSL Certificate for Nginx in Ubuntu 16.04</a></li>
+<li><a href="https://stackoverflow.com/questions/10175812/how-to-generate-a-self-signed-ssl-certificate-using-openssl">How to generate a self-signed SSL certificate using OpenSSL?</a></li>
+<li><a href="https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/">Restricting Access with HTTP Basic Authentication</a></li>
+<li><a href="https://support.hcltechsw.com/csm?id=kb_article&amp;sysparm_article=KB0098768">在iOS设备上安装根证书(CA)</a></li>
+<li><a href="https://discussions.apple.com/thread/253667401?sortBy=best">Enabling self-signed certificates in iOS 15</a></li>
+<li><a href="https://support.apple.com/en-us/102028">Apple: About upcoming limits on trusted certificates</a></li>
+</ul>
 ]]></content>
       <categories>
-        <category>softwares</category>
-        <category>Hexo</category>
+        <category>tech</category>
+        <category>Docker</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
+        <tag>Docker</tag>
+        <tag>Nginx</tag>
+        <tag>SSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录一次 Intel 13700K 降压的操作</title>
+    <url>/en/2024/06/01/Intel-13700K-Undervolting/</url>
+    <content><![CDATA[<h1>问题</h1>
+<p>最近外网爆出了 Intel 13、14 代 i9 打游戏会报显存错误。这个也许只是 CPU 不稳定导致的<strong>短时</strong>运算错误，不足为惧<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。但是，B站上有人讨论很多 14 代 i9 在待机模式下蓝屏，甚至 13700K 也出现了这种现象。如果消息准确，那么使用了半年的 14代 i9 就出现了“缩缸”现象（硬件损坏导致的<strong>永久</strong>性能损失）。理论上，CPU 的寿命至少是 10 年，而且大部分 CPU 都是不用了、而不是用坏了。我的 CPU 就是 13700K，这让我非常警惕。</p>
+<p>对于这个问题的讨论有两点需要厘清：</p>
+<ol>
+<li>软件报错，比如游戏、压测工具和渲染工具。这一点<strong>占据了极大比例的流量</strong>。目前，无论是 Intel 官方还是第三方网站、博主，给出的解决方案都是限制功耗和降频，使得软件不会报错。Intel 把锅甩给主板厂商，要求它们按照 Intel 标准来设置 BIOS。目前来看，这个所谓的 Intel 标准电压更高、频率更低，跑分更差。要注意，频率降低等于消费者吃亏。因此，<strong>Intel 和主板厂商都有责任</strong>。</li>
+<li>CPU“缩缸”，这是产品缺陷。这一点<strong>只占据很小比例的流量</strong>。显然，Intel 永远不会承认这一点。也许从 23 年 6 月 Intel 质保政策开始收紧时<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>，Intel 已经知道了这一事实。</li>
+</ol>
+<p>我是在 23 年初配的电脑，轻度办公、写一写代码，基本没玩过 3A 大作。最近，我用 CPU-Z 和 R23 测试了性能，和网上的结果<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>差不多。因此，我的 13700K 应该没有“缩缸”。</p>
+<p>话说回来，我倒不是很关心降频，我更关心 CPU 寿命。目前自动核心电压为 1.38 V，R23 跑一次就 100 度。这样的配置，迟早要“缩缸”。因此，本文主要记录我是如何给 CPU 降压的，以及在研究过程中发现的各种问题。</p>
+<span id="more"></span>
+<h1>一些概念</h1>
+<ul>
+<li>降频：降低 CPU 的频率，比如 13700K 可以跑到 5.3GHz；</li>
+<li>降压：降低 CPU 所需的电压；</li>
+</ul>
+<p>频率需要由电压来保证。高频率需要在高电压下才能稳定，否则 CPU 就会产生错误；但这不意味着低电压就带不动原有的高频率。这也是降压的目的之一。另外，降压也能够避免 CPU 温度达到温度墙（而被强制降频），从而保证高负载下依旧维持高频率。此时 R23 跑分甚至可以更高。</p>
+<h1>XTU</h1>
+<h2 id="降压方式">降压方式</h2>
+<p>最方便的降压降频方法是用 Intel Extreme Tuning Utility，简称 XTU<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>。（这个工具实际上更多地用来超频）。</p>
+<p>用这个工具调整设置后，如果系统蓝屏，则开机时会自动恢复默认配置，防止开不了机的情况。</p>
+<p>同时，XTU 是个软件，点击就可以修改，不需要每次在 BIOS 里调整。</p>
+<p><img src="/MarkDownImages/image-20240601111408430.png" alt="image-20240601111408430"></p>
+<p>具体的降压方法<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>：</p>
+<p>电压偏移每次降低 0.01V 或 0.005V，然后点击 Apply。每降低一次，都跑一次 R23，直到系统出现蓝屏。</p>
+<p>在出现蓝屏的电压偏移再加上 0.01 V，然后跑 R23 30分钟，看看会不会蓝屏。</p>
+<p>不会蓝屏的话，就将当前配置设置为开机自动启用：</p>
+<p><img src="/MarkDownImages/image-20240601111910013.png" alt="image-20240601111910013"></p>
+<h2 id="Watchdog">Watchdog</h2>
+<p>Watchdog 机制是实现超频后 crash safe 的关键。没有这个机制，电脑无法在开机时会自动恢复默认配置。</p>
+<p>不幸的是，XTU 提醒我这个功能没有开启：（Advanced | System information 中查看）</p>
+<p><img src="/MarkDownImages/image-20240601112232739.png" alt="image-20240601112232739"></p>
+<p>但是，在设备管理器中，Watchdog 是存在的（先点击 查看 | 显示隐藏设备，Watchdog 在系统设备中）：</p>
+<p><img src="/MarkDownImages/image-20240601112446574.png" alt="image-20240601112446574"></p>
+<p>经过一番研究，发现华硕 Z790 主板（无论什么具体型号<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>）用 Watchdog 保证 XMP 的稳定性。如果开启了 XMP，那么 XTU 就没法用 Watchdog 了<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>。</p>
+<blockquote>
+<p>早知道不买华硕主板了，现在我得手动调 BIOS 了。</p>
+</blockquote>
+<h1>调整 BIOS</h1>
+<p>调整 BIOS 的方法看这两个视频<sup class="footnote-ref"><a href="#fn6" id="fnref6:1">[6:1]</a></sup><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>。问题在于，旧 BIOS 本来只有一个地方可以设置 CPU 电压 offset。现在新的华硕主板把它变成了多个配置，又把问题给搞复杂了。</p>
+<p>先说结论：Global Core SVID Voltage 调整为 adaptive mode，然后设置 offset<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>：</p>
+<p><img src="/MarkDownImages/image-20240601124657423.png" alt="image-20240601124657423"></p>
+<p>这等价于 XTU 里面的 Core Voltage Offset<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>。</p>
+<hr>
+<p>这几个电压的关系可以看这两篇帖子（别把自己给看晕了），不过和我们的操作关系不大：</p>
+<ul>
+<li><a href="https://nga.178.com/read.php?tid=34908324">华硕Z790 APEX，CPU两个关键电压设置的疑问</a></li>
+<li><a href="https://www.reddit.com/r/overclocking/comments/typcy6/please_help_me_overclock_12700k_with_this_poor/">Please Help Me Overclock 12700K With This Poor Asus Board</a></li>
+</ul>
+<h1>降压过程</h1>
+<h2 id="降压前">降压前</h2>
+<p>买回来就没升级过 BIOS：</p>
+<p><img src="/MarkDownImages/20240601_130522.jpg" alt="20240601_130522"></p>
+<p>在 CPU 降压前，我的 BIOS 只打开了 XMP 和 iGPU Multi-Monitor（使用独显时开启核显）。</p>
+<p>降压前记得把开启自启动的软件都关掉，说不定系统崩溃时就把它们搞坏了。</p>
+<p>降压时的工具：R23 和 HWMonitor。</p>
+<p>HWMonitor 中需要关注主板 VCORE（CPU 实际电压）、CPU 温度和 CPU 功耗。</p>
+<h2 id="r23-跑一轮">r23 跑一轮</h2>
+<p>测试极限 offset：</p>
+<table>
+<thead>
+<tr>
+<th>offset</th>
+<th>r23 跑分</th>
+<th>最大功耗（W）</th>
+<th>最大电压 (V)</th>
+<th>最大温度（°C）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0</td>
+<td>30425</td>
+<td>243</td>
+<td>1.403</td>
+<td>100</td>
+</tr>
+<tr>
+<td>-0.005</td>
+<td>30488</td>
+<td>240</td>
+<td>1.350</td>
+<td>100</td>
+</tr>
+<tr>
+<td>-0.01</td>
+<td>30788</td>
+<td>237</td>
+<td>1.332</td>
+<td>100</td>
+</tr>
+<tr>
+<td>-0.02</td>
+<td>30713</td>
+<td>232</td>
+<td>1.332</td>
+<td>98</td>
+</tr>
+<tr>
+<td>-0.03</td>
+<td>30752</td>
+<td>228</td>
+<td>1.314</td>
+<td>97</td>
+</tr>
+<tr>
+<td>-0.04</td>
+<td>30668</td>
+<td>224</td>
+<td>1.296</td>
+<td>96</td>
+</tr>
+<tr>
+<td>-0.05</td>
+<td>30744</td>
+<td>220</td>
+<td>1.288</td>
+<td>95</td>
+</tr>
+<tr>
+<td>-0.06</td>
+<td>30416</td>
+<td>218</td>
+<td>1.279</td>
+<td>96</td>
+</tr>
+<tr>
+<td>-0.07</td>
+<td>30867</td>
+<td>212</td>
+<td>1.270</td>
+<td>92</td>
+</tr>
+<tr>
+<td>-0.08</td>
+<td>29622</td>
+<td>207</td>
+<td>1.261</td>
+<td>91</td>
+</tr>
+<tr>
+<td>-0.09</td>
+<td>30745</td>
+<td>204</td>
+<td>1.243</td>
+<td>90</td>
+</tr>
+<tr>
+<td>-0.10</td>
+<td>30442</td>
+<td>202</td>
+<td>1.234</td>
+<td>88</td>
+</tr>
+<tr>
+<td>-0.11</td>
+<td>30694</td>
+<td>196</td>
+<td>1.225</td>
+<td>87</td>
+</tr>
+<tr>
+<td>-0.12</td>
+<td>30739</td>
+<td>193</td>
+<td>1.217</td>
+<td>87</td>
+</tr>
+<tr>
+<td>-0.13</td>
+<td>报错</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>功耗是 package power</p>
+<p>电压是 vcore</p>
+<p>温度是 package temperature</p>
+</blockquote>
+<p>当 offset 来到 <code>-0.13</code> 时，cinebench 报错，意味着需要回退 offset。</p>
+<blockquote>
+<p>无论是 cinebench 报错，还是系统黑屏、蓝屏，都表明当前的 offset 不合格。</p>
+</blockquote>
+<img src="/MarkDownImages/屏幕截图(14).png" alt="屏幕截图(14)" style="zoom: 67%;" />
+<hr>
+<p>从表格中可以看出，随着电压减少，温度降低，r23 跑分反而更高了，因为不会再触发温度墙而导致降频。</p>
+<h2 id="r23-跑-30-分钟">r23 跑 30 分钟</h2>
+<p>测试满足稳定性条件时的 offset：</p>
+<table>
+<thead>
+<tr>
+<th>offset</th>
+<th>cinebench 何时报错</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-0.115</td>
+<td>32 秒</td>
+</tr>
+<tr>
+<td>-0.11</td>
+<td>15 秒</td>
+</tr>
+<tr>
+<td>-0.10</td>
+<td>11 分 13 秒</td>
+</tr>
+<tr>
+<td>-0.09</td>
+<td>18 分</td>
+</tr>
+<tr>
+<td>-0.08</td>
+<td>6 分</td>
+</tr>
+<tr>
+<td>-0.07</td>
+<td>成功</td>
+</tr>
+</tbody>
+</table>
+<p>因此，<code>-0.07</code> 是最极限的 offset。30分钟结束后，r23 跑了 70 轮，得分 30337，最大温度为 97 °C，最大功耗为 217 W。</p>
+<p><code>-0.07</code> 距离单轮 r23 的极限值 <code>-0.12</code> 差了 <code>0.05</code>，看来这颗 13700K 的体质不咋地。</p>
+<h2 id="日常使用场景测试">日常使用场景测试</h2>
+<table>
+<thead>
+<tr>
+<th>使用场景</th>
+<th>是否通过</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>浏览器看视频</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>玩『猎人：荒野的召唤』</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>同时打开多个 IDE 窗口</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>同时打开 4 个虚拟机（先拍了个快照，防止崩溃）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>在虚拟机里打开 bluestacks 模拟器玩手机游戏</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>在后四种场景下，风扇声音明显比之前小，说明成功通过降压实现了降温，保护了 CPU 寿命。</p>
+<p>我又跑了下 CPU-Z 的稳定性测试，发现此时只占用了 180 W，温度不到 90 °C。看来 CPU-Z 的程序并不像 r23 那样会吃满 CPU，不适合作为压测工具。</p>
+<h1>总结</h1>
+<p>在这次 CPU 降压的过程中，我研究了很多东西。很显然，Intel 和华硕都有错，不然我也不用折腾了 —— 以后还是买 AMD 的 CPU 吧。感觉降压降的不是 CPU 的电压，而是我的血压🤪。</p>
+<h1>参考</h1>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="https://www.pcgamer.com/there-are-increased-reports-of-crashing-in-unreal-engine-games-etc-and-epic-is-blaming-intel-chips/">There are increased reports of crashing in Unreal Engine games, etc. and Epic is blaming Intel chips</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a href="https://www.bilibili.com/video/BV1Mo4y1u7oj">英特尔盒装CPU拒保？硬件去哪买番外篇！</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p><a href="https://valid.x86.fr/bench/971jbu">CPU-Z Benchmark (x64 - 2017.1)</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p><a href="https://nanoreview.net/en/cpu-list/cinebench-scores">Cinebench R23 Scores</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p><a href="https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-intel-xtu.html">Intel® Extreme Tuning Utility (Intel® XTU)</a> <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p><a href="https://youtu.be/CHndRWqOTxs">🔧 Undervolt Your INTEL CPU to increase FPS, Lower TEMPS &amp; Use LESS POWER ✅</a> <a href="#fnref6" class="footnote-backref">↩︎</a> <a href="#fnref6:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p><a href="https://www.reddit.com/r/ASUS/comments/yhlf3v/help_with_intel_xtu_new_build_issue/">Help with Intel XTU - New Build issue</a> <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p><a href="https://rog-forum.asus.com/t5/intel-700-600-series/asus-z790e-gaming-wifi-ii-with-intel-14900k-watchdog-present/m-p/993333/highlight/true#M21024">Asus Z790E Gaming WiFi II with Intel 14900K Watchdog Present False</a> <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p><a href="https://www.bilibili.com/video/BV1yD4y1V7fd">风冷压13900K，也不是不可以</a> <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p><a href="https://www.bilibili.com/video/BV1R24y1Q7Tw">华硕主板vid offset超频13700k 13900k（通用主板）</a> <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p><a href="https://www.reddit.com/r/overclocking/comments/xn49e8/whats_the_difference_between_actual_vrm_core/">What’s the difference between actual VRM core voltage and global core SVID voltage?</a> <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>硬件</category>
+      </categories>
+      <tags>
+        <tag>CPU</tag>
+        <tag>BIOS</tag>
+        <tag>Intel</tag>
+        <tag>硬件</tag>
       </tags>
   </entry>
   <entry>
@@ -809,153 +1259,6 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
         <tag>NAS</tag>
         <tag>Docker</tag>
         <tag>Jellyfin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Deploying Nginx in Docker and Configuring SSL Certificate for Local Network</title>
-    <url>/en/2024/01/31/Docker-Nginx-SSL-Local-Network/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>In my previous post, I successfully set up a LANraragi server and shared it with other devices in my home LAN. However, new issues arose:</p>
-<ul>
-<li>LANraragi could be accessed without logging in.</li>
-<li>Even if LANraragi had a login feature, it still used HTTP plaintext transmission, which is equivalent to no password protection.</li>
-</ul>
-<p>The root cause of these issues was that devices like smartphones and smart home devices, connected to the LAN, were not trustworthy. They could potentially have backdoors (or ‘users voluntarily transmitting private data to improve service’). Anyway, these issues needed urgent resolution.</p>
-<p>The solution is Nginx:</p>
-<ul>
-<li>Use Nginx’s built-in basic authentication to allow access only with a correct username and password.</li>
-<li>Utilize Nginx’s reverse proxy feature. Once Nginx is configured with HTTPS, any software being proxied can use the encrypted transmission.</li>
-</ul>
-<p>Therefore, the key lies in the configuration of Nginx and SSL certificates. The challenge is that I need to request a certificate for an internal IP address without a corresponding domain name. This article explores these solutions, marking my first encounter with Nginx and SSL certificate configuration.</p>
-<span id="more"></span>
-<h1>Nginx Container</h1>
-<h2 id="Obtain-the-Default-Configuration-File">Obtain the Default Configuration File</h2>
-<p>Create a temporary container, copy the <code>nginx.conf</code> from it:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker run --name tmp-nginx-container -d nginx:1.24</span><br><span class="line">docker <span class="built_in">cp</span> tmp-nginx-container:/etc/nginx/nginx.conf /opt/nginx.conf</span><br><span class="line">docker <span class="built_in">rm</span> -f tmp-nginx-container</span><br></pre></td></tr></table></figure>
-<h2 id="Docker-Compose">Docker Compose</h2>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:1.24</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/nginx_ssl:/etc/nginx/ssl/:ro</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">bridge</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50443</span><span class="string">:443</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>Besides the configuration file, map a directory to store SSL private key and certificate.</li>
-<li>Choose the bridge network mode; otherwise, other containers cannot be accessed.</li>
-<li>Only map the <code>443</code> port, while I have no intention to open the <code>80</code> port.</li>
-</ul>
-<h1>SSL Certificate</h1>
-<h2 id="Create-a-CA">Create a CA</h2>
-<p>Create a CA key <code>myCAPK.key</code> and a (self-signed) certificate <code>myCACertificate.crt</code>:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl req -x509 -sha256 -nodes -days 3650 -newkey rsa:4096 -keyout myCAPK.key -out myCACertificate.crt</span><br></pre></td></tr></table></figure>
-<p>The private key and certificate generated by this command can be directly used for Nginx server. However, if another server also needs an SSL certificate, client devices need to manually trust the new certificate, which is troublesome.</p>
-<p>If this certificate is used as a CA certificate, as long as devices trust this certificate, all other certificates signed by this CA will be automatically trusted. Therefore, devices only need to manually add the CA certificate only once.</p>
-<h2 id="Check-Certificate-Information">Check Certificate Information</h2>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl x509 -text -noout -<span class="keyword">in</span> myCACertificate.crt</span><br></pre></td></tr></table></figure>
-<h2 id="Trust-the-CA">Trust the CA</h2>
-<p>As this CA certificate is self-created, the system won’t recognize it, so it needs to be installed.</p>
-<p>Without this step, the browser can still establish an HTTPS connection but will prompt that the connection is not secure.</p>
-<h3 id="Windows">Windows</h3>
-<p>Control Panel | Internet Options | Content | Certificates</p>
-<p><img src="/MarkDownImages/image-20240131172736021.png" alt="image-20240131172736021"></p>
-<p>Trust the CA as a root certificate authority.</p>
-<p><img src="/MarkDownImages/image-20240131172831043.png" alt="image-20240131172831043"></p>
-<h3 id="Android">Android</h3>
-<p>Different systems have different locations for installing certificates, but the basic options are the same. Here’s an example for Samsung:</p>
-<p>Either choose ‘CA certificates’ or ‘VPN and app user certificates’. Do not choose ‘WLAN certificates’; it does not work.</p>
-<p><img src="/MarkDownImages/Screenshot_20240201_113254_Settings.png" alt="Screenshot_20240201_113254_Settings"></p>
-<h3 id="IOS">IOS</h3>
-<blockquote>
-<p>Using iPadOS 15.7 as an example</p>
-</blockquote>
-<ol>
-<li>
-<p>Open your email, send the CA certificate as an attachment to yourself.</p>
-</li>
-<li>
-<p>Using the Safari browser, log in to your email, click the attachment, and select “Download Profile” (a prompt will appear:  ‘go to settings to confirm installation’).</p>
-</li>
-<li>
-<p>Go to settings, select “Install Profile,” enter your lock screen password.</p>
-</li>
-<li>
-<p>Settings | General | About | Certificate Trust Settings: Enable full trust.</p>
-<p><img src="/MarkDownImages/IMG_2032.PNG" alt="IMG_2032"></p>
-</li>
-</ol>
-<hr>
-<p>According to Apple’s <a href="https://support.apple.com/en-us/102028">new policy</a>，server’s certificate cannot exceed 398 days, otherwise SSL connection errors occur（<code>NET::ERR_CERT_VALIDITY_TOO_LONG</code>.</p>
-<h2 id="Create-Server-Key">Create Server Key</h2>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl genrsa -out nginx_server.key 4096</span><br></pre></td></tr></table></figure>
-<h2 id="Create-Server-CSR-Certificate-Signing-Request">Create Server CSR (Certificate Signing Request)</h2>
-<p>Create <code>openssl.cnf</code> with the following content:</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">authorityKeyIdentifier</span>=<span class="string">keyid,issuer</span></span><br><span class="line"><span class="attr">basicConstraints</span>=<span class="string">CA:FALSE</span></span><br><span class="line"><span class="attr">subjectAltName</span> = <span class="string">@alt_names</span></span><br><span class="line"><span class="attr">[alt_names]</span></span><br><span class="line"><span class="comment"># 虚拟机</span></span><br><span class="line"><span class="attr">DNS.1</span> = <span class="string">CentOS100</span></span><br><span class="line"><span class="attr">IP.1</span> = <span class="string">192.168.169.132</span></span><br><span class="line"><span class="comment"># 主机</span></span><br><span class="line"><span class="attr">IP.2</span> = <span class="string">192.168.0.105</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>The configuration file can be more complex, but for this case, these few configurations are sufficient.</p>
-</blockquote>
-<ul>
-<li><code>DNS.x</code> corresponds to hostname/domain.</li>
-<li><code>IP.x</code> corresponds to IP addresses.</li>
-</ul>
-<blockquote>
-<p><code>x</code> is a positive integer.</p>
-</blockquote>
-<p>The only purpose of this file is to bind the server’s domain name and IP with the certificate during CA signing, indicating that the certificate indeed belongs to that server and not someone else pretending. Without this configuration, the browser would show an error: <code>NET::ERR_CERT_COMMON_NAME_INVALID</code>.</p>
-<p>Use the following command to create the CSR:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl req -new -key nginx_server.key -out nginx_server.csr</span><br></pre></td></tr></table></figure>
-<h2 id="CA-Signing">CA Signing</h2>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl x509 -req -extfile openssl.cnf  -<span class="keyword">in</span> nginx_server.csr -CA /opt/MyOwnCA/myCACertificate.crt -CAkey /opt/MyOwnCA/myCAPK.key -CAcreateserial -out nginx_server.crt -days 3650</span><br></pre></td></tr></table></figure>
-<p>After signing, you will get the private key <code>nginx_server.key</code> and certificate <code>nginx_server.crt</code> ready to be used in Nginx.</p>
-<h1>Nginx Configuration</h1>
-<h2 id="SSL">SSL</h2>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> default_server ssl http2;</span><br><span class="line">    <span class="attribute">listen</span> [::]:<span class="number">443</span> ssl http2;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span> /etc/nginx/ssl/nginx_server.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/nginx/ssl/nginx_server.key;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> /... &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> ...;  </span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>This is just the basic configuration; there are more SSL directives in practice, but these are sufficient for now.</p>
-</blockquote>
-<h2 id="Basic-Authentication">Basic Authentication</h2>
-<p>1️⃣First, create a username and password:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Create the file if it doesn&#x27;t exist</span></span><br><span class="line"><span class="built_in">touch</span> /opt/docker/nginx_auth/.htpasswd-lanraragi</span><br><span class="line"><span class="comment"># Add user alpha to this configuration file</span></span><br><span class="line">htpasswd /opt/docker/nginx_auth/.htpasswd-lanraragi alpha</span><br></pre></td></tr></table></figure>
-<p>Then, the system will prompt to set a password for the <code>alpha</code> user. To add multiple users, use the same command:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">htpasswd /opt/docker/nginx_auth/.htpasswd-lanraragi beta</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>On CentOS, the <code>htpasswd</code> command belongs to <code>httpd-tools</code>. If not installed, the system will prompt to install it.</p>
-</blockquote>
-<hr>
-<p>2️⃣Configure in Nginx：</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> /api &#123;</span><br><span class="line">    <span class="attribute">auth_basic</span>           <span class="string">&quot;Administrator’s Area&quot;</span>;</span><br><span class="line">    <span class="attribute">auth_basic_user_file</span> /etc/nginx/.htpasswd; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>auth_basic</code> prompts a message to user on the login page；</li>
-<li><code>auth_basic_user_file</code> points to the previously created <code>.htpasswd</code>；</li>
-</ul>
-<p>It can also be enabled globally and disabled for specific URLs:</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="attribute">auth_basic</span>           <span class="string">&quot;Administrator’s Area&quot;</span>;</span><br><span class="line">    <span class="attribute">auth_basic_user_file</span> conf/.htpasswd;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> /public/ &#123;</span><br><span class="line">      <span class="attribute">auth_basic</span> <span class="literal">off</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1>Example: Lanraragi</h1>
-<p>Let’s come back to the initial demand: reverse proxy Lanraragi and provide a login feature.</p>
-<p>Docker compose:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:1.24</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">nginx-lanraragi</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/nginx_conf/nginx-lanraragi.conf:/etc/nginx/nginx.conf:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/nginx_ssl:/etc/nginx/ssl/:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/nginx_auth:/etc/nginx/auth/:ro</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">43000</span><span class="string">:443</span></span><br><span class="line">  <span class="attr">lanraragi:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">difegue/lanraragi:v.0.9.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">lanraragi</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/mnt/hgfs/doujinshiArchives:/home/koyomi/lanraragi/content:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">lanraragi-database:/home/koyomi/lanraragi/database</span></span><br><span class="line">    <span class="attr">depends_on:</span> </span><br><span class="line">      <span class="bullet">-</span> <span class="string">nginx</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">lanraragi-database:</span></span><br></pre></td></tr></table></figure>
-<p>Nginx configuration:</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">user</span>  nginx;</span><br><span class="line"><span class="attribute">worker_processes</span>  auto;</span><br><span class="line"></span><br><span class="line"><span class="attribute">error_log</span>  /var/log/nginx/<span class="literal">error</span>.log <span class="literal">notice</span>;</span><br><span class="line"><span class="attribute">pid</span>        /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       /etc/nginx/mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">log_format</span>  main  <span class="string">&#x27;<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$request</span>&quot; &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> &quot;<span class="variable">$http_referer</span>&quot; &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;&quot;<span class="variable">$http_user_agent</span>&quot; &quot;<span class="variable">$http_x_forwarded_for</span>&quot;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">access_log</span>  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">443</span> default_server ssl http2;</span><br><span class="line">        <span class="attribute">listen</span> [::]:<span class="number">443</span> ssl http2;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">ssl_certificate</span> /etc/nginx/ssl/nginx_server.crt;</span><br><span class="line">        <span class="attribute">ssl_certificate_key</span> /etc/nginx/ssl/nginx_server.key;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">auth_basic</span>           <span class="string">&quot;Login to view any content&quot;</span>;</span><br><span class="line">        <span class="attribute">auth_basic_user_file</span> /etc/nginx/auth/.htpasswd-lanraragi;</span><br><span class="line"></span><br><span class="line">        <span class="section">location</span> / &#123;</span><br><span class="line">            <span class="comment"># Access directly through service name in the same network</span></span><br><span class="line">            <span class="comment"># No need to map any port for lanraragi</span></span><br><span class="line">            <span class="attribute">proxy_pass</span> http://lanraragi:3000;</span><br><span class="line">            <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">            <span class="attribute">http2_push_preload</span> <span class="literal">on</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Lanraragi’s own routing strategy cannot be changed, which means <code>/</code> must be mapped as-is to Lanraragi’s URI. In other words, Lanraragi needs a separate Nginx instance.</p>
-<p>From a computational resources perspective, this isn’t a big deal, as one Nginx instance uses less than 20 MB of memory.</p>
-<p>If each existing software gets its own Nginx, these Nginx instances can share a single SSL certificate. After all, when accessing the Linux host, it tells Nginx instances from each other by port, and the certificate is bound to IP/domain. Although this is a solution, I’m not sure if it’s the best practice. However, in a home LAN scenario, it is clearly sufficient.</p>
-<h1>References</h1>
-<ul>
-<li>ChatGPT</li>
-<li><a href="https://mindsers.blog/en/post/https-using-nginx-certbot-docker/">HTTPS using Nginx and Let’s encrypt in Docker</a></li>
-<li><a href="https://www.baeldung.com/openssl-self-signed-cert">Creating a Self-Signed Certificate With OpenSSL</a></li>
-<li><a href="https://hub.docker.com/_/nginx">Nginx Docker hub</a></li>
-<li><a href="https://www.tangyuecan.com/2021/12/17/%E5%B1%80%E5%9F%9F%E7%BD%91%E5%86%85%E6%90%AD%E5%BB%BA%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%AF%E4%BF%A1%E4%BB%BB%E7%9A%84ssl%E8%AF%81%E4%B9%A6/">局域网内搭建浏览器可信任的SSL证书</a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04">How To Create a Self-Signed SSL Certificate for Nginx in Ubuntu 16.04</a></li>
-<li><a href="https://stackoverflow.com/questions/10175812/how-to-generate-a-self-signed-ssl-certificate-using-openssl">How to generate a self-signed SSL certificate using OpenSSL?</a></li>
-<li><a href="https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/">Restricting Access with HTTP Basic Authentication</a></li>
-<li><a href="https://support.hcltechsw.com/csm?id=kb_article&amp;sysparm_article=KB0098768">在iOS设备上安装根证书(CA)</a></li>
-<li><a href="https://discussions.apple.com/thread/253667401?sortBy=best">Enabling self-signed certificates in iOS 15</a></li>
-<li><a href="https://support.apple.com/en-us/102028">Apple: About upcoming limits on trusted certificates</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Nginx</tag>
-        <tag>SSL</tag>
       </tags>
   </entry>
   <entry>
@@ -1166,6 +1469,117 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
+    <title>Automatically Copying Images When Inserting into Markdown – Using Typora and VS Code as Examples</title>
+    <url>/en/2023/07/22/Markdown-Automatically-Copy-When-Inserting-Images-Using-Typora-and-VS-Code-as-Examples/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>With the widespread adoption of Markdown, the efficiency of using traditional text editors for writing appears to be low, especially when dealing with some complex syntax, such as inserting tables or images.</p>
+<p>Typora, a well-known Markdown editor, not only features “live rendering” but also offers many convenient functions for writing Markdown. One notable feature is the automatic saving when inserting images: paste an image into a Markdown file (text file), and the image will be automatically saved to a specified path, with the reference automatically created in Markdown.</p>
+<p>For someone like me who frequently takes Markdown notes, <strong>this feature should be a standard in the industry</strong>. However, another commonly used editor, VS Code, does not provide good support for this feature. Of course, we shouldn’t expect such a free, universal editor to cover every aspect.</p>
+<h1>Demands</h1>
+<p>For users who frequently take notes, capturing screenshots and inserting them into Markdown is a common practice. Two aspects affect the user experience in this operation: 1️⃣ screenshot tool 2️⃣ Markdown editor.</p>
+<p>With a consistent screenshot tool, the Markdown editor is the key factor in determining the user experience. Below, I will elaborate on how three editors handle image insertion.</p>
+<span id="more"></span>
+<h1>Traditional Text Editors</h1>
+<p>These editors are typically “notepads” that support Markdown syntax highlighting, such as Vim, Sublime, etc.</p>
+<p>After taking a screenshot, we need to save the image locally and then manually reference the image path using Markdown syntax:</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">![<span class="string">alt text</span>](<span class="link">image.jpg</span>)</span><br></pre></td></tr></table></figure>
+<p>For convenience, screenshot software often stores images in a specific path. To separately store images related to each Markdown file, we also need to manually cut the image to the desired location. Quite cumbersome!</p>
+<h1>Typora</h1>
+<h2 id="Configuration">Configuration</h2>
+<p>Typora provides various features for inserting images, with the one I use most being ‘Copy Image to Specified Path.’</p>
+<p>Here, ‘Insert Image’ refers to dragging an image into Typora or pasting it from the clipboard (<code>win + v</code>).</p>
+<img src="/MarkDownImages/image-20230722141038783.png" alt="image-20230722141038783" style="zoom:50%;" />
+<p>I choose to save it to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). A better practice would be to choose ‘Copy Image to <code>./$&#123;filename&#125;.assets</code> folder’ for easy migration of Markdown files.</p>
+<img src="/MarkDownImages/image-20230722141359394.png" alt="image-20230722141359394" style="zoom:50%;" />
+<p>‘Apply the same rule to images on the network’: When we copy a network image (a URL), Typora will automatically download the image to the specified path and change the URL to a local file reference, as storing images locally is more reliable than relying on images on the internet, which may disappear at any time.</p>
+<h2 id="Operation">Operation</h2>
+<p>After taking a screenshot, press <code>Ctrl + v</code> in Typora, and the image from the clipboard will be automatically copied to the <code>MarkDownImages</code> folder, with the file name based on the timestamp and less prone to duplication.</p>
+<hr>
+<img src="/MarkDownImages/image-20230722142231405.png" alt="image-20230722142231405" style="zoom:67%;" />
+<hr>
+<img src="/MarkDownImages/image-20230722142307844.png" alt="image-20230722142307844" style="zoom:67%;" />
+<hr>
+<img src="/MarkDownImages/image-20230722142326387.png" alt="image-20230722142326387" style="zoom:67%;" />
+<hr>
+<p>As seen, this way of inserting images is very elegant and convenient.</p>
+<h1>VS Code</h1>
+<h2 id="Configuration-2">Configuration</h2>
+<p>VS Code seems to have recently added a feature similar to Typora, but it only provides the option of ‘Copy Image to Specified Path’.</p>
+<p>My configuration here is to copy any file (<code>**/*</code>) inserted to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). The file is named <code>VSCodeCopied-$&#123;fileName&#125;</code>, where <code>$&#123;fileName&#125;</code> is the original file name.</p>
+<p><img src="/MarkDownImages/image-20230722142953270.png" alt="image-20230722142953270"></p>
+<p>Alternatively, you can copy the following content directly into <code>settings.json</code>:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;markdown.copyFiles.destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;**/*&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./MarkDownImages/VSCodeCopied-$&#123;fileName&#125;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Operation-2">Operation</h2>
+<p>Similar to Typora, press <code>Ctrl + v</code> after taking a screenshot.</p>
+<p>Why is the saved image named <code>VSCodeCopied-$&#123;fileName&#125;</code>? This is because when inserting a screenshot into VS Code, it is named as <code>image.png</code>.</p>
+<p><img src="/MarkDownImages/image-20230722143640371.png" alt="image-20230722143640371"></p>
+<p>If there are duplicates, a number is added to the file name to distinguish:</p>
+<p><img src="/MarkDownImages/image-20230722143756389.png" alt="image-20230722143756389"></p>
+<p><img src="/MarkDownImages/image-20230722143813041.png" alt="image-20230722143813041"></p>
+<p>This is obviously not intuitive and can lead to filename conflicts when collaborating on document writing within a team. Hopefully, future updates to VS Code will address this and provide more options when inserting images.</p>
+<h1>References</h1>
+<p><a href="https://support.typora.io/Images/#when-insert-images">Images in Typora: when-insert-images</a></p>
+<p><a href="https://www.markdownguide.org/cheat-sheet/">Markdown Cheat Sheet</a></p>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>softwares</category>
+        <category>VS Code</category>
+        <category>Typora</category>
+        <category>Markdown</category>
+      </categories>
+      <tags>
+        <tag>settings</tag>
+        <tag>VS Code</tag>
+        <tag>Typora</tag>
+        <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Install and Use Metabase</title>
+    <url>/en/2024/05/02/Metabase-install-and-usage/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>Metabase is an open-source data analysis tool that is easy to operate and can connect to various data sources. Although its data analysis capabilities are not as powerful as Excel, Metabase is sufficient for daily use. Moreover, I am more capable of writing SQL than clicking Excel sheets, so Metabase is a good choice for me.</p>
+<span id="more"></span>
+<h1>Docker compose</h1>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">metabase:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">metabase/metabase:v0.49.5</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">metabase</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_TIMEZONE:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">42233</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">metabase_data:/metabase.db</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> <span class="string">out=$$(curl</span> <span class="string">localhost:3000/api/health);</span> <span class="string">echo</span> <span class="string">$$out</span> <span class="string">|</span> <span class="string">grep</span> <span class="string">&#x27;&quot;status&quot;:&quot;ok&quot;&#x27;</span> <span class="string">||</span> &#123; <span class="string">echo</span> <span class="string">$$out;</span> <span class="string">exit</span> <span class="number">1</span><span class="string">;</span> &#125;</span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">2m</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">metabase_data:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Metabase uses the h2 database by default, stored in the <code>/metabase.db</code> directory. In the production environment, it is recommended to use MySQL or PostgreSQL (this step is not necessary for personal use).</li>
+</ul>
+<h1>Usage</h1>
+<p>You can refer to <a href="https://www.youtube.com/playlist?list=PL5ZlXxM-0LTF7jb-bn0vLv7IIS3Peg3YK">this tutorial</a> for basic usage of Metabase, which covers most types of charts and is suitable for beginners who have not been exposed to data analysis before.</p>
+<hr>
+<p>It is worth mentioning how to delete a question or dashboard:</p>
+<ul>
+<li>
+<p>First, archive the question or dashboard you want to delete:</p>
+<p><img src="/MarkDownImages/image-20240502141222546.png" alt="image-20240502141222546"></p>
+</li>
+<li>
+<p>Then go to the Archive page (or enter from <code>/archive</code>):</p>
+<p><img src="/MarkDownImages/image-20240502141306567.png" alt="image-20240502141306567"></p>
+</li>
+<li>
+<p>Click delete here:</p>
+<p><img src="/MarkDownImages/image-20240502141533004.png" alt="image-20240502141533004"></p>
+</li>
+</ul>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker">Metabase doc: Running Metabase on Docker</a></li>
+<li><a href="https://discourse.metabase.com/t/how-to-delete-charts-and-dashboards/5835">How to delete charts and dashboards？</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Metabase</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LocalSend：局域网文件传输利器</title>
     <url>/en/2023/09/04/LocalSend-A-powerful-tool-for-local-file-transfer/</url>
     <content><![CDATA[<h1>序言</h1>
@@ -1237,77 +1651,10 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <category>LocalSend</category>
       </categories>
       <tags>
-        <tag>LocalSend</tag>
         <tag>settings</tag>
+        <tag>LocalSend</tag>
         <tag>Firewall</tag>
         <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Automatically Copying Images When Inserting into Markdown – Using Typora and VS Code as Examples</title>
-    <url>/en/2023/07/22/Markdown-Automatically-Copy-When-Inserting-Images-Using-Typora-and-VS-Code-as-Examples/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>With the widespread adoption of Markdown, the efficiency of using traditional text editors for writing appears to be low, especially when dealing with some complex syntax, such as inserting tables or images.</p>
-<p>Typora, a well-known Markdown editor, not only features “live rendering” but also offers many convenient functions for writing Markdown. One notable feature is the automatic saving when inserting images: paste an image into a Markdown file (text file), and the image will be automatically saved to a specified path, with the reference automatically created in Markdown.</p>
-<p>For someone like me who frequently takes Markdown notes, <strong>this feature should be a standard in the industry</strong>. However, another commonly used editor, VS Code, does not provide good support for this feature. Of course, we shouldn’t expect such a free, universal editor to cover every aspect.</p>
-<h1>Demands</h1>
-<p>For users who frequently take notes, capturing screenshots and inserting them into Markdown is a common practice. Two aspects affect the user experience in this operation: 1️⃣ screenshot tool 2️⃣ Markdown editor.</p>
-<p>With a consistent screenshot tool, the Markdown editor is the key factor in determining the user experience. Below, I will elaborate on how three editors handle image insertion.</p>
-<span id="more"></span>
-<h1>Traditional Text Editors</h1>
-<p>These editors are typically “notepads” that support Markdown syntax highlighting, such as Vim, Sublime, etc.</p>
-<p>After taking a screenshot, we need to save the image locally and then manually reference the image path using Markdown syntax:</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">![<span class="string">alt text</span>](<span class="link">image.jpg</span>)</span><br></pre></td></tr></table></figure>
-<p>For convenience, screenshot software often stores images in a specific path. To separately store images related to each Markdown file, we also need to manually cut the image to the desired location. Quite cumbersome!</p>
-<h1>Typora</h1>
-<h2 id="Configuration">Configuration</h2>
-<p>Typora provides various features for inserting images, with the one I use most being ‘Copy Image to Specified Path.’</p>
-<p>Here, ‘Insert Image’ refers to dragging an image into Typora or pasting it from the clipboard (<code>win + v</code>).</p>
-<img src="/MarkDownImages/image-20230722141038783.png" alt="image-20230722141038783" style="zoom:50%;" />
-<p>I choose to save it to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). A better practice would be to choose ‘Copy Image to <code>./$&#123;filename&#125;.assets</code> folder’ for easy migration of Markdown files.</p>
-<img src="/MarkDownImages/image-20230722141359394.png" alt="image-20230722141359394" style="zoom:50%;" />
-<p>‘Apply the same rule to images on the network’: When we copy a network image (a URL), Typora will automatically download the image to the specified path and change the URL to a local file reference, as storing images locally is more reliable than relying on images on the internet, which may disappear at any time.</p>
-<h2 id="Operation">Operation</h2>
-<p>After taking a screenshot, press <code>Ctrl + v</code> in Typora, and the image from the clipboard will be automatically copied to the <code>MarkDownImages</code> folder, with the file name based on the timestamp and less prone to duplication.</p>
-<hr>
-<img src="/MarkDownImages/image-20230722142231405.png" alt="image-20230722142231405" style="zoom:67%;" />
-<hr>
-<img src="/MarkDownImages/image-20230722142307844.png" alt="image-20230722142307844" style="zoom:67%;" />
-<hr>
-<img src="/MarkDownImages/image-20230722142326387.png" alt="image-20230722142326387" style="zoom:67%;" />
-<hr>
-<p>As seen, this way of inserting images is very elegant and convenient.</p>
-<h1>VS Code</h1>
-<h2 id="Configuration-2">Configuration</h2>
-<p>VS Code seems to have recently added a feature similar to Typora, but it only provides the option of ‘Copy Image to Specified Path’.</p>
-<p>My configuration here is to copy any file (<code>**/*</code>) inserted to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). The file is named <code>VSCodeCopied-$&#123;fileName&#125;</code>, where <code>$&#123;fileName&#125;</code> is the original file name.</p>
-<p><img src="/MarkDownImages/image-20230722142953270.png" alt="image-20230722142953270"></p>
-<p>Alternatively, you can copy the following content directly into <code>settings.json</code>:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;markdown.copyFiles.destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;**/*&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./MarkDownImages/VSCodeCopied-$&#123;fileName&#125;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Operation-2">Operation</h2>
-<p>Similar to Typora, press <code>Ctrl + v</code> after taking a screenshot.</p>
-<p>Why is the saved image named <code>VSCodeCopied-$&#123;fileName&#125;</code>? This is because when inserting a screenshot into VS Code, it is named as <code>image.png</code>.</p>
-<p><img src="/MarkDownImages/image-20230722143640371.png" alt="image-20230722143640371"></p>
-<p>If there are duplicates, a number is added to the file name to distinguish:</p>
-<p><img src="/MarkDownImages/image-20230722143756389.png" alt="image-20230722143756389"></p>
-<p><img src="/MarkDownImages/image-20230722143813041.png" alt="image-20230722143813041"></p>
-<p>This is obviously not intuitive and can lead to filename conflicts when collaborating on document writing within a team. Hopefully, future updates to VS Code will address this and provide more options when inserting images.</p>
-<h1>References</h1>
-<p><a href="https://support.typora.io/Images/#when-insert-images">Images in Typora: when-insert-images</a></p>
-<p><a href="https://www.markdownguide.org/cheat-sheet/">Markdown Cheat Sheet</a></p>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>softwares</category>
-        <category>VS Code</category>
-        <category>Typora</category>
-        <category>Markdown</category>
-      </categories>
-      <tags>
-        <tag>settings</tag>
-        <tag>VS Code</tag>
-        <tag>Typora</tag>
-        <tag>Markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -1360,96 +1707,6 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>MyBatis-Plus</tag>
         <tag>JDBC</tag>
         <tag>Repository</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Install and Use Metabase</title>
-    <url>/en/2024/05/02/Metabase-install-and-usage/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>Metabase is an open-source data analysis tool that is easy to operate and can connect to various data sources. Although its data analysis capabilities are not as powerful as Excel, Metabase is sufficient for daily use. Moreover, I am more capable of writing SQL than clicking Excel sheets, so Metabase is a good choice for me.</p>
-<span id="more"></span>
-<h1>Docker compose</h1>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">metabase:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">metabase/metabase:v0.49.5</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">metabase</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_TIMEZONE:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">42233</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">metabase_data:/metabase.db</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> <span class="string">out=$$(curl</span> <span class="string">localhost:3000/api/health);</span> <span class="string">echo</span> <span class="string">$$out</span> <span class="string">|</span> <span class="string">grep</span> <span class="string">&#x27;&quot;status&quot;:&quot;ok&quot;&#x27;</span> <span class="string">||</span> &#123; <span class="string">echo</span> <span class="string">$$out;</span> <span class="string">exit</span> <span class="number">1</span><span class="string">;</span> &#125;</span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">2m</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">metabase_data:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>Metabase uses the h2 database by default, stored in the <code>/metabase.db</code> directory. In the production environment, it is recommended to use MySQL or PostgreSQL (this step is not necessary for personal use).</li>
-</ul>
-<h1>Usage</h1>
-<p>You can refer to <a href="https://www.youtube.com/playlist?list=PL5ZlXxM-0LTF7jb-bn0vLv7IIS3Peg3YK">this tutorial</a> for basic usage of Metabase, which covers most types of charts and is suitable for beginners who have not been exposed to data analysis before.</p>
-<hr>
-<p>It is worth mentioning how to delete a question or dashboard:</p>
-<ul>
-<li>
-<p>First, archive the question or dashboard you want to delete:</p>
-<p><img src="/MarkDownImages/image-20240502141222546.png" alt="image-20240502141222546"></p>
-</li>
-<li>
-<p>Then go to the Archive page (or enter from <code>/archive</code>):</p>
-<p><img src="/MarkDownImages/image-20240502141306567.png" alt="image-20240502141306567"></p>
-</li>
-<li>
-<p>Click delete here:</p>
-<p><img src="/MarkDownImages/image-20240502141533004.png" alt="image-20240502141533004"></p>
-</li>
-</ul>
-<h1>References</h1>
-<ul>
-<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker">Metabase doc: Running Metabase on Docker</a></li>
-<li><a href="https://discourse.metabase.com/t/how-to-delete-charts-and-dashboards/5835">How to delete charts and dashboards？</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Metabase</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PotPlayer 启用 Nvidia 超分辨率</title>
-    <url>/en/2023/07/09/PotPlayer-Enable-Nvidia-Super-Resolution/</url>
-    <content><![CDATA[<h1>序言</h1>
-<p>Nvidia VSR (Video Super Resolution) 通过 AI 技术优化视频的画面质量，主要表现在锐化低分辨率的视频上。该技术最初只支持 Chrome 和 Edge 浏览器。</p>
-<p>如何在本地视频播放器中体验这项技术？PotPlayer 最近发布了相关更新，支持了该技术。</p>
-<p>PotPlayer 是目前数一数二的视频播放器，也是我的主力播放器。趁着这次更新，我来记录一下如何在 PotPlayer 上使用 Nvidia Super Resolution.</p>
-<h1>浏览器开启 VSR</h1>
-<p>本小节先介绍一下如何让 Chrome 和 Edge 浏览器使用 Nvidia Super Resolution。</p>
-<span id="more"></span>
-<h2 id="更新驱动版本">更新驱动版本</h2>
-<p>更新驱动版本，至少到 532 版</p>
-<img src="/MarkDownImages/image-20230709161546792.png" alt="image-20230709161546792" style="zoom: 67%;" />
-<h2 id="设置">设置</h2>
-<p>在 Nvidia Control Panel 中进入如下配置：</p>
-<p>开启『超分辨率』，选择质量。数字越大，增强效果越强，同时对 GPU 压力也越大</p>
-<p><img src="/MarkDownImages/image-20230709161702760.png" alt="image-20230709161702760"></p>
-<h1>PotPlayer 开启 VSR</h1>
-<h2 id="更新版本">更新版本</h2>
-<p>在 PotPlayer 近期的更新说明中，提到了：</p>
-<blockquote>
-<p>添加 GPU 超分辨率功能到内置的 D3D11 视频渲染器</p>
-</blockquote>
-<img src="/MarkDownImages/image-20230709162050531.png" alt="image-20230709162050531" style="zoom: 67%;" />
-<p>至少将 PotPlayer 升级到这个版本</p>
-<h2 id="设置-2">设置</h2>
-<p>确保使用的是『Direct3D 11 视频渲染器』，并打开『超分辨率』（默认是关闭的）</p>
-<img src="/MarkDownImages/image-20230709162350077.png" alt="image-20230709162350077" style="zoom: 80%;" />
-<h2 id="测试">测试</h2>
-<p>随便打开一个视频，按 <code>Tab</code> 键。如果『视频渲染器 - 缩放』显示的是『GPU Super Resolution』，则说明配置成功了。播放视频时，也可以在任务管理器中看到 GPU 的负载升高。</p>
-<p><img src="/MarkDownImages/image-20230709162617479.png" alt="image-20230709162617479"></p>
-<h1>参考文章</h1>
-<p><a href="https://blogs.nvidia.com/blog/2023/02/28/rtx-video-super-resolution/">Pixel Perfect: RTX Video Super Resolution Now Available for GeForce RTX 40 and 30 Series GPUs</a></p>
-<p><a href="https://potplayer.daum.net/">PotPlayer 官网</a></p>
-]]></content>
-      <categories>
-        <category>softwares</category>
-        <category>PotPlayer</category>
-      </categories>
-      <tags>
-        <tag>settings</tag>
-        <tag>PotPlayer</tag>
-        <tag>Nvidia</tag>
-        <tag>VSR</tag>
       </tags>
   </entry>
   <entry>
@@ -1509,49 +1766,49 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
-    <title>Display Original Filenames in Jellyfin</title>
-    <url>/en/2024/02/17/jellyfin-original-filename/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
-<p>To fit this demand, I have created a script using <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> to batch rename all media in a specific media library. Additionally, this article explores some previous solutions, none of which were satisfactory in my opinion.</p>
+    <title>PotPlayer 启用 Nvidia 超分辨率</title>
+    <url>/en/2023/07/09/PotPlayer-Enable-Nvidia-Super-Resolution/</url>
+    <content><![CDATA[<h1>序言</h1>
+<p>Nvidia VSR (Video Super Resolution) 通过 AI 技术优化视频的画面质量，主要表现在锐化低分辨率的视频上。该技术最初只支持 Chrome 和 Edge 浏览器。</p>
+<p>如何在本地视频播放器中体验这项技术？PotPlayer 最近发布了相关更新，支持了该技术。</p>
+<p>PotPlayer 是目前数一数二的视频播放器，也是我的主力播放器。趁着这次更新，我来记录一下如何在 PotPlayer 上使用 Nvidia Super Resolution.</p>
+<h1>浏览器开启 VSR</h1>
+<p>本小节先介绍一下如何让 Chrome 和 Edge 浏览器使用 Nvidia Super Resolution。</p>
 <span id="more"></span>
-<h1>Existing Solution 1</h1>
-<p>When creating a media library, choose ‘Music Videos’ as its content type and select ‘Prefer embedded titles over filenames’.</p>
-<p>What is this “embedded title”? Open the ‘Properties’ of a video and go to ‘Details’.</p>
-<p><img src="/MarkDownImages/image-20240217135326419.png" alt="image-20240217135326419"></p>
-<p>Any content in the ‘Title’ field will be displayed as the media title in Jellyfin without any modifications. However, this approach has two issues:</p>
-<p>1️⃣ For most anime published, the values of their ‘Title’ are their series names, as shown in the image, lacking episode numbers, making it hard for me to distinguish.</p>
-<p>This issue can be easily solved by copying the file name to ‘Title’ or clearing the ‘Title’ field. In either case, the original filename will be displayed eventually. For automation in Python, the <a href="https://github.com/quodlibet/mutagen">mutagen</a> module is handy to use.</p>
-<p>2️⃣ Media libraries of type ‘Music Videos’ cannot display folder structures, which I find unacceptable. In fact, only ‘Mixed Movies and Shows’ will be presented in a pure folder format.</p>
-<h1>Existing Solution 2</h1>
-<p>Directly modify the database, as referenced in <a href="https://www.cnblogs.com/toumingbai/p/15514526.html">‘Manually Correcting Titles to File (Folder) Names’</a>。</p>
-<p>Bypassing the Service Tier to directly manipulate the database is too risky. I will never use this approach.</p>
-<h1>My Solution</h1>
-<p>Since directly manipulating the database in Solution 2 is bad, why not use the Jellyfin API?</p>
-<p>The first step is to find which API corresponds to the required functionality. Instead of referring to the official documentation first, inspect the browser’s network traffic in Developer tools and then refer to the documentation. However, in most cases, the documentation is still useless, because there is no description. Under such circumstances, we need perform experiments to guess the usage of an API.</p>
-<p>Fortunately, <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> provides a ready-made API, eliminating the need to start from <code>requests</code>. I quickly completed the script:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python <span class="keyword">import</span> JellyfinClient</span><br><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python.api <span class="keyword">import</span> API</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_to_filename</span>(<span class="params">jellyfin: API, item_id: <span class="built_in">str</span></span>):</span><br><span class="line">    metadata: <span class="built_in">dict</span> = jellyfin.get_item(item_id)</span><br><span class="line">    <span class="keyword">assert</span> metadata[<span class="string">&#x27;Id&#x27;</span>] == item_id</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(metadata[<span class="string">&#x27;MediaSources&#x27;</span>]) == <span class="number">1</span></span><br><span class="line">    path: <span class="built_in">str</span> = metadata[<span class="string">&#x27;MediaSources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;Path&#x27;</span>]</span><br><span class="line">    filename = path.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Only modify Name, keep other info unchanged</span></span><br><span class="line">    metadata.update(&#123;<span class="string">&#x27;Name&#x27;</span>: filename&#125;)</span><br><span class="line">    <span class="keyword">return</span> jellyfin.items(<span class="string">&#x27;/&#x27;</span> + item_id, action=<span class="string">&#x27;POST&#x27;</span>, params=<span class="literal">None</span>, json=metadata)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_items_in_library</span>(<span class="params">jellyfin: API, library_id: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="comment"># get_items_by_letter recursively retrieves elements in all subfolders</span></span><br><span class="line">    res = jellyfin.get_items_by_letter(parent_id=library_id)</span><br><span class="line">    res = res[<span class="string">&#x27;Items&#x27;</span>]</span><br><span class="line">    item_count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> res:</span><br><span class="line">        <span class="keyword">if</span> r[<span class="string">&#x27;Type&#x27;</span>] == <span class="string">&#x27;Folder&#x27;</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        rename_to_filename(jellyfin, r[<span class="string">&#x27;Id&#x27;</span>])</span><br><span class="line">        item_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;total renamed item count: <span class="subst">&#123;item_count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client = JellyfinClient()</span><br><span class="line"><span class="comment"># Modify these client infos as needed; it doesn&#x27;t affect the result</span></span><br><span class="line">client.config.app(<span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;0.0.1&#x27;</span>, <span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;kufhskdf&#x27;</span>)</span><br><span class="line">client.config.data[<span class="string">&quot;auth.ssl&quot;</span>] = <span class="literal">True</span></span><br><span class="line">client.authenticate(&#123;<span class="string">&quot;Servers&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;AccessToken&quot;</span>: <span class="string">&quot;xxx&quot;</span>,  <span class="comment"># Create one in &#x27;Dashboard | API Keys&#x27;</span></span><br><span class="line">        <span class="string">&quot;address&quot;</span>: <span class="string">&quot;zzz&quot;</span>, <span class="comment"># Jellyfin server address</span></span><br><span class="line">        <span class="string">&quot;DateLastAccessed&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;UserId&quot;</span>: <span class="string">&quot;yyy&quot;</span>  <span class="comment"># This user should have the privilege to manage media library</span></span><br><span class="line">    &#125;</span><br><span class="line">]&#125;, discover=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(client.logged_in)</span><br><span class="line"></span><br><span class="line">rename_items_in_library(client.jellyfin, <span class="string">&#x27;uuu&#x27;</span>)  <span class="comment"># Fill in the media library ID</span></span><br></pre></td></tr></table></figure>
+<h2 id="更新驱动版本">更新驱动版本</h2>
+<p>更新驱动版本，至少到 532 版</p>
+<img src="/MarkDownImages/image-20230709161546792.png" alt="image-20230709161546792" style="zoom: 67%;" />
+<h2 id="设置">设置</h2>
+<p>在 Nvidia Control Panel 中进入如下配置：</p>
+<p>开启『超分辨率』，选择质量。数字越大，增强效果越强，同时对 GPU 压力也越大</p>
+<p><img src="/MarkDownImages/image-20230709161702760.png" alt="image-20230709161702760"></p>
+<h1>PotPlayer 开启 VSR</h1>
+<h2 id="更新版本">更新版本</h2>
+<p>在 PotPlayer 近期的更新说明中，提到了：</p>
 <blockquote>
-<p>By the way, the documentation for this module is also poor; I only figured out how to connect to the server through Issues.</p>
+<p>添加 GPU 超分辨率功能到内置的 D3D11 视频渲染器</p>
 </blockquote>
-<p>My Jellyfin server’s certificate is self-signed, and it seems Python’s SSL cannot use the certificates installed on OS. We can resolve this by setting the environment variable <code>REQUESTS_CA_BUNDLE=&lt;certificate_path&gt;</code>.</p>
-<p>My solution perfectly addresses the drawbacks of the two aforementioned solutions.</p>
-<h1>References</h1>
-<ul>
-<li><a href="https://www.reddit.com/r/jellyfin/comments/pcptfz/possible_to_use_original_filenames_only/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Possible to use original filenames only?</a></li>
-<li><a href="https://www.cnblogs.com/toumingbai/p/15514526.html">jellyfin手动修正标题为文件（夹）名</a></li>
-<li><a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a></li>
-</ul>
+<img src="/MarkDownImages/image-20230709162050531.png" alt="image-20230709162050531" style="zoom: 67%;" />
+<p>至少将 PotPlayer 升级到这个版本</p>
+<h2 id="设置-2">设置</h2>
+<p>确保使用的是『Direct3D 11 视频渲染器』，并打开『超分辨率』（默认是关闭的）</p>
+<img src="/MarkDownImages/image-20230709162350077.png" alt="image-20230709162350077" style="zoom: 80%;" />
+<h2 id="测试">测试</h2>
+<p>随便打开一个视频，按 <code>Tab</code> 键。如果『视频渲染器 - 缩放』显示的是『GPU Super Resolution』，则说明配置成功了。播放视频时，也可以在任务管理器中看到 GPU 的负载升高。</p>
+<p><img src="/MarkDownImages/image-20230709162617479.png" alt="image-20230709162617479"></p>
+<h1>参考文章</h1>
+<p><a href="https://blogs.nvidia.com/blog/2023/02/28/rtx-video-super-resolution/">Pixel Perfect: RTX Video Super Resolution Now Available for GeForce RTX 40 and 30 Series GPUs</a></p>
+<p><a href="https://potplayer.daum.net/">PotPlayer 官网</a></p>
 ]]></content>
       <categories>
-        <category>tech</category>
-        <category>NAS</category>
-        <category>Python</category>
+        <category>softwares</category>
+        <category>PotPlayer</category>
       </categories>
       <tags>
-        <tag>NAS</tag>
-        <tag>Jellyfin</tag>
-        <tag>Python</tag>
+        <tag>settings</tag>
+        <tag>PotPlayer</tag>
+        <tag>Nvidia</tag>
+        <tag>VSR</tag>
       </tags>
   </entry>
   <entry>
@@ -1646,105 +1903,49 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
-    <title>Common Commands for pip &amp; conda</title>
-    <url>/en/2024/01/14/pip-conda-Common-Commands/</url>
-    <content><![CDATA[<h1>pip</h1>
-<ol>
-<li>
-<p>Install <code>script-house</code>, version <code>0.0.2</code>.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2</span><br></pre></td></tr></table></figure>
-<p>If you want to install the latest version by default, you can omit <code>==0.0.2</code>.</p>
-<p>To install multiple dependencies in one line:</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2 pydantic==2.5.3 pymongo==4.6.1</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+    <title>Display Original Filenames in Jellyfin</title>
+    <url>/en/2024/02/17/jellyfin-original-filename/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
+<p>To fit this demand, I have created a script using <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> to batch rename all media in a specific media library. Additionally, this article explores some previous solutions, none of which were satisfactory in my opinion.</p>
 <span id="more"></span>
-<ol start="2">
-<li>
-<p>List all dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip list</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>List current dependencies in <code>requirements.txt</code> format.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze</span><br></pre></td></tr></table></figure>
-<p>The result of <code>pip freeze</code> is a subset of <code>pip list</code>. <code>pip list</code> usually includes fundamental dependencies like <code>pip</code>, <code>setuptools</code>, and <code>wheel</code>.</p>
-<p>The purpose of <code>pip freeze</code> is to export project dependencies for others to use, while <code>pip list</code> is just for display.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Install all dependencies from <code>requirements.txt</code>.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Uninstall a specific dependency.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall script-house</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Uninstall multiple dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall -r req.txt -y</span><br></pre></td></tr></table></figure>
-<p><code>-y</code> automatically confirms the deletion.</p>
-<p>How to uninstall all dependencies in the current environment?</p>
- <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; req</span><br><span class="line">pip uninstall <span class="literal">-r</span> req <span class="literal">-y</span></span><br><span class="line"><span class="built_in">del</span> req</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1>conda</h1>
-<ol>
-<li>
-<p>After conda is installed on Linux, you should run <code>conda init</code> first before using conda commands; On Windows, there is no such need.</p>
-</li>
-<li>
-<p>List all environments.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Create a new environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda create -n &lt;environment-name&gt; python=3.8</span><br></pre></td></tr></table></figure>
-<p>The basic command is <code>conda create -n &lt;environment-name&gt;</code>, but specifying the Python version is a common practice. Compared to venv, conda environments also install some basic OS-dependent dependencies.</p>
-</li>
-<li>
-<p>Activate an environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda activate &lt;environment-name&gt;</span><br></pre></td></tr></table></figure>
-<p>On Windows, you probably need to omit <code>conda</code>.</p>
-</li>
-<li>
-<p>Deactivate the environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Remove an environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda remove -n &lt;environment-name&gt; --all</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>View basic information.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda info</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Install dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 -c pytorch -c conda-forge</span><br></pre></td></tr></table></figure>
-<p>Similar to pip, it follows the format <code>dependency==version</code>; the <code>-c</code> parameter specifies the download source (channel) as default channels often fail.</p>
-</li>
-<li>
-<p>Create an environment from a configuration file (usually named <code>environment.yml</code>).</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> create -f environment.yml</span><br></pre></td></tr></table></figure>
-<p>Content of <code>environment.yml</code>:</p>
- <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">&lt;environment-name&gt;</span></span><br><span class="line"><span class="attr">channels:</span> <span class="comment"># -c parameter, specifying download source</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">pytorch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">conda-forge</span></span><br><span class="line"><span class="attr">dependencies:</span> <span class="comment"># dependencies installed by conda</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">python=3.8</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">numpy</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">pandas</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">matplotlib</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">pip:</span> <span class="comment"># dependencies installed by pip</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">imageio</span></span><br></pre></td></tr></table></figure>
-<p>It’s not recommended to create a new environment by this method, because channels often fail.</p>
-</li>
-<li>
-<p>Disable auto-activation of the base environment. If enabled, every new shell will automatically activate the base environment.</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<h1>Existing Solution 1</h1>
+<p>When creating a media library, choose ‘Music Videos’ as its content type and select ‘Prefer embedded titles over filenames’.</p>
+<p>What is this “embedded title”? Open the ‘Properties’ of a video and go to ‘Details’.</p>
+<p><img src="/MarkDownImages/image-20240217135326419.png" alt="image-20240217135326419"></p>
+<p>Any content in the ‘Title’ field will be displayed as the media title in Jellyfin without any modifications. However, this approach has two issues:</p>
+<p>1️⃣ For most anime published, the values of their ‘Title’ are their series names, as shown in the image, lacking episode numbers, making it hard for me to distinguish.</p>
+<p>This issue can be easily solved by copying the file name to ‘Title’ or clearing the ‘Title’ field. In either case, the original filename will be displayed eventually. For automation in Python, the <a href="https://github.com/quodlibet/mutagen">mutagen</a> module is handy to use.</p>
+<p>2️⃣ Media libraries of type ‘Music Videos’ cannot display folder structures, which I find unacceptable. In fact, only ‘Mixed Movies and Shows’ will be presented in a pure folder format.</p>
+<h1>Existing Solution 2</h1>
+<p>Directly modify the database, as referenced in <a href="https://www.cnblogs.com/toumingbai/p/15514526.html">‘Manually Correcting Titles to File (Folder) Names’</a>。</p>
+<p>Bypassing the Service Tier to directly manipulate the database is too risky. I will never use this approach.</p>
+<h1>My Solution</h1>
+<p>Since directly manipulating the database in Solution 2 is bad, why not use the Jellyfin API?</p>
+<p>The first step is to find which API corresponds to the required functionality. Instead of referring to the official documentation first, inspect the browser’s network traffic in Developer tools and then refer to the documentation. However, in most cases, the documentation is still useless, because there is no description. Under such circumstances, we need perform experiments to guess the usage of an API.</p>
+<p>Fortunately, <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> provides a ready-made API, eliminating the need to start from <code>requests</code>. I quickly completed the script:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python <span class="keyword">import</span> JellyfinClient</span><br><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python.api <span class="keyword">import</span> API</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_to_filename</span>(<span class="params">jellyfin: API, item_id: <span class="built_in">str</span></span>):</span><br><span class="line">    metadata: <span class="built_in">dict</span> = jellyfin.get_item(item_id)</span><br><span class="line">    <span class="keyword">assert</span> metadata[<span class="string">&#x27;Id&#x27;</span>] == item_id</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(metadata[<span class="string">&#x27;MediaSources&#x27;</span>]) == <span class="number">1</span></span><br><span class="line">    path: <span class="built_in">str</span> = metadata[<span class="string">&#x27;MediaSources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;Path&#x27;</span>]</span><br><span class="line">    filename = path.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Only modify Name, keep other info unchanged</span></span><br><span class="line">    metadata.update(&#123;<span class="string">&#x27;Name&#x27;</span>: filename&#125;)</span><br><span class="line">    <span class="keyword">return</span> jellyfin.items(<span class="string">&#x27;/&#x27;</span> + item_id, action=<span class="string">&#x27;POST&#x27;</span>, params=<span class="literal">None</span>, json=metadata)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_items_in_library</span>(<span class="params">jellyfin: API, library_id: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="comment"># get_items_by_letter recursively retrieves elements in all subfolders</span></span><br><span class="line">    res = jellyfin.get_items_by_letter(parent_id=library_id)</span><br><span class="line">    res = res[<span class="string">&#x27;Items&#x27;</span>]</span><br><span class="line">    item_count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> res:</span><br><span class="line">        <span class="keyword">if</span> r[<span class="string">&#x27;Type&#x27;</span>] == <span class="string">&#x27;Folder&#x27;</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        rename_to_filename(jellyfin, r[<span class="string">&#x27;Id&#x27;</span>])</span><br><span class="line">        item_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;total renamed item count: <span class="subst">&#123;item_count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client = JellyfinClient()</span><br><span class="line"><span class="comment"># Modify these client infos as needed; it doesn&#x27;t affect the result</span></span><br><span class="line">client.config.app(<span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;0.0.1&#x27;</span>, <span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;kufhskdf&#x27;</span>)</span><br><span class="line">client.config.data[<span class="string">&quot;auth.ssl&quot;</span>] = <span class="literal">True</span></span><br><span class="line">client.authenticate(&#123;<span class="string">&quot;Servers&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;AccessToken&quot;</span>: <span class="string">&quot;xxx&quot;</span>,  <span class="comment"># Create one in &#x27;Dashboard | API Keys&#x27;</span></span><br><span class="line">        <span class="string">&quot;address&quot;</span>: <span class="string">&quot;zzz&quot;</span>, <span class="comment"># Jellyfin server address</span></span><br><span class="line">        <span class="string">&quot;DateLastAccessed&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;UserId&quot;</span>: <span class="string">&quot;yyy&quot;</span>  <span class="comment"># This user should have the privilege to manage media library</span></span><br><span class="line">    &#125;</span><br><span class="line">]&#125;, discover=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(client.logged_in)</span><br><span class="line"></span><br><span class="line">rename_items_in_library(client.jellyfin, <span class="string">&#x27;uuu&#x27;</span>)  <span class="comment"># Fill in the media library ID</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>By the way, the documentation for this module is also poor; I only figured out how to connect to the server through Issues.</p>
+</blockquote>
+<p>My Jellyfin server’s certificate is self-signed, and it seems Python’s SSL cannot use the certificates installed on OS. We can resolve this by setting the environment variable <code>REQUESTS_CA_BUNDLE=&lt;certificate_path&gt;</code>.</p>
+<p>My solution perfectly addresses the drawbacks of the two aforementioned solutions.</p>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.reddit.com/r/jellyfin/comments/pcptfz/possible_to_use_original_filenames_only/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Possible to use original filenames only?</a></li>
+<li><a href="https://www.cnblogs.com/toumingbai/p/15514526.html">jellyfin手动修正标题为文件（夹）名</a></li>
+<li><a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>tech</category>
+        <category>NAS</category>
         <category>Python</category>
-        <category>cheat sheet</category>
       </categories>
       <tags>
+        <tag>NAS</tag>
+        <tag>Jellyfin</tag>
         <tag>Python</tag>
-        <tag>pip</tag>
-        <tag>conda</tag>
       </tags>
   </entry>
   <entry>
@@ -1812,67 +2013,6 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>settings</tag>
         <tag>VS Code</tag>
         <tag>SSH</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Basic Usage of Python AIOHTTP</title>
-    <url>/en/2024/03/29/python-aiohttp-use/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>Recently, I’ve been using Python to write web crawlers for downloading manga (see <a href="/en/tags/LANraragi/">previous posts on LANraragi</a>). A typical page of a manga like this:</p>
-<img src="/MarkDownImages/image-20240329132644183.png" alt="image-20240329132644183" style="zoom: 33%;" />
-<p>All the data on this webpage can be retrieved using BeautifulSoup, and only one communication is needed per page. However, downloading images is different: each image requires a separate communication, and the response body is often quite large. Obviously, images don’t need to be downloaded sequentially, otherwise, it would waste a lot of time.</p>
-<p>AIOHTTP is an asynchronous HTTP client/server module, which is very suitable for this scenario. Through asynchronous programming, it can maximize the performance of the network (and the server). This article focuses on introducing the basic usage of AIOHTTP, without going into details about how it works.</p>
-<span id="more"></span>
-<h1>Principles</h1>
-<p>AIOHTTP is an HTTP library based on Python’s coroutine mechanism. HTTP needs no introduction, and Python coroutines are based on the asyncio module, using <code>async</code> and <code>await</code> as keywords, aiming to improve the efficiency of IO-bound tasks.</p>
-<p>Using coroutines involves concurrency — synchronizing tasks and mutex of data — which needs to be taken into account when programming.</p>
-<h1>Example 1: hello world</h1>
-<p>copied from the official doc:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> aiohttp</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> session.get(<span class="string">&#x27;http://python.org&#x27;</span>) <span class="keyword">as</span> response:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Status:&quot;</span>, response.status)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Content-type:&quot;</span>, response.headers[<span class="string">&#x27;content-type&#x27;</span>])</span><br><span class="line"></span><br><span class="line">            html = <span class="keyword">await</span> response.text()</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Body:&quot;</span>, html[:<span class="number">15</span>], <span class="string">&quot;...&quot;</span>)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>aiohttp.ClientSession</code> object is responsible for sending all requests;</li>
-<li>If the function body contains <code>async</code> or <code>await</code> keywords, the function must be asynchronous, i.e. defined with <code>async def</code>;</li>
-<li>For an async function:
-<ul>
-<li>If called in a sync context, <code>asyncio.run(async_function(arguments))</code> should be used;</li>
-<li>If called in an async context, <code>await async_function(arguments)</code> should be used, as in <code>html = await response.text()</code> above.</li>
-</ul>
-</li>
-</ul>
-<h1>Example 2: <code>ClientSession</code></h1>
-<p><code>aiohttp.ClientSession</code> has its own connection pool. Therefore we usually create only one instance during the lifecycle of the program to reuse connections.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> aiohttp</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">url, session, headers=&#123;&#125;, cookies=&#123;&#125;</span>):</span><br><span class="line">    <span class="comment"># Setting headers and cookies works the same as requests.get()</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> session.get(url, headers=headers, cookies=cookies) <span class="keyword">as</span> response:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> response.text()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        text = <span class="keyword">await</span> get(<span class="string">&quot;http://python.org&quot;</span>, session)</span><br><span class="line">        <span class="built_in">print</span>(text[:<span class="number">50</span>])</span><br><span class="line">        text = <span class="keyword">await</span> get(<span class="string">&quot;https://docs.aiohttp.org/en/stable/&quot;</span>, session)</span><br><span class="line">        <span class="built_in">print</span>(text[:<span class="number">50</span>])</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
-<h1>Example 3: Downloading Files</h1>
-<p>If we want to download large files like photos or videos, we should use the following way:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">download_image</span>(<span class="params">session: aiohttp.ClientSession, uri: <span class="built_in">str</span>, file_path: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> session.get(uri) <span class="keyword">as</span> response:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                chunk = <span class="keyword">await</span> response.content.read(<span class="number">8192</span>)</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> chunk:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                file.write(chunk)</span><br></pre></td></tr></table></figure>
-<h1>Example 4: Concurrent Execution</h1>
-<blockquote>
-<p>This is a feature of asyncio, not AIOHTTP</p>
-</blockquote>
-<p>Suppose we want to download multiple images, we can do it like this:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    site = <span class="string">&#x27;https://gustaavv.github.io/MarkDownImages/&#x27;</span></span><br><span class="line">    images = [<span class="string">&#x27;image-20230722142231405.png&#x27;</span>, <span class="string">&#x27;image-20230722142307844.png&#x27;</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> im <span class="keyword">in</span> images:</span><br><span class="line">            <span class="keyword">await</span> download_image(session, site + im, im)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
-<p>However, the downloads are still sequential, not concurrent.</p>
-<p>The correct way is to use <code>asyncio.gather</code>, which can execute a series of tasks concurrently.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    site = <span class="string">&#x27;https://gustaavv.github.io/MarkDownImages/&#x27;</span></span><br><span class="line">    images = [<span class="string">&#x27;image-20230722142231405.png&#x27;</span>, <span class="string">&#x27;image-20230722142307844.png&#x27;</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        tasks = [download_image(session, site + im, im) <span class="keyword">for</span> im <span class="keyword">in</span> images]</span><br><span class="line">        result_list = <span class="keyword">await</span> asyncio.gather(*tasks)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
-<p>The parameter of <code>gather()</code> is a call to async functions, that is <code>gather(f1(), f2())</code>. Here <code>gather(*[f1(), f2()])</code> is equivalent to <code> gather(f1(), f2())</code></p>
-<p><code>await</code> ensures that all download tasks are completed before the the next statement is executed.</p>
-<h1>Summary</h1>
-<p>In my web crawler project, the use of AIOHTTP is relatively simple. I only implemented concurrent image downloading. The main work focuses on parsing HTML.</p>
-<p>In the project, I used the template method design pattern: in the parent class, I implemented concurrent downloads using AIOHTTP, while the subclass only needs to implement the <code>parse_html()</code> abstract function. AIOHTTP is only used when setting up the framework, and will not be involved later. Considering the possibility of future use, I wrote this post to document the basic usage of AIOHTTP and asyncio.</p>
-<h1>References</h1>
-<ul>
-<li>ChatGPT</li>
-<li><a href="https://docs.python.org/3/library/asyncio.html">Python doc: asyncio</a></li>
-<li><a href="https://docs.aiohttp.org/en/stable/">AIOHTTP</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>AIOHTTP</tag>
       </tags>
   </entry>
   <entry>
@@ -2029,9 +2169,111 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </categories>
       <tags>
         <tag>Simulation</tag>
-        <tag>DP</tag>
         <tag>Tree</tag>
+        <tag>DP</tag>
         <tag>Bit Manipulation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Common Commands for pip &amp; conda</title>
+    <url>/en/2024/01/14/pip-conda-Common-Commands/</url>
+    <content><![CDATA[<h1>pip</h1>
+<ol>
+<li>
+<p>Install <code>script-house</code>, version <code>0.0.2</code>.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2</span><br></pre></td></tr></table></figure>
+<p>If you want to install the latest version by default, you can omit <code>==0.0.2</code>.</p>
+<p>To install multiple dependencies in one line:</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2 pydantic==2.5.3 pymongo==4.6.1</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<span id="more"></span>
+<ol start="2">
+<li>
+<p>List all dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip list</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>List current dependencies in <code>requirements.txt</code> format.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze</span><br></pre></td></tr></table></figure>
+<p>The result of <code>pip freeze</code> is a subset of <code>pip list</code>. <code>pip list</code> usually includes fundamental dependencies like <code>pip</code>, <code>setuptools</code>, and <code>wheel</code>.</p>
+<p>The purpose of <code>pip freeze</code> is to export project dependencies for others to use, while <code>pip list</code> is just for display.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Install all dependencies from <code>requirements.txt</code>.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Uninstall a specific dependency.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall script-house</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Uninstall multiple dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall -r req.txt -y</span><br></pre></td></tr></table></figure>
+<p><code>-y</code> automatically confirms the deletion.</p>
+<p>How to uninstall all dependencies in the current environment?</p>
+ <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; req</span><br><span class="line">pip uninstall <span class="literal">-r</span> req <span class="literal">-y</span></span><br><span class="line"><span class="built_in">del</span> req</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1>conda</h1>
+<ol>
+<li>
+<p>After conda is installed on Linux, you should run <code>conda init</code> first before using conda commands; On Windows, there is no such need.</p>
+</li>
+<li>
+<p>List all environments.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Create a new environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda create -n &lt;environment-name&gt; python=3.8</span><br></pre></td></tr></table></figure>
+<p>The basic command is <code>conda create -n &lt;environment-name&gt;</code>, but specifying the Python version is a common practice. Compared to venv, conda environments also install some basic OS-dependent dependencies.</p>
+</li>
+<li>
+<p>Activate an environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda activate &lt;environment-name&gt;</span><br></pre></td></tr></table></figure>
+<p>On Windows, you probably need to omit <code>conda</code>.</p>
+</li>
+<li>
+<p>Deactivate the environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Remove an environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda remove -n &lt;environment-name&gt; --all</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>View basic information.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda info</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Install dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 -c pytorch -c conda-forge</span><br></pre></td></tr></table></figure>
+<p>Similar to pip, it follows the format <code>dependency==version</code>; the <code>-c</code> parameter specifies the download source (channel) as default channels often fail.</p>
+</li>
+<li>
+<p>Create an environment from a configuration file (usually named <code>environment.yml</code>).</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> create -f environment.yml</span><br></pre></td></tr></table></figure>
+<p>Content of <code>environment.yml</code>:</p>
+ <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">&lt;environment-name&gt;</span></span><br><span class="line"><span class="attr">channels:</span> <span class="comment"># -c parameter, specifying download source</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">pytorch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">conda-forge</span></span><br><span class="line"><span class="attr">dependencies:</span> <span class="comment"># dependencies installed by conda</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">python=3.8</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">numpy</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">pandas</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">matplotlib</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">pip:</span> <span class="comment"># dependencies installed by pip</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">imageio</span></span><br></pre></td></tr></table></figure>
+<p>It’s not recommended to create a new environment by this method, because channels often fail.</p>
+</li>
+<li>
+<p>Disable auto-activation of the base environment. If enabled, every new shell will automatically activate the base environment.</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Python</category>
+        <category>cheat sheet</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>pip</tag>
+        <tag>conda</tag>
       </tags>
   </entry>
   <entry>
@@ -2195,8 +2437,69 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </categories>
       <tags>
         <tag>Simulation</tag>
-        <tag>DP</tag>
         <tag>Tree</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Basic Usage of Python AIOHTTP</title>
+    <url>/en/2024/03/29/python-aiohttp-use/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>Recently, I’ve been using Python to write web crawlers for downloading manga (see <a href="/en/tags/LANraragi/">previous posts on LANraragi</a>). A typical page of a manga like this:</p>
+<img src="/MarkDownImages/image-20240329132644183.png" alt="image-20240329132644183" style="zoom: 33%;" />
+<p>All the data on this webpage can be retrieved using BeautifulSoup, and only one communication is needed per page. However, downloading images is different: each image requires a separate communication, and the response body is often quite large. Obviously, images don’t need to be downloaded sequentially, otherwise, it would waste a lot of time.</p>
+<p>AIOHTTP is an asynchronous HTTP client/server module, which is very suitable for this scenario. Through asynchronous programming, it can maximize the performance of the network (and the server). This article focuses on introducing the basic usage of AIOHTTP, without going into details about how it works.</p>
+<span id="more"></span>
+<h1>Principles</h1>
+<p>AIOHTTP is an HTTP library based on Python’s coroutine mechanism. HTTP needs no introduction, and Python coroutines are based on the asyncio module, using <code>async</code> and <code>await</code> as keywords, aiming to improve the efficiency of IO-bound tasks.</p>
+<p>Using coroutines involves concurrency — synchronizing tasks and mutex of data — which needs to be taken into account when programming.</p>
+<h1>Example 1: hello world</h1>
+<p>copied from the official doc:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> aiohttp</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> session.get(<span class="string">&#x27;http://python.org&#x27;</span>) <span class="keyword">as</span> response:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Status:&quot;</span>, response.status)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Content-type:&quot;</span>, response.headers[<span class="string">&#x27;content-type&#x27;</span>])</span><br><span class="line"></span><br><span class="line">            html = <span class="keyword">await</span> response.text()</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Body:&quot;</span>, html[:<span class="number">15</span>], <span class="string">&quot;...&quot;</span>)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>aiohttp.ClientSession</code> object is responsible for sending all requests;</li>
+<li>If the function body contains <code>async</code> or <code>await</code> keywords, the function must be asynchronous, i.e. defined with <code>async def</code>;</li>
+<li>For an async function:
+<ul>
+<li>If called in a sync context, <code>asyncio.run(async_function(arguments))</code> should be used;</li>
+<li>If called in an async context, <code>await async_function(arguments)</code> should be used, as in <code>html = await response.text()</code> above.</li>
+</ul>
+</li>
+</ul>
+<h1>Example 2: <code>ClientSession</code></h1>
+<p><code>aiohttp.ClientSession</code> has its own connection pool. Therefore we usually create only one instance during the lifecycle of the program to reuse connections.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> aiohttp</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">url, session, headers=&#123;&#125;, cookies=&#123;&#125;</span>):</span><br><span class="line">    <span class="comment"># Setting headers and cookies works the same as requests.get()</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> session.get(url, headers=headers, cookies=cookies) <span class="keyword">as</span> response:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> response.text()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        text = <span class="keyword">await</span> get(<span class="string">&quot;http://python.org&quot;</span>, session)</span><br><span class="line">        <span class="built_in">print</span>(text[:<span class="number">50</span>])</span><br><span class="line">        text = <span class="keyword">await</span> get(<span class="string">&quot;https://docs.aiohttp.org/en/stable/&quot;</span>, session)</span><br><span class="line">        <span class="built_in">print</span>(text[:<span class="number">50</span>])</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
+<h1>Example 3: Downloading Files</h1>
+<p>If we want to download large files like photos or videos, we should use the following way:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">download_image</span>(<span class="params">session: aiohttp.ClientSession, uri: <span class="built_in">str</span>, file_path: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> session.get(uri) <span class="keyword">as</span> response:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                chunk = <span class="keyword">await</span> response.content.read(<span class="number">8192</span>)</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> chunk:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                file.write(chunk)</span><br></pre></td></tr></table></figure>
+<h1>Example 4: Concurrent Execution</h1>
+<blockquote>
+<p>This is a feature of asyncio, not AIOHTTP</p>
+</blockquote>
+<p>Suppose we want to download multiple images, we can do it like this:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    site = <span class="string">&#x27;https://gustaavv.github.io/MarkDownImages/&#x27;</span></span><br><span class="line">    images = [<span class="string">&#x27;image-20230722142231405.png&#x27;</span>, <span class="string">&#x27;image-20230722142307844.png&#x27;</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> im <span class="keyword">in</span> images:</span><br><span class="line">            <span class="keyword">await</span> download_image(session, site + im, im)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
+<p>However, the downloads are still sequential, not concurrent.</p>
+<p>The correct way is to use <code>asyncio.gather</code>, which can execute a series of tasks concurrently.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    site = <span class="string">&#x27;https://gustaavv.github.io/MarkDownImages/&#x27;</span></span><br><span class="line">    images = [<span class="string">&#x27;image-20230722142231405.png&#x27;</span>, <span class="string">&#x27;image-20230722142307844.png&#x27;</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        tasks = [download_image(session, site + im, im) <span class="keyword">for</span> im <span class="keyword">in</span> images]</span><br><span class="line">        result_list = <span class="keyword">await</span> asyncio.gather(*tasks)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
+<p>The parameter of <code>gather()</code> is a call to async functions, that is <code>gather(f1(), f2())</code>. Here <code>gather(*[f1(), f2()])</code> is equivalent to <code> gather(f1(), f2())</code></p>
+<p><code>await</code> ensures that all download tasks are completed before the the next statement is executed.</p>
+<h1>Summary</h1>
+<p>In my web crawler project, the use of AIOHTTP is relatively simple. I only implemented concurrent image downloading. The main work focuses on parsing HTML.</p>
+<p>In the project, I used the template method design pattern: in the parent class, I implemented concurrent downloads using AIOHTTP, while the subclass only needs to implement the <code>parse_html()</code> abstract function. AIOHTTP is only used when setting up the framework, and will not be involved later. Considering the possibility of future use, I wrote this post to document the basic usage of AIOHTTP and asyncio.</p>
+<h1>References</h1>
+<ul>
+<li>ChatGPT</li>
+<li><a href="https://docs.python.org/3/library/asyncio.html">Python doc: asyncio</a></li>
+<li><a href="https://docs.aiohttp.org/en/stable/">AIOHTTP</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>AIOHTTP</tag>
       </tags>
   </entry>
   <entry>
