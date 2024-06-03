@@ -209,68 +209,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Algorithm Problem 006: Construct Binary Tree from Preorder and Postorder Traversal</title>
-    <url>/en/2024/02/22/Algorithm-Problem-006-construct-binary-tree-from-preorder-and-postorder-traversal/</url>
-    <content><![CDATA[<h1>Problem</h1>
-<blockquote>
-<p>Problem Source：<a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal">889. Construct Binary Tree from Preorder and Postorder Traversal</a>(Daily Challenge)</p>
-</blockquote>
-<blockquote>
-<p><strong>Problem Description</strong>：</p>
-<p>Given two integer arrays, <code>preorder</code> and <code>postorder</code> where <code>preorder</code> is the preorder traversal of a binary tree of <strong>distinct</strong> values and <code>postorder</code> is the postorder traversal of the same tree, reconstruct and return <em>the binary tree</em>.</p>
-<p>If there exist multiple answers, you can <strong>return any</strong> of them.</p>
-</blockquote>
-<span id="more"></span>
-<blockquote>
-<p><strong>Example 1:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2021/07/24/lc-prepost.jpg" alt="img"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]</span><br><span class="line">Output: [1,2,3,4,5,6,7]</span><br></pre></td></tr></table></figure>
-<p><strong>Example 2:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: preorder = [1], postorder = [1]</span><br><span class="line">Output: [1]</span><br></pre></td></tr></table></figure>
-<p><strong>Constraints:</strong></p>
-<ul>
-<li><code>1 &lt;= preorder.length &lt;= 30</code></li>
-<li><code>1 &lt;= preorder[i] &lt;= preorder.length</code></li>
-<li>All the values of <code>preorder</code> are <strong>unique</strong>.</li>
-<li><code>postorder.length == preorder.length</code></li>
-<li><code>1 &lt;= postorder[i] &lt;= postorder.length</code></li>
-<li>All the values of <code>postorder</code> are <strong>unique</strong>.</li>
-<li>It is guaranteed that <code>preorder</code> and <code>postorder</code> are the preorder traversal and postorder traversal of the same binary tree.</li>
-</ul>
-</blockquote>
-<h1>Approach</h1>
-<p>Firstly, it is important to note that <strong>the binary tree constructed from preorder and postorder traversals is not unique</strong>, and therefore, there is no deterministic rule. In contrast, ‘inorder and preorder’ as well as ‘inorder and postorder’ correspond uniquely to a binary tree. These rules are clear, making coding straightforward. Hence, we need to define our own rules.</p>
-<p>Recall that when constructing a binary tree from ‘inorder and preorder’, we sequentially traverse the preorder list. For each value, we create a corresponding node and then determine its subtree based on the inorder traversal. This can be understood as creating the preorder and verifying with the inorder.</p>
-<p>Similarly, in this problem, we also ‘sequentially traverse the preorder list, creating a corresponding node’ but determine the <strong>position of the node</strong> (instead of its subtree) based on the postorder traversal. This is creating the preorder and verifying with the postorder.</p>
-<p>In preorder, the sequence is “root - left - right”, and for each node in preorder, we can try placing it as the left child. In postorder, the sequence is “left - right - root”. <strong>If a node A in postorder is after node B, then A cannot be in the left subtree of B.</strong></p>
-<p>For example, consider node <code>5</code> in Example 1. While sequentially traversing the preorder list, we can try placing <code>5</code> as the left child of <code>4</code>. However, in the postorder list, since <code>5</code> comes after <code>4</code>, this attempt is not allowed. <strong><code>5</code> can only be in the right subtree of one of the ancestors of <code>4</code></strong>, in this case, the right child of <code>2</code>.</p>
-<p>Therefore, we need to keep track of the <strong>path from the root to the last traversed node</strong> and store them in a stack.</p>
-<ul>
-<li>As long as the current node and the top node of the stack do not satisfy the postorder constraint mentioned above, we pop the stack until it is satisfied. At this point, the current node becomes the right child of the top node.</li>
-<li>If the constraint is already satisfied, the current node directly becomes the left child of the top node.</li>
-</ul>
-<h1>Code</h1>
-<p>The above approach is a rough description, and we should pay attention to details.</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">constructFromPrePost</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; preorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = preorder.<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// Only operate on the vector&#x27;s tail, equivalent to a stack</span></span><br><span class="line">        vector&lt;TreeNode*&gt; ve;</span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; mp;</span><br><span class="line">        <span class="comment">// Just like &#x27;inorder and preorder&#x27;, store &lt;element, index&gt; in the hash table for validation</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            mp[postorder[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> v: preorder) &#123;</span><br><span class="line">            TreeNode* cur = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(v);</span><br><span class="line">            <span class="comment">// Only the first element (root) will trigger this condition</span></span><br><span class="line">            <span class="keyword">if</span> (ve.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                ve.<span class="built_in">push_back</span>(cur);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">bool</span> popped = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>((!ve.<span class="built_in">empty</span>()) &amp;&amp; (mp[v] &gt; mp[ve.<span class="built_in">back</span>()-&gt;val])) &#123;</span><br><span class="line">                ve.<span class="built_in">pop_back</span>();</span><br><span class="line">                popped = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!popped) &#123;</span><br><span class="line">                ve.<span class="built_in">back</span>()-&gt;left = cur;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ve.<span class="built_in">back</span>()-&gt;right = cur;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Store the current node for the validation of the next node</span></span><br><span class="line">            ve.<span class="built_in">push_back</span>(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// The first node is always the root node and will never be popped</span></span><br><span class="line">        <span class="keyword">return</span> ve.<span class="built_in">front</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>Time Complexity: $O(n)$</p>
-<ul>
-<li>Sequentially traverse <code>preorder</code> and <code>postorder</code>.</li>
-<li>Each node enters and exits <code>ve</code> only once.</li>
-</ul>
-<p>Space Complexity: $O(n)$</p>
-<ul>
-<li><code>mp</code> stores the values and their indices of all $n$ nodes.</li>
-<li>In the worst case, all nodes are in <code>ve</code>.</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Algorithm Problems</category>
-      </categories>
-      <tags>
-        <tag>Tree</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Algorithm Problem 004: Maximum Employees to Be Invited to a Meeting</title>
     <url>/en/2023/11/01/Algorithm-Problem-004-maximum-employees-to-be-invited-to-a-meeting/</url>
     <content><![CDATA[<h1>Problem</h1>
@@ -452,6 +390,68 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
+    <title>Algorithm Problem 006: Construct Binary Tree from Preorder and Postorder Traversal</title>
+    <url>/en/2024/02/22/Algorithm-Problem-006-construct-binary-tree-from-preorder-and-postorder-traversal/</url>
+    <content><![CDATA[<h1>Problem</h1>
+<blockquote>
+<p>Problem Source：<a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal">889. Construct Binary Tree from Preorder and Postorder Traversal</a>(Daily Challenge)</p>
+</blockquote>
+<blockquote>
+<p><strong>Problem Description</strong>：</p>
+<p>Given two integer arrays, <code>preorder</code> and <code>postorder</code> where <code>preorder</code> is the preorder traversal of a binary tree of <strong>distinct</strong> values and <code>postorder</code> is the postorder traversal of the same tree, reconstruct and return <em>the binary tree</em>.</p>
+<p>If there exist multiple answers, you can <strong>return any</strong> of them.</p>
+</blockquote>
+<span id="more"></span>
+<blockquote>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/07/24/lc-prepost.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]</span><br><span class="line">Output: [1,2,3,4,5,6,7]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: preorder = [1], postorder = [1]</span><br><span class="line">Output: [1]</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= preorder.length &lt;= 30</code></li>
+<li><code>1 &lt;= preorder[i] &lt;= preorder.length</code></li>
+<li>All the values of <code>preorder</code> are <strong>unique</strong>.</li>
+<li><code>postorder.length == preorder.length</code></li>
+<li><code>1 &lt;= postorder[i] &lt;= postorder.length</code></li>
+<li>All the values of <code>postorder</code> are <strong>unique</strong>.</li>
+<li>It is guaranteed that <code>preorder</code> and <code>postorder</code> are the preorder traversal and postorder traversal of the same binary tree.</li>
+</ul>
+</blockquote>
+<h1>Approach</h1>
+<p>Firstly, it is important to note that <strong>the binary tree constructed from preorder and postorder traversals is not unique</strong>, and therefore, there is no deterministic rule. In contrast, ‘inorder and preorder’ as well as ‘inorder and postorder’ correspond uniquely to a binary tree. These rules are clear, making coding straightforward. Hence, we need to define our own rules.</p>
+<p>Recall that when constructing a binary tree from ‘inorder and preorder’, we sequentially traverse the preorder list. For each value, we create a corresponding node and then determine its subtree based on the inorder traversal. This can be understood as creating the preorder and verifying with the inorder.</p>
+<p>Similarly, in this problem, we also ‘sequentially traverse the preorder list, creating a corresponding node’ but determine the <strong>position of the node</strong> (instead of its subtree) based on the postorder traversal. This is creating the preorder and verifying with the postorder.</p>
+<p>In preorder, the sequence is “root - left - right”, and for each node in preorder, we can try placing it as the left child. In postorder, the sequence is “left - right - root”. <strong>If a node A in postorder is after node B, then A cannot be in the left subtree of B.</strong></p>
+<p>For example, consider node <code>5</code> in Example 1. While sequentially traversing the preorder list, we can try placing <code>5</code> as the left child of <code>4</code>. However, in the postorder list, since <code>5</code> comes after <code>4</code>, this attempt is not allowed. <strong><code>5</code> can only be in the right subtree of one of the ancestors of <code>4</code></strong>, in this case, the right child of <code>2</code>.</p>
+<p>Therefore, we need to keep track of the <strong>path from the root to the last traversed node</strong> and store them in a stack.</p>
+<ul>
+<li>As long as the current node and the top node of the stack do not satisfy the postorder constraint mentioned above, we pop the stack until it is satisfied. At this point, the current node becomes the right child of the top node.</li>
+<li>If the constraint is already satisfied, the current node directly becomes the left child of the top node.</li>
+</ul>
+<h1>Code</h1>
+<p>The above approach is a rough description, and we should pay attention to details.</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">constructFromPrePost</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; preorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = preorder.<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// Only operate on the vector&#x27;s tail, equivalent to a stack</span></span><br><span class="line">        vector&lt;TreeNode*&gt; ve;</span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; mp;</span><br><span class="line">        <span class="comment">// Just like &#x27;inorder and preorder&#x27;, store &lt;element, index&gt; in the hash table for validation</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            mp[postorder[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> v: preorder) &#123;</span><br><span class="line">            TreeNode* cur = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(v);</span><br><span class="line">            <span class="comment">// Only the first element (root) will trigger this condition</span></span><br><span class="line">            <span class="keyword">if</span> (ve.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                ve.<span class="built_in">push_back</span>(cur);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">bool</span> popped = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>((!ve.<span class="built_in">empty</span>()) &amp;&amp; (mp[v] &gt; mp[ve.<span class="built_in">back</span>()-&gt;val])) &#123;</span><br><span class="line">                ve.<span class="built_in">pop_back</span>();</span><br><span class="line">                popped = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!popped) &#123;</span><br><span class="line">                ve.<span class="built_in">back</span>()-&gt;left = cur;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ve.<span class="built_in">back</span>()-&gt;right = cur;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Store the current node for the validation of the next node</span></span><br><span class="line">            ve.<span class="built_in">push_back</span>(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// The first node is always the root node and will never be popped</span></span><br><span class="line">        <span class="keyword">return</span> ve.<span class="built_in">front</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Time Complexity: $O(n)$</p>
+<ul>
+<li>Sequentially traverse <code>preorder</code> and <code>postorder</code>.</li>
+<li>Each node enters and exits <code>ve</code> only once.</li>
+</ul>
+<p>Space Complexity: $O(n)$</p>
+<ul>
+<li><code>mp</code> stores the values and their indices of all $n$ nodes.</li>
+<li>In the worst case, all nodes are in <code>ve</code>.</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Algorithm Problems</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>the Architecture of Azure Pipelines</title>
     <url>/en/2023/10/06/Azure-Pipelines-Architecture/</url>
     <content><![CDATA[<h1>Introduction</h1>
@@ -516,6 +516,143 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
+    <title>Docker: healthcheck 和 depends_on</title>
+    <url>/en/2024/06/03/Docker-Healthcheck/</url>
+    <content><![CDATA[<h1>序言</h1>
+<p>本文主要包括 Docker healthcheck 的机制、语法，以及 Docker compose 的 <code>depends_on</code> 机制、语法。本文可以视作一个 cheat sheet。</p>
+<h1>healthcheck 机制</h1>
+<blockquote>
+<p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
+</blockquote>
+<span id="more"></span>
+<p>healthcheck 有如下参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--interval=DURATION</code></td>
+<td><code>30s</code></td>
+<td>间隔多久执行一次 healthcheck。</td>
+</tr>
+<tr>
+<td><code>--timeout=DURATION</code></td>
+<td><code>30s</code></td>
+<td>每一次 healthcheck 最多执行多久。如果超过该时间，视为失败。</td>
+</tr>
+<tr>
+<td><code>--retries=N</code></td>
+<td><code>3</code></td>
+<td>如果连续 <code>retries</code> 次失败，则容器状态变为 <code>unhealthy</code>。</td>
+</tr>
+<tr>
+<td><code>--start-period=DURATION</code></td>
+<td><code>0s</code></td>
+<td>在这段时间内，如果 healthcheck 失败了，不会记录到累计 <code>retries</code> 次数中。但是，只要 healthcheck 成功了，容器视作启动成功，start period 自动结束。</td>
+</tr>
+<tr>
+<td><code>--start-interval=DURATION</code></td>
+<td><code>5s</code></td>
+<td>在 start period 内，间隔多久执行一次 healthcheck。</td>
+</tr>
+</tbody>
+</table>
+<p>容器启动后，它处于 <code>starting</code> 状态，也就是处于 start period。start period 内，容器只可能变为 <code>healthy</code> 状态，不可能变为 <code>unhealthy</code> 状态。</p>
+<h1>healthcheck 语法</h1>
+<h2 id="语法">语法</h2>
+<blockquote>
+<p>本文不考虑 dockerfile 和 cli 中的语法，只考虑 compose 中的语法。</p>
+</blockquote>
+<p>compose 内的 healthcheck 会覆盖 dockerfile 中的 healthcheck 。</p>
+<p>例子：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">interval:</span> <span class="string">1m30s</span></span><br><span class="line">  <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">start_period:</span> <span class="string">40s</span></span><br><span class="line">  <span class="attr">start_interval:</span> <span class="string">5s</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>test</code> defines the command Compose runs to check container health. It can be <strong>either a string or a list</strong>.</p>
+<p>If it’s a list, the first item must be either <code>NONE</code>, <code>CMD</code> or <code>CMD-SHELL</code>.</p>
+<p>If it’s a string, it’s equivalent to specifying <code>CMD-SHELL</code> followed by that string.</p>
+</blockquote>
+<p>以下两种形式等价：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;curl -f http://localhost || exit 1&quot;</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>显然，第二种更方便。</p>
+<h2 id="debug-test-命令">debug <code>test</code> 命令</h2>
+<p>常用的 <code>test</code> 命令模板见<a href="/2024/04/12/MySQL-Docker/#healthcheck">之前的文章</a>。如何 debug 自己写的 <code>test</code> 命令？—— 使用 <code>docker inspect</code>。healthcheck 信息在 <code>State.Health</code> 中，可以直接用以下命令获得：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker inspect --format=<span class="string">&#x27;&#123;&#123;json .State.Health&#125;&#125;&#x27;</span> 容器</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;healthy&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;FailingStreak&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Log&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.110841425+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.178282083+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.208737778+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.261481813+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><code>Log</code> 元素的属性的含义：</p>
+<ul>
+<li><code>Output</code> ：执行命令后的输出，用来 debug。</li>
+<li><code>Exitcode</code>：<code>0</code> 表示容器健康，<code>1</code> 表示不健康。</li>
+</ul>
+<h2 id="禁用-healthcheck">禁用 healthcheck</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">disable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h1>depends_on 机制</h1>
+<blockquote>
+<p>You can <strong>control the order of service startup and shutdown</strong> with the <code>depends_on</code> attribute. Compose always starts and stops containers in dependency order.</p>
+<p>It is useful if services are closely coupled, and the startup sequence impacts the application’s functionality.</p>
+</blockquote>
+<p>要注意，<code>depends_on</code> 只是表示启动顺序，不代表先启动的容器准备好了。</p>
+<blockquote>
+<p>On startup, Compose <strong>does not wait until a container is “ready”, only until it’s running</strong>.</p>
+</blockquote>
+<p>通过设置 <code>depends_on</code> 的 <code>condition</code> 属性，可以指定依赖 A 的容器 B 何时启动。该属性有如下值：</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>service_started</code></td>
+<td>默认值，只要 A 启动了 B 就启动。</td>
+</tr>
+<tr>
+<td><code>service_healthy</code></td>
+<td>只有 A 变为 <code>healthy</code> 状态，B 才能启动。</td>
+</tr>
+<tr>
+<td><code>service_completed_successfully</code></td>
+<td>当 A 成功执行完它的 <code>command</code> 命令，B 才能启动。这里 A 通常用来执行一个命令/脚本（而不是作为一个服务），执行完毕后 A 停止。命令/脚本退出码为 0 表示成功。可以看这个<a href="https://stackoverflow.com/a/69612290/23172420">具体的例子</a>。</td>
+</tr>
+</tbody>
+</table>
+<p>因此，如果要求 compose 中作为服务启动的多个容器实现真正的有序启动，需要利用 healthcheck 机制，同时设置 <code>condition</code> 为 <code>service_healthy</code>。</p>
+<hr>
+<p>需要注意的是，利用 <code>depends_on</code> 只是在使用 <code>docker compose up|start</code> 启动时有效。如果容器的 <code>restart</code> 设置为 <code>unless-stopped</code> 或者 <code>always</code>，那么在服务器重启后，这些容器<strong>不会</strong>按照 <code>depends_on</code> 的顺序启动。</p>
+<h1>depends_on 语法</h1>
+<h2 id="简单配置">简单配置</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
+<p>此时 <code>condition</code> 默认为 <code>service_started</code>。</p>
+<h2 id="详细配置">详细配置</h2>
+<p>这种配置可以指定 <code>condition</code>。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">      <span class="attr">redis:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_started</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
+<h1>参考</h1>
+<ul>
+<li><a href="https://docs.docker.com/reference/dockerfile/#healthcheck">Dockerfile HEALTHCHECK</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/05-services/#healthcheck">Docker compose healthcheck</a></li>
+<li><a href="https://docs.docker.com/compose/startup-order/">Control startup and shutdown order in Compose</a></li>
+<li><a href="https://stackoverflow.com/a/69612290/23172420">How to start service only when other service had completed?</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/05-services/#depends_on">Docker compose depends_on</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Docker</category>
+        <category>cheat sheet</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Dashy Installation and Config</title>
     <url>/en/2024/04/04/Dashy-install-and-config/</url>
     <content><![CDATA[<h1>Preface</h1>
@@ -566,39 +703,9 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
         <category>Docker</category>
       </categories>
       <tags>
-        <tag>NAS</tag>
         <tag>Docker</tag>
+        <tag>NAS</tag>
         <tag>Dashy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo自定义404页面</title>
-    <url>/en/2023/07/04/Hexo-custom-404/</url>
-    <content><![CDATA[<h1>自定义 404 页面</h1>
-<p>首先，创建一个名为 <code>404</code> 的 post</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new <span class="number">404</span></span><br></pre></td></tr></table></figure>
-<p>在对应的 md 文件中，我们可以自定义 404 页面。由于 Hexo 框架的特性，我们可以编写 JS 脚本，让页面动起来。</p>
-<p>这里给出<a href="/404" target="_blank">我的 404 页面</a>。可以看到，上面有一个倒计时。当倒计时为 0 时，会自动跳转到首页。当然，用户也可以手动点击，从而返回首页。</p>
-<p>下面是对应的代码，直接放在 md 文件中即可：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./../js/jquery-3.3.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>您正在访问一个不存在的地址🤔<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>系统会在 <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;seconds&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span> 秒后自动跳转到首页,<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span> 您也可以点此 <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_self&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span> &gt;</span>链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>, 手动跳转!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="built_in">setInterval</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> seconds = $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript">            $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>(--seconds);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (seconds == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                location.<span class="property">href</span> = <span class="string">&quot;/&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我选择将 jQuery 代码放在本地，这样页面响应更快。</p>
-<p>jQuery 在这里只是用于获取 DOM 对象，因此也完全可以用原生 JS 函数来写。</p>
-<h1>如何让网站跳转到自定义页面？</h1>
-<span id="more"></span>
-<p>注意：以下方法仅限于 Github Pages，其他平台的方式可能不同。</p>
-<p>在<code>front-matter</code>中添加如下内容，Github Pages 就能设置该页面为 404 页面</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">permalink:</span> <span class="string">/404.html</span></span><br></pre></td></tr></table></figure>
-<p>不妨随机访问一个不存在的网页？看看效果如何：▶ <a href="/hsfh/40u235u/jasdlafn" target="_blank">点我</a></p>
-<h1>参考文章</h1>
-<p><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site">Creating a custom 404 page for your GitHub Pages site</a></p>
-<p><a href="https://theme-next.js.org/docs/theme-settings/custom-pages.html#Custom-404-Page">theme-next: custom-pages</a></p>
-]]></content>
-      <categories>
-        <category>softwares</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -633,8 +740,8 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
         <category>Docker</category>
       </categories>
       <tags>
-        <tag>NAS</tag>
         <tag>Docker</tag>
+        <tag>NAS</tag>
         <tag>Glances</tag>
       </tags>
   </entry>
@@ -783,6 +890,36 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
         <tag>Docker</tag>
         <tag>Nginx</tag>
         <tag>SSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo自定义404页面</title>
+    <url>/en/2023/07/04/Hexo-custom-404/</url>
+    <content><![CDATA[<h1>自定义 404 页面</h1>
+<p>首先，创建一个名为 <code>404</code> 的 post</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new <span class="number">404</span></span><br></pre></td></tr></table></figure>
+<p>在对应的 md 文件中，我们可以自定义 404 页面。由于 Hexo 框架的特性，我们可以编写 JS 脚本，让页面动起来。</p>
+<p>这里给出<a href="/404" target="_blank">我的 404 页面</a>。可以看到，上面有一个倒计时。当倒计时为 0 时，会自动跳转到首页。当然，用户也可以手动点击，从而返回首页。</p>
+<p>下面是对应的代码，直接放在 md 文件中即可：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./../js/jquery-3.3.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>您正在访问一个不存在的地址🤔<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>系统会在 <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;seconds&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span> 秒后自动跳转到首页,<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span> 您也可以点此 <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_self&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span> &gt;</span>链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>, 手动跳转!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="built_in">setInterval</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> seconds = $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript">            $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>(--seconds);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (seconds == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                location.<span class="property">href</span> = <span class="string">&quot;/&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我选择将 jQuery 代码放在本地，这样页面响应更快。</p>
+<p>jQuery 在这里只是用于获取 DOM 对象，因此也完全可以用原生 JS 函数来写。</p>
+<h1>如何让网站跳转到自定义页面？</h1>
+<span id="more"></span>
+<p>注意：以下方法仅限于 Github Pages，其他平台的方式可能不同。</p>
+<p>在<code>front-matter</code>中添加如下内容，Github Pages 就能设置该页面为 404 页面</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">permalink:</span> <span class="string">/404.html</span></span><br></pre></td></tr></table></figure>
+<p>不妨随机访问一个不存在的网页？看看效果如何：▶ <a href="/hsfh/40u235u/jasdlafn" target="_blank">点我</a></p>
+<h1>参考文章</h1>
+<p><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site">Creating a custom 404 page for your GitHub Pages site</a></p>
+<p><a href="https://theme-next.js.org/docs/theme-settings/custom-pages.html#Custom-404-Page">theme-next: custom-pages</a></p>
+]]></content>
+      <categories>
+        <category>softwares</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1256,8 +1393,8 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
         <category>Docker</category>
       </categories>
       <tags>
-        <tag>NAS</tag>
         <tag>Docker</tag>
+        <tag>NAS</tag>
         <tag>Jellyfin</tag>
       </tags>
   </entry>
@@ -1330,8 +1467,8 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <category>Docker</category>
       </categories>
       <tags>
-        <tag>NAS</tag>
         <tag>Docker</tag>
+        <tag>NAS</tag>
         <tag>Jellyfin</tag>
         <tag>LANraragi</tag>
       </tags>
@@ -1463,120 +1600,9 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <category>Docker</category>
       </categories>
       <tags>
+        <tag>Docker</tag>
         <tag>NAS</tag>
-        <tag>Docker</tag>
         <tag>LANraragi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Automatically Copying Images When Inserting into Markdown – Using Typora and VS Code as Examples</title>
-    <url>/en/2023/07/22/Markdown-Automatically-Copy-When-Inserting-Images-Using-Typora-and-VS-Code-as-Examples/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>With the widespread adoption of Markdown, the efficiency of using traditional text editors for writing appears to be low, especially when dealing with some complex syntax, such as inserting tables or images.</p>
-<p>Typora, a well-known Markdown editor, not only features “live rendering” but also offers many convenient functions for writing Markdown. One notable feature is the automatic saving when inserting images: paste an image into a Markdown file (text file), and the image will be automatically saved to a specified path, with the reference automatically created in Markdown.</p>
-<p>For someone like me who frequently takes Markdown notes, <strong>this feature should be a standard in the industry</strong>. However, another commonly used editor, VS Code, does not provide good support for this feature. Of course, we shouldn’t expect such a free, universal editor to cover every aspect.</p>
-<h1>Demands</h1>
-<p>For users who frequently take notes, capturing screenshots and inserting them into Markdown is a common practice. Two aspects affect the user experience in this operation: 1️⃣ screenshot tool 2️⃣ Markdown editor.</p>
-<p>With a consistent screenshot tool, the Markdown editor is the key factor in determining the user experience. Below, I will elaborate on how three editors handle image insertion.</p>
-<span id="more"></span>
-<h1>Traditional Text Editors</h1>
-<p>These editors are typically “notepads” that support Markdown syntax highlighting, such as Vim, Sublime, etc.</p>
-<p>After taking a screenshot, we need to save the image locally and then manually reference the image path using Markdown syntax:</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">![<span class="string">alt text</span>](<span class="link">image.jpg</span>)</span><br></pre></td></tr></table></figure>
-<p>For convenience, screenshot software often stores images in a specific path. To separately store images related to each Markdown file, we also need to manually cut the image to the desired location. Quite cumbersome!</p>
-<h1>Typora</h1>
-<h2 id="Configuration">Configuration</h2>
-<p>Typora provides various features for inserting images, with the one I use most being ‘Copy Image to Specified Path.’</p>
-<p>Here, ‘Insert Image’ refers to dragging an image into Typora or pasting it from the clipboard (<code>win + v</code>).</p>
-<img src="/MarkDownImages/image-20230722141038783.png" alt="image-20230722141038783" style="zoom:50%;" />
-<p>I choose to save it to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). A better practice would be to choose ‘Copy Image to <code>./$&#123;filename&#125;.assets</code> folder’ for easy migration of Markdown files.</p>
-<img src="/MarkDownImages/image-20230722141359394.png" alt="image-20230722141359394" style="zoom:50%;" />
-<p>‘Apply the same rule to images on the network’: When we copy a network image (a URL), Typora will automatically download the image to the specified path and change the URL to a local file reference, as storing images locally is more reliable than relying on images on the internet, which may disappear at any time.</p>
-<h2 id="Operation">Operation</h2>
-<p>After taking a screenshot, press <code>Ctrl + v</code> in Typora, and the image from the clipboard will be automatically copied to the <code>MarkDownImages</code> folder, with the file name based on the timestamp and less prone to duplication.</p>
-<hr>
-<img src="/MarkDownImages/image-20230722142231405.png" alt="image-20230722142231405" style="zoom:67%;" />
-<hr>
-<img src="/MarkDownImages/image-20230722142307844.png" alt="image-20230722142307844" style="zoom:67%;" />
-<hr>
-<img src="/MarkDownImages/image-20230722142326387.png" alt="image-20230722142326387" style="zoom:67%;" />
-<hr>
-<p>As seen, this way of inserting images is very elegant and convenient.</p>
-<h1>VS Code</h1>
-<h2 id="Configuration-2">Configuration</h2>
-<p>VS Code seems to have recently added a feature similar to Typora, but it only provides the option of ‘Copy Image to Specified Path’.</p>
-<p>My configuration here is to copy any file (<code>**/*</code>) inserted to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). The file is named <code>VSCodeCopied-$&#123;fileName&#125;</code>, where <code>$&#123;fileName&#125;</code> is the original file name.</p>
-<p><img src="/MarkDownImages/image-20230722142953270.png" alt="image-20230722142953270"></p>
-<p>Alternatively, you can copy the following content directly into <code>settings.json</code>:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;markdown.copyFiles.destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;**/*&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./MarkDownImages/VSCodeCopied-$&#123;fileName&#125;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Operation-2">Operation</h2>
-<p>Similar to Typora, press <code>Ctrl + v</code> after taking a screenshot.</p>
-<p>Why is the saved image named <code>VSCodeCopied-$&#123;fileName&#125;</code>? This is because when inserting a screenshot into VS Code, it is named as <code>image.png</code>.</p>
-<p><img src="/MarkDownImages/image-20230722143640371.png" alt="image-20230722143640371"></p>
-<p>If there are duplicates, a number is added to the file name to distinguish:</p>
-<p><img src="/MarkDownImages/image-20230722143756389.png" alt="image-20230722143756389"></p>
-<p><img src="/MarkDownImages/image-20230722143813041.png" alt="image-20230722143813041"></p>
-<p>This is obviously not intuitive and can lead to filename conflicts when collaborating on document writing within a team. Hopefully, future updates to VS Code will address this and provide more options when inserting images.</p>
-<h1>References</h1>
-<p><a href="https://support.typora.io/Images/#when-insert-images">Images in Typora: when-insert-images</a></p>
-<p><a href="https://www.markdownguide.org/cheat-sheet/">Markdown Cheat Sheet</a></p>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>softwares</category>
-        <category>VS Code</category>
-        <category>Typora</category>
-        <category>Markdown</category>
-      </categories>
-      <tags>
-        <tag>settings</tag>
-        <tag>VS Code</tag>
-        <tag>Typora</tag>
-        <tag>Markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Install and Use Metabase</title>
-    <url>/en/2024/05/02/Metabase-install-and-usage/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>Metabase is an open-source data analysis tool that is easy to operate and can connect to various data sources. Although its data analysis capabilities are not as powerful as Excel, Metabase is sufficient for daily use. Moreover, I am more capable of writing SQL than clicking Excel sheets, so Metabase is a good choice for me.</p>
-<span id="more"></span>
-<h1>Docker compose</h1>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">metabase:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">metabase/metabase:v0.49.5</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">metabase</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_TIMEZONE:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">42233</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">metabase_data:/metabase.db</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> <span class="string">out=$$(curl</span> <span class="string">localhost:3000/api/health);</span> <span class="string">echo</span> <span class="string">$$out</span> <span class="string">|</span> <span class="string">grep</span> <span class="string">&#x27;&quot;status&quot;:&quot;ok&quot;&#x27;</span> <span class="string">||</span> &#123; <span class="string">echo</span> <span class="string">$$out;</span> <span class="string">exit</span> <span class="number">1</span><span class="string">;</span> &#125;</span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">2m</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">metabase_data:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>Metabase uses the h2 database by default, stored in the <code>/metabase.db</code> directory. In the production environment, it is recommended to use MySQL or PostgreSQL (this step is not necessary for personal use).</li>
-</ul>
-<h1>Usage</h1>
-<p>You can refer to <a href="https://www.youtube.com/playlist?list=PL5ZlXxM-0LTF7jb-bn0vLv7IIS3Peg3YK">this tutorial</a> for basic usage of Metabase, which covers most types of charts and is suitable for beginners who have not been exposed to data analysis before.</p>
-<hr>
-<p>It is worth mentioning how to delete a question or dashboard:</p>
-<ul>
-<li>
-<p>First, archive the question or dashboard you want to delete:</p>
-<p><img src="/MarkDownImages/image-20240502141222546.png" alt="image-20240502141222546"></p>
-</li>
-<li>
-<p>Then go to the Archive page (or enter from <code>/archive</code>):</p>
-<p><img src="/MarkDownImages/image-20240502141306567.png" alt="image-20240502141306567"></p>
-</li>
-<li>
-<p>Click delete here:</p>
-<p><img src="/MarkDownImages/image-20240502141533004.png" alt="image-20240502141533004"></p>
-</li>
-</ul>
-<h1>References</h1>
-<ul>
-<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker">Metabase doc: Running Metabase on Docker</a></li>
-<li><a href="https://discourse.metabase.com/t/how-to-delete-charts-and-dashboards/5835">How to delete charts and dashboards？</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Metabase</tag>
       </tags>
   </entry>
   <entry>
@@ -1651,62 +1677,54 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <category>LocalSend</category>
       </categories>
       <tags>
-        <tag>settings</tag>
         <tag>LocalSend</tag>
+        <tag>settings</tag>
         <tag>Firewall</tag>
         <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
-    <title>Mapping MySQL JSON Fields with MyBatis-Plus</title>
-    <url>/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/</url>
+    <title>Install and Use Metabase</title>
+    <url>/en/2024/05/02/Metabase-install-and-usage/</url>
     <content><![CDATA[<h1>Preface</h1>
-<p>MySQL supports fields of type JSON. In comparison to string-type fields, JSON fields offer the following advantages:</p>
-<ul>
-<li>Automatic validation of JSON syntax</li>
-<li>Underlying support for quick access to elements within the JSON. There’s no need to read the entire string and then parse it into a JSON object.</li>
-</ul>
-<p>Logically, JSON is no different from a POJO. Spring MVC has already implemented automatic conversion between the two at the Controller tier, evident in request parameters and return values. So, how can the Repository tier achieve automatic conversion?</p>
-<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping (ORM) between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
-<h1>Demo</h1>
-<h2 id="Table">Table</h2>
+<p>Metabase is an open-source data analysis tool that is easy to operate and can connect to various data sources. Although its data analysis capabilities are not as powerful as Excel, Metabase is sufficient for daily use. Moreover, I am more capable of writing SQL than clicking Excel sheets, so Metabase is a good choice for me.</p>
 <span id="more"></span>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE `person` (</span><br><span class="line">  `id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(255) NOT NULL,</span><br><span class="line">  `log` json NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
-<h2 id="Dependencies">Dependencies</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="entity">entity</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@TableName(value = &quot;person&quot;, autoResultMap = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TableField(typeHandler = JacksonTypeHandler.class)</span></span><br><span class="line">    <span class="keyword">private</span> PersonLog log;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PersonLog</span> &#123;</span><br><span class="line">        List&lt;String&gt; hobbies;</span><br><span class="line">        Integer age;</span><br><span class="line">        String address;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The <code>PersonLog</code> here is the focal point of our discussion, aiming to map it to JSON.</p>
-<p>The <code>Person</code> class needs two annotations, usually used together:</p>
-<p><code>TableName#autoResultMap</code>: Responsible for converting JSON to POJO during <strong>query</strong>.</p>
-<p><code>TableField#typeHandler</code>: Responsible for converting POJO to JSON during <strong>insert</strong>. Since spring-web-starter has already imported the Jackson dependency, we can directly use <code>JacksonTypeHandler</code>.</p>
-<h2 id="mapper-xml">mapper.xml</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.demo.mapper.PersonMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.example.demo.entity.Person&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;BIGINT&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;log&quot;</span> <span class="attr">property</span>=<span class="string">&quot;log&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;LONGVARCHAR&quot;</span> <span class="attr">typeHandler</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;Base_Column_List&quot;</span>&gt;</span></span><br><span class="line">        id, name, log</span><br><span class="line">    <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>In the mapper file, specify the full class name of the <code>typeHandler</code> for the <code>log</code> field.</p>
-<h2 id="Testing">Testing</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">PersonMapper</span> <span class="keyword">extends</span> <span class="title class_">BaseMapper</span>&lt;Person&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Service tier is omitted.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PersonController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PersonMapper personMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/json&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">testJSON2BeanMap</span><span class="params">(<span class="meta">@RequestBody</span> Person person)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.insert(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/json/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Person <span class="title function_">getPersonById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.selectById(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Test both methods; if no errors occur, it indicates success. We can also check the database after insertion.</p>
-<p>The <strong>non-intrusive ORM</strong> mentioned in the <a href="#Preface">Preface</a> implies that we don’t need to manually execute the conversion between JSON and <code>PersonLog</code> in the code.</p>
-<h1>Conclusion</h1>
-<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
-<p>My exploration of this issue originated from the requirements of a business logic during my internship. When I searched for information online, I found that the descriptions in the posts were not quite complete or intuitive. Therefore, I documented the solution and wrote this article.</p>
-<h1>Reference</h1>
-<p><a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">The JSON Data Type</a></p>
-<p><a href="https://blog.csdn.net/qq_33360626/article/details/119836835">mybatis-plus处理mysql中json格式方法</a></p>
+<h1>Docker compose</h1>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">metabase:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">metabase/metabase:v0.49.5</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">metabase</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_TIMEZONE:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">42233</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">metabase_data:/metabase.db</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> <span class="string">out=$$(curl</span> <span class="string">localhost:3000/api/health);</span> <span class="string">echo</span> <span class="string">$$out</span> <span class="string">|</span> <span class="string">grep</span> <span class="string">&#x27;&quot;status&quot;:&quot;ok&quot;&#x27;</span> <span class="string">||</span> &#123; <span class="string">echo</span> <span class="string">$$out;</span> <span class="string">exit</span> <span class="number">1</span><span class="string">;</span> &#125;</span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">2m</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">metabase_data:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Metabase uses the h2 database by default, stored in the <code>/metabase.db</code> directory. In the production environment, it is recommended to use MySQL or PostgreSQL (this step is not necessary for personal use).</li>
+</ul>
+<h1>Usage</h1>
+<p>You can refer to <a href="https://www.youtube.com/playlist?list=PL5ZlXxM-0LTF7jb-bn0vLv7IIS3Peg3YK">this tutorial</a> for basic usage of Metabase, which covers most types of charts and is suitable for beginners who have not been exposed to data analysis before.</p>
+<hr>
+<p>It is worth mentioning how to delete a question or dashboard:</p>
+<ul>
+<li>
+<p>First, archive the question or dashboard you want to delete:</p>
+<p><img src="/MarkDownImages/image-20240502141222546.png" alt="image-20240502141222546"></p>
+</li>
+<li>
+<p>Then go to the Archive page (or enter from <code>/archive</code>):</p>
+<p><img src="/MarkDownImages/image-20240502141306567.png" alt="image-20240502141306567"></p>
+</li>
+<li>
+<p>Click delete here:</p>
+<p><img src="/MarkDownImages/image-20240502141533004.png" alt="image-20240502141533004"></p>
+</li>
+</ul>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker">Metabase doc: Running Metabase on Docker</a></li>
+<li><a href="https://discourse.metabase.com/t/how-to-delete-charts-and-dashboards/5835">How to delete charts and dashboards？</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>tech</category>
-        <category>Java</category>
+        <category>Docker</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>Spring Boot</tag>
-        <tag>MySQL</tag>
-        <tag>MyBatis-Plus</tag>
-        <tag>JDBC</tag>
-        <tag>Repository</tag>
+        <tag>Docker</tag>
+        <tag>Metabase</tag>
       </tags>
   </entry>
   <entry>
@@ -1812,6 +1830,58 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
+    <title>Mapping MySQL JSON Fields with MyBatis-Plus</title>
+    <url>/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>MySQL supports fields of type JSON. In comparison to string-type fields, JSON fields offer the following advantages:</p>
+<ul>
+<li>Automatic validation of JSON syntax</li>
+<li>Underlying support for quick access to elements within the JSON. There’s no need to read the entire string and then parse it into a JSON object.</li>
+</ul>
+<p>Logically, JSON is no different from a POJO. Spring MVC has already implemented automatic conversion between the two at the Controller tier, evident in request parameters and return values. So, how can the Repository tier achieve automatic conversion?</p>
+<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping (ORM) between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
+<h1>Demo</h1>
+<h2 id="Table">Table</h2>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE `person` (</span><br><span class="line">  `id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(255) NOT NULL,</span><br><span class="line">  `log` json NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
+<h2 id="Dependencies">Dependencies</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="entity">entity</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@TableName(value = &quot;person&quot;, autoResultMap = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TableField(typeHandler = JacksonTypeHandler.class)</span></span><br><span class="line">    <span class="keyword">private</span> PersonLog log;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PersonLog</span> &#123;</span><br><span class="line">        List&lt;String&gt; hobbies;</span><br><span class="line">        Integer age;</span><br><span class="line">        String address;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>PersonLog</code> here is the focal point of our discussion, aiming to map it to JSON.</p>
+<p>The <code>Person</code> class needs two annotations, usually used together:</p>
+<p><code>TableName#autoResultMap</code>: Responsible for converting JSON to POJO during <strong>query</strong>.</p>
+<p><code>TableField#typeHandler</code>: Responsible for converting POJO to JSON during <strong>insert</strong>. Since spring-web-starter has already imported the Jackson dependency, we can directly use <code>JacksonTypeHandler</code>.</p>
+<h2 id="mapper-xml">mapper.xml</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.demo.mapper.PersonMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.example.demo.entity.Person&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;BIGINT&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;log&quot;</span> <span class="attr">property</span>=<span class="string">&quot;log&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;LONGVARCHAR&quot;</span> <span class="attr">typeHandler</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;Base_Column_List&quot;</span>&gt;</span></span><br><span class="line">        id, name, log</span><br><span class="line">    <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In the mapper file, specify the full class name of the <code>typeHandler</code> for the <code>log</code> field.</p>
+<h2 id="Testing">Testing</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">PersonMapper</span> <span class="keyword">extends</span> <span class="title class_">BaseMapper</span>&lt;Person&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Service tier is omitted.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PersonController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PersonMapper personMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/json&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">testJSON2BeanMap</span><span class="params">(<span class="meta">@RequestBody</span> Person person)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.insert(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/json/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Person <span class="title function_">getPersonById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.selectById(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Test both methods; if no errors occur, it indicates success. We can also check the database after insertion.</p>
+<p>The <strong>non-intrusive ORM</strong> mentioned in the <a href="#Preface">Preface</a> implies that we don’t need to manually execute the conversion between JSON and <code>PersonLog</code> in the code.</p>
+<h1>Conclusion</h1>
+<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
+<p>My exploration of this issue originated from the requirements of a business logic during my internship. When I searched for information online, I found that the descriptions in the posts were not quite complete or intuitive. Therefore, I documented the solution and wrote this article.</p>
+<h1>Reference</h1>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">The JSON Data Type</a></p>
+<p><a href="https://blog.csdn.net/qq_33360626/article/details/119836835">mybatis-plus处理mysql中json格式方法</a></p>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Java</tag>
+        <tag>Spring Boot</tag>
+        <tag>MyBatis-Plus</tag>
+        <tag>JDBC</tag>
+        <tag>Repository</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Using Python venv</title>
     <url>/en/2023/12/20/Python-venv-use/</url>
     <content><![CDATA[<h1>Preface</h1>
@@ -1903,49 +1973,70 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
-    <title>Display Original Filenames in Jellyfin</title>
-    <url>/en/2024/02/17/jellyfin-original-filename/</url>
+    <title>Automatically Copying Images When Inserting into Markdown – Using Typora and VS Code as Examples</title>
+    <url>/en/2023/07/22/Markdown-Automatically-Copy-When-Inserting-Images-Using-Typora-and-VS-Code-as-Examples/</url>
     <content><![CDATA[<h1>Preface</h1>
-<p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
-<p>To fit this demand, I have created a script using <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> to batch rename all media in a specific media library. Additionally, this article explores some previous solutions, none of which were satisfactory in my opinion.</p>
+<p>With the widespread adoption of Markdown, the efficiency of using traditional text editors for writing appears to be low, especially when dealing with some complex syntax, such as inserting tables or images.</p>
+<p>Typora, a well-known Markdown editor, not only features “live rendering” but also offers many convenient functions for writing Markdown. One notable feature is the automatic saving when inserting images: paste an image into a Markdown file (text file), and the image will be automatically saved to a specified path, with the reference automatically created in Markdown.</p>
+<p>For someone like me who frequently takes Markdown notes, <strong>this feature should be a standard in the industry</strong>. However, another commonly used editor, VS Code, does not provide good support for this feature. Of course, we shouldn’t expect such a free, universal editor to cover every aspect.</p>
+<h1>Demands</h1>
+<p>For users who frequently take notes, capturing screenshots and inserting them into Markdown is a common practice. Two aspects affect the user experience in this operation: 1️⃣ screenshot tool 2️⃣ Markdown editor.</p>
+<p>With a consistent screenshot tool, the Markdown editor is the key factor in determining the user experience. Below, I will elaborate on how three editors handle image insertion.</p>
 <span id="more"></span>
-<h1>Existing Solution 1</h1>
-<p>When creating a media library, choose ‘Music Videos’ as its content type and select ‘Prefer embedded titles over filenames’.</p>
-<p>What is this “embedded title”? Open the ‘Properties’ of a video and go to ‘Details’.</p>
-<p><img src="/MarkDownImages/image-20240217135326419.png" alt="image-20240217135326419"></p>
-<p>Any content in the ‘Title’ field will be displayed as the media title in Jellyfin without any modifications. However, this approach has two issues:</p>
-<p>1️⃣ For most anime published, the values of their ‘Title’ are their series names, as shown in the image, lacking episode numbers, making it hard for me to distinguish.</p>
-<p>This issue can be easily solved by copying the file name to ‘Title’ or clearing the ‘Title’ field. In either case, the original filename will be displayed eventually. For automation in Python, the <a href="https://github.com/quodlibet/mutagen">mutagen</a> module is handy to use.</p>
-<p>2️⃣ Media libraries of type ‘Music Videos’ cannot display folder structures, which I find unacceptable. In fact, only ‘Mixed Movies and Shows’ will be presented in a pure folder format.</p>
-<h1>Existing Solution 2</h1>
-<p>Directly modify the database, as referenced in <a href="https://www.cnblogs.com/toumingbai/p/15514526.html">‘Manually Correcting Titles to File (Folder) Names’</a>。</p>
-<p>Bypassing the Service Tier to directly manipulate the database is too risky. I will never use this approach.</p>
-<h1>My Solution</h1>
-<p>Since directly manipulating the database in Solution 2 is bad, why not use the Jellyfin API?</p>
-<p>The first step is to find which API corresponds to the required functionality. Instead of referring to the official documentation first, inspect the browser’s network traffic in Developer tools and then refer to the documentation. However, in most cases, the documentation is still useless, because there is no description. Under such circumstances, we need perform experiments to guess the usage of an API.</p>
-<p>Fortunately, <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> provides a ready-made API, eliminating the need to start from <code>requests</code>. I quickly completed the script:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python <span class="keyword">import</span> JellyfinClient</span><br><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python.api <span class="keyword">import</span> API</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_to_filename</span>(<span class="params">jellyfin: API, item_id: <span class="built_in">str</span></span>):</span><br><span class="line">    metadata: <span class="built_in">dict</span> = jellyfin.get_item(item_id)</span><br><span class="line">    <span class="keyword">assert</span> metadata[<span class="string">&#x27;Id&#x27;</span>] == item_id</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(metadata[<span class="string">&#x27;MediaSources&#x27;</span>]) == <span class="number">1</span></span><br><span class="line">    path: <span class="built_in">str</span> = metadata[<span class="string">&#x27;MediaSources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;Path&#x27;</span>]</span><br><span class="line">    filename = path.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Only modify Name, keep other info unchanged</span></span><br><span class="line">    metadata.update(&#123;<span class="string">&#x27;Name&#x27;</span>: filename&#125;)</span><br><span class="line">    <span class="keyword">return</span> jellyfin.items(<span class="string">&#x27;/&#x27;</span> + item_id, action=<span class="string">&#x27;POST&#x27;</span>, params=<span class="literal">None</span>, json=metadata)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_items_in_library</span>(<span class="params">jellyfin: API, library_id: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="comment"># get_items_by_letter recursively retrieves elements in all subfolders</span></span><br><span class="line">    res = jellyfin.get_items_by_letter(parent_id=library_id)</span><br><span class="line">    res = res[<span class="string">&#x27;Items&#x27;</span>]</span><br><span class="line">    item_count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> res:</span><br><span class="line">        <span class="keyword">if</span> r[<span class="string">&#x27;Type&#x27;</span>] == <span class="string">&#x27;Folder&#x27;</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        rename_to_filename(jellyfin, r[<span class="string">&#x27;Id&#x27;</span>])</span><br><span class="line">        item_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;total renamed item count: <span class="subst">&#123;item_count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client = JellyfinClient()</span><br><span class="line"><span class="comment"># Modify these client infos as needed; it doesn&#x27;t affect the result</span></span><br><span class="line">client.config.app(<span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;0.0.1&#x27;</span>, <span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;kufhskdf&#x27;</span>)</span><br><span class="line">client.config.data[<span class="string">&quot;auth.ssl&quot;</span>] = <span class="literal">True</span></span><br><span class="line">client.authenticate(&#123;<span class="string">&quot;Servers&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;AccessToken&quot;</span>: <span class="string">&quot;xxx&quot;</span>,  <span class="comment"># Create one in &#x27;Dashboard | API Keys&#x27;</span></span><br><span class="line">        <span class="string">&quot;address&quot;</span>: <span class="string">&quot;zzz&quot;</span>, <span class="comment"># Jellyfin server address</span></span><br><span class="line">        <span class="string">&quot;DateLastAccessed&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;UserId&quot;</span>: <span class="string">&quot;yyy&quot;</span>  <span class="comment"># This user should have the privilege to manage media library</span></span><br><span class="line">    &#125;</span><br><span class="line">]&#125;, discover=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(client.logged_in)</span><br><span class="line"></span><br><span class="line">rename_items_in_library(client.jellyfin, <span class="string">&#x27;uuu&#x27;</span>)  <span class="comment"># Fill in the media library ID</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>By the way, the documentation for this module is also poor; I only figured out how to connect to the server through Issues.</p>
-</blockquote>
-<p>My Jellyfin server’s certificate is self-signed, and it seems Python’s SSL cannot use the certificates installed on OS. We can resolve this by setting the environment variable <code>REQUESTS_CA_BUNDLE=&lt;certificate_path&gt;</code>.</p>
-<p>My solution perfectly addresses the drawbacks of the two aforementioned solutions.</p>
+<h1>Traditional Text Editors</h1>
+<p>These editors are typically “notepads” that support Markdown syntax highlighting, such as Vim, Sublime, etc.</p>
+<p>After taking a screenshot, we need to save the image locally and then manually reference the image path using Markdown syntax:</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">![<span class="string">alt text</span>](<span class="link">image.jpg</span>)</span><br></pre></td></tr></table></figure>
+<p>For convenience, screenshot software often stores images in a specific path. To separately store images related to each Markdown file, we also need to manually cut the image to the desired location. Quite cumbersome!</p>
+<h1>Typora</h1>
+<h2 id="Configuration">Configuration</h2>
+<p>Typora provides various features for inserting images, with the one I use most being ‘Copy Image to Specified Path.’</p>
+<p>Here, ‘Insert Image’ refers to dragging an image into Typora or pasting it from the clipboard (<code>win + v</code>).</p>
+<img src="/MarkDownImages/image-20230722141038783.png" alt="image-20230722141038783" style="zoom:50%;" />
+<p>I choose to save it to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). A better practice would be to choose ‘Copy Image to <code>./$&#123;filename&#125;.assets</code> folder’ for easy migration of Markdown files.</p>
+<img src="/MarkDownImages/image-20230722141359394.png" alt="image-20230722141359394" style="zoom:50%;" />
+<p>‘Apply the same rule to images on the network’: When we copy a network image (a URL), Typora will automatically download the image to the specified path and change the URL to a local file reference, as storing images locally is more reliable than relying on images on the internet, which may disappear at any time.</p>
+<h2 id="Operation">Operation</h2>
+<p>After taking a screenshot, press <code>Ctrl + v</code> in Typora, and the image from the clipboard will be automatically copied to the <code>MarkDownImages</code> folder, with the file name based on the timestamp and less prone to duplication.</p>
+<hr>
+<img src="/MarkDownImages/image-20230722142231405.png" alt="image-20230722142231405" style="zoom:67%;" />
+<hr>
+<img src="/MarkDownImages/image-20230722142307844.png" alt="image-20230722142307844" style="zoom:67%;" />
+<hr>
+<img src="/MarkDownImages/image-20230722142326387.png" alt="image-20230722142326387" style="zoom:67%;" />
+<hr>
+<p>As seen, this way of inserting images is very elegant and convenient.</p>
+<h1>VS Code</h1>
+<h2 id="Configuration-2">Configuration</h2>
+<p>VS Code seems to have recently added a feature similar to Typora, but it only provides the option of ‘Copy Image to Specified Path’.</p>
+<p>My configuration here is to copy any file (<code>**/*</code>) inserted to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). The file is named <code>VSCodeCopied-$&#123;fileName&#125;</code>, where <code>$&#123;fileName&#125;</code> is the original file name.</p>
+<p><img src="/MarkDownImages/image-20230722142953270.png" alt="image-20230722142953270"></p>
+<p>Alternatively, you can copy the following content directly into <code>settings.json</code>:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;markdown.copyFiles.destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;**/*&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./MarkDownImages/VSCodeCopied-$&#123;fileName&#125;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Operation-2">Operation</h2>
+<p>Similar to Typora, press <code>Ctrl + v</code> after taking a screenshot.</p>
+<p>Why is the saved image named <code>VSCodeCopied-$&#123;fileName&#125;</code>? This is because when inserting a screenshot into VS Code, it is named as <code>image.png</code>.</p>
+<p><img src="/MarkDownImages/image-20230722143640371.png" alt="image-20230722143640371"></p>
+<p>If there are duplicates, a number is added to the file name to distinguish:</p>
+<p><img src="/MarkDownImages/image-20230722143756389.png" alt="image-20230722143756389"></p>
+<p><img src="/MarkDownImages/image-20230722143813041.png" alt="image-20230722143813041"></p>
+<p>This is obviously not intuitive and can lead to filename conflicts when collaborating on document writing within a team. Hopefully, future updates to VS Code will address this and provide more options when inserting images.</p>
 <h1>References</h1>
-<ul>
-<li><a href="https://www.reddit.com/r/jellyfin/comments/pcptfz/possible_to_use_original_filenames_only/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Possible to use original filenames only?</a></li>
-<li><a href="https://www.cnblogs.com/toumingbai/p/15514526.html">jellyfin手动修正标题为文件（夹）名</a></li>
-<li><a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a></li>
-</ul>
+<p><a href="https://support.typora.io/Images/#when-insert-images">Images in Typora: when-insert-images</a></p>
+<p><a href="https://www.markdownguide.org/cheat-sheet/">Markdown Cheat Sheet</a></p>
 ]]></content>
       <categories>
         <category>tech</category>
-        <category>NAS</category>
-        <category>Python</category>
+        <category>softwares</category>
+        <category>VS Code</category>
+        <category>Typora</category>
+        <category>Markdown</category>
       </categories>
       <tags>
-        <tag>NAS</tag>
-        <tag>Jellyfin</tag>
-        <tag>Python</tag>
+        <tag>settings</tag>
+        <tag>VS Code</tag>
+        <tag>Typora</tag>
+        <tag>Markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -2013,6 +2104,52 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>settings</tag>
         <tag>VS Code</tag>
         <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Display Original Filenames in Jellyfin</title>
+    <url>/en/2024/02/17/jellyfin-original-filename/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
+<p>To fit this demand, I have created a script using <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> to batch rename all media in a specific media library. Additionally, this article explores some previous solutions, none of which were satisfactory in my opinion.</p>
+<span id="more"></span>
+<h1>Existing Solution 1</h1>
+<p>When creating a media library, choose ‘Music Videos’ as its content type and select ‘Prefer embedded titles over filenames’.</p>
+<p>What is this “embedded title”? Open the ‘Properties’ of a video and go to ‘Details’.</p>
+<p><img src="/MarkDownImages/image-20240217135326419.png" alt="image-20240217135326419"></p>
+<p>Any content in the ‘Title’ field will be displayed as the media title in Jellyfin without any modifications. However, this approach has two issues:</p>
+<p>1️⃣ For most anime published, the values of their ‘Title’ are their series names, as shown in the image, lacking episode numbers, making it hard for me to distinguish.</p>
+<p>This issue can be easily solved by copying the file name to ‘Title’ or clearing the ‘Title’ field. In either case, the original filename will be displayed eventually. For automation in Python, the <a href="https://github.com/quodlibet/mutagen">mutagen</a> module is handy to use.</p>
+<p>2️⃣ Media libraries of type ‘Music Videos’ cannot display folder structures, which I find unacceptable. In fact, only ‘Mixed Movies and Shows’ will be presented in a pure folder format.</p>
+<h1>Existing Solution 2</h1>
+<p>Directly modify the database, as referenced in <a href="https://www.cnblogs.com/toumingbai/p/15514526.html">‘Manually Correcting Titles to File (Folder) Names’</a>。</p>
+<p>Bypassing the Service Tier to directly manipulate the database is too risky. I will never use this approach.</p>
+<h1>My Solution</h1>
+<p>Since directly manipulating the database in Solution 2 is bad, why not use the Jellyfin API?</p>
+<p>The first step is to find which API corresponds to the required functionality. Instead of referring to the official documentation first, inspect the browser’s network traffic in Developer tools and then refer to the documentation. However, in most cases, the documentation is still useless, because there is no description. Under such circumstances, we need perform experiments to guess the usage of an API.</p>
+<p>Fortunately, <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> provides a ready-made API, eliminating the need to start from <code>requests</code>. I quickly completed the script:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python <span class="keyword">import</span> JellyfinClient</span><br><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python.api <span class="keyword">import</span> API</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_to_filename</span>(<span class="params">jellyfin: API, item_id: <span class="built_in">str</span></span>):</span><br><span class="line">    metadata: <span class="built_in">dict</span> = jellyfin.get_item(item_id)</span><br><span class="line">    <span class="keyword">assert</span> metadata[<span class="string">&#x27;Id&#x27;</span>] == item_id</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(metadata[<span class="string">&#x27;MediaSources&#x27;</span>]) == <span class="number">1</span></span><br><span class="line">    path: <span class="built_in">str</span> = metadata[<span class="string">&#x27;MediaSources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;Path&#x27;</span>]</span><br><span class="line">    filename = path.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Only modify Name, keep other info unchanged</span></span><br><span class="line">    metadata.update(&#123;<span class="string">&#x27;Name&#x27;</span>: filename&#125;)</span><br><span class="line">    <span class="keyword">return</span> jellyfin.items(<span class="string">&#x27;/&#x27;</span> + item_id, action=<span class="string">&#x27;POST&#x27;</span>, params=<span class="literal">None</span>, json=metadata)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_items_in_library</span>(<span class="params">jellyfin: API, library_id: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="comment"># get_items_by_letter recursively retrieves elements in all subfolders</span></span><br><span class="line">    res = jellyfin.get_items_by_letter(parent_id=library_id)</span><br><span class="line">    res = res[<span class="string">&#x27;Items&#x27;</span>]</span><br><span class="line">    item_count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> res:</span><br><span class="line">        <span class="keyword">if</span> r[<span class="string">&#x27;Type&#x27;</span>] == <span class="string">&#x27;Folder&#x27;</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        rename_to_filename(jellyfin, r[<span class="string">&#x27;Id&#x27;</span>])</span><br><span class="line">        item_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;total renamed item count: <span class="subst">&#123;item_count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client = JellyfinClient()</span><br><span class="line"><span class="comment"># Modify these client infos as needed; it doesn&#x27;t affect the result</span></span><br><span class="line">client.config.app(<span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;0.0.1&#x27;</span>, <span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;kufhskdf&#x27;</span>)</span><br><span class="line">client.config.data[<span class="string">&quot;auth.ssl&quot;</span>] = <span class="literal">True</span></span><br><span class="line">client.authenticate(&#123;<span class="string">&quot;Servers&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;AccessToken&quot;</span>: <span class="string">&quot;xxx&quot;</span>,  <span class="comment"># Create one in &#x27;Dashboard | API Keys&#x27;</span></span><br><span class="line">        <span class="string">&quot;address&quot;</span>: <span class="string">&quot;zzz&quot;</span>, <span class="comment"># Jellyfin server address</span></span><br><span class="line">        <span class="string">&quot;DateLastAccessed&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;UserId&quot;</span>: <span class="string">&quot;yyy&quot;</span>  <span class="comment"># This user should have the privilege to manage media library</span></span><br><span class="line">    &#125;</span><br><span class="line">]&#125;, discover=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(client.logged_in)</span><br><span class="line"></span><br><span class="line">rename_items_in_library(client.jellyfin, <span class="string">&#x27;uuu&#x27;</span>)  <span class="comment"># Fill in the media library ID</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>By the way, the documentation for this module is also poor; I only figured out how to connect to the server through Issues.</p>
+</blockquote>
+<p>My Jellyfin server’s certificate is self-signed, and it seems Python’s SSL cannot use the certificates installed on OS. We can resolve this by setting the environment variable <code>REQUESTS_CA_BUNDLE=&lt;certificate_path&gt;</code>.</p>
+<p>My solution perfectly addresses the drawbacks of the two aforementioned solutions.</p>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.reddit.com/r/jellyfin/comments/pcptfz/possible_to_use_original_filenames_only/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Possible to use original filenames only?</a></li>
+<li><a href="https://www.cnblogs.com/toumingbai/p/15514526.html">jellyfin手动修正标题为文件（夹）名</a></li>
+<li><a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>NAS</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>NAS</tag>
+        <tag>Jellyfin</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -2169,111 +2306,9 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </categories>
       <tags>
         <tag>Simulation</tag>
-        <tag>Tree</tag>
         <tag>DP</tag>
+        <tag>Tree</tag>
         <tag>Bit Manipulation</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Common Commands for pip &amp; conda</title>
-    <url>/en/2024/01/14/pip-conda-Common-Commands/</url>
-    <content><![CDATA[<h1>pip</h1>
-<ol>
-<li>
-<p>Install <code>script-house</code>, version <code>0.0.2</code>.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2</span><br></pre></td></tr></table></figure>
-<p>If you want to install the latest version by default, you can omit <code>==0.0.2</code>.</p>
-<p>To install multiple dependencies in one line:</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2 pydantic==2.5.3 pymongo==4.6.1</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<span id="more"></span>
-<ol start="2">
-<li>
-<p>List all dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip list</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>List current dependencies in <code>requirements.txt</code> format.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze</span><br></pre></td></tr></table></figure>
-<p>The result of <code>pip freeze</code> is a subset of <code>pip list</code>. <code>pip list</code> usually includes fundamental dependencies like <code>pip</code>, <code>setuptools</code>, and <code>wheel</code>.</p>
-<p>The purpose of <code>pip freeze</code> is to export project dependencies for others to use, while <code>pip list</code> is just for display.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Install all dependencies from <code>requirements.txt</code>.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Uninstall a specific dependency.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall script-house</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Uninstall multiple dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall -r req.txt -y</span><br></pre></td></tr></table></figure>
-<p><code>-y</code> automatically confirms the deletion.</p>
-<p>How to uninstall all dependencies in the current environment?</p>
- <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; req</span><br><span class="line">pip uninstall <span class="literal">-r</span> req <span class="literal">-y</span></span><br><span class="line"><span class="built_in">del</span> req</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1>conda</h1>
-<ol>
-<li>
-<p>After conda is installed on Linux, you should run <code>conda init</code> first before using conda commands; On Windows, there is no such need.</p>
-</li>
-<li>
-<p>List all environments.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Create a new environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda create -n &lt;environment-name&gt; python=3.8</span><br></pre></td></tr></table></figure>
-<p>The basic command is <code>conda create -n &lt;environment-name&gt;</code>, but specifying the Python version is a common practice. Compared to venv, conda environments also install some basic OS-dependent dependencies.</p>
-</li>
-<li>
-<p>Activate an environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda activate &lt;environment-name&gt;</span><br></pre></td></tr></table></figure>
-<p>On Windows, you probably need to omit <code>conda</code>.</p>
-</li>
-<li>
-<p>Deactivate the environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Remove an environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda remove -n &lt;environment-name&gt; --all</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>View basic information.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda info</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Install dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 -c pytorch -c conda-forge</span><br></pre></td></tr></table></figure>
-<p>Similar to pip, it follows the format <code>dependency==version</code>; the <code>-c</code> parameter specifies the download source (channel) as default channels often fail.</p>
-</li>
-<li>
-<p>Create an environment from a configuration file (usually named <code>environment.yml</code>).</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> create -f environment.yml</span><br></pre></td></tr></table></figure>
-<p>Content of <code>environment.yml</code>:</p>
- <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">&lt;environment-name&gt;</span></span><br><span class="line"><span class="attr">channels:</span> <span class="comment"># -c parameter, specifying download source</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">pytorch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">conda-forge</span></span><br><span class="line"><span class="attr">dependencies:</span> <span class="comment"># dependencies installed by conda</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">python=3.8</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">numpy</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">pandas</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">matplotlib</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">pip:</span> <span class="comment"># dependencies installed by pip</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">imageio</span></span><br></pre></td></tr></table></figure>
-<p>It’s not recommended to create a new environment by this method, because channels often fail.</p>
-</li>
-<li>
-<p>Disable auto-activation of the base environment. If enabled, every new shell will automatically activate the base environment.</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Python</category>
-        <category>cheat sheet</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>pip</tag>
-        <tag>conda</tag>
       </tags>
   </entry>
   <entry>
@@ -2437,8 +2472,110 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </categories>
       <tags>
         <tag>Simulation</tag>
-        <tag>Tree</tag>
         <tag>DP</tag>
+        <tag>Tree</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Common Commands for pip &amp; conda</title>
+    <url>/en/2024/01/14/pip-conda-Common-Commands/</url>
+    <content><![CDATA[<h1>pip</h1>
+<ol>
+<li>
+<p>Install <code>script-house</code>, version <code>0.0.2</code>.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2</span><br></pre></td></tr></table></figure>
+<p>If you want to install the latest version by default, you can omit <code>==0.0.2</code>.</p>
+<p>To install multiple dependencies in one line:</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2 pydantic==2.5.3 pymongo==4.6.1</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<span id="more"></span>
+<ol start="2">
+<li>
+<p>List all dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip list</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>List current dependencies in <code>requirements.txt</code> format.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze</span><br></pre></td></tr></table></figure>
+<p>The result of <code>pip freeze</code> is a subset of <code>pip list</code>. <code>pip list</code> usually includes fundamental dependencies like <code>pip</code>, <code>setuptools</code>, and <code>wheel</code>.</p>
+<p>The purpose of <code>pip freeze</code> is to export project dependencies for others to use, while <code>pip list</code> is just for display.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Install all dependencies from <code>requirements.txt</code>.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Uninstall a specific dependency.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall script-house</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Uninstall multiple dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall -r req.txt -y</span><br></pre></td></tr></table></figure>
+<p><code>-y</code> automatically confirms the deletion.</p>
+<p>How to uninstall all dependencies in the current environment?</p>
+ <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; req</span><br><span class="line">pip uninstall <span class="literal">-r</span> req <span class="literal">-y</span></span><br><span class="line"><span class="built_in">del</span> req</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1>conda</h1>
+<ol>
+<li>
+<p>After conda is installed on Linux, you should run <code>conda init</code> first before using conda commands; On Windows, there is no such need.</p>
+</li>
+<li>
+<p>List all environments.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Create a new environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda create -n &lt;environment-name&gt; python=3.8</span><br></pre></td></tr></table></figure>
+<p>The basic command is <code>conda create -n &lt;environment-name&gt;</code>, but specifying the Python version is a common practice. Compared to venv, conda environments also install some basic OS-dependent dependencies.</p>
+</li>
+<li>
+<p>Activate an environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda activate &lt;environment-name&gt;</span><br></pre></td></tr></table></figure>
+<p>On Windows, you probably need to omit <code>conda</code>.</p>
+</li>
+<li>
+<p>Deactivate the environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Remove an environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda remove -n &lt;environment-name&gt; --all</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>View basic information.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda info</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Install dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 -c pytorch -c conda-forge</span><br></pre></td></tr></table></figure>
+<p>Similar to pip, it follows the format <code>dependency==version</code>; the <code>-c</code> parameter specifies the download source (channel) as default channels often fail.</p>
+</li>
+<li>
+<p>Create an environment from a configuration file (usually named <code>environment.yml</code>).</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> create -f environment.yml</span><br></pre></td></tr></table></figure>
+<p>Content of <code>environment.yml</code>:</p>
+ <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">&lt;environment-name&gt;</span></span><br><span class="line"><span class="attr">channels:</span> <span class="comment"># -c parameter, specifying download source</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">pytorch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">conda-forge</span></span><br><span class="line"><span class="attr">dependencies:</span> <span class="comment"># dependencies installed by conda</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">python=3.8</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">numpy</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">pandas</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">matplotlib</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">pip:</span> <span class="comment"># dependencies installed by pip</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">imageio</span></span><br></pre></td></tr></table></figure>
+<p>It’s not recommended to create a new environment by this method, because channels often fail.</p>
+</li>
+<li>
+<p>Disable auto-activation of the base environment. If enabled, every new shell will automatically activate the base environment.</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Python</category>
+        <category>cheat sheet</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>pip</tag>
+        <tag>conda</tag>
       </tags>
   </entry>
   <entry>
