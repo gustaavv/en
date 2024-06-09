@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"gustaavv.github.io","root":"/en/","images":"/en/images","scheme":"Gemini","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#008000","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/en/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/en/js/config.js"></script>
 
-    <meta name="description" content="序言 本文主要包括 Docker healthcheck 的机制、语法，以及 Docker compose 的 depends_on 机制、语法。本文可以视作一个 cheat sheet。 healthcheck 机制  When a container has a healthcheck specified, it has a health status in addition to its n">
+    <meta name="description" content="Introduction This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s depends_on. This post can be viewd as a cheat sheet. healthcheck Mechanism  When a container h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker: healthcheck 和 depends_on">
+<meta property="og:title" content="Docker: healthcheck and depends_on">
 <meta property="og:url" content="https://gustaavv.github.io/en/2024/06/03/Docker-Healthcheck/index.html">
 <meta property="og:site_name" content="Gustav&#39;s blog">
-<meta property="og:description" content="序言 本文主要包括 Docker healthcheck 的机制、语法，以及 Docker compose 的 depends_on 机制、语法。本文可以视作一个 cheat sheet。 healthcheck 机制  When a container has a healthcheck specified, it has a health status in addition to its n">
+<meta property="og:description" content="Introduction This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s depends_on. This post can be viewd as a cheat sheet. healthcheck Mechanism  When a container h">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-06-03T05:04:40.000Z">
 <meta property="article:modified_time" content="2024-06-03T05:04:40.000Z">
@@ -40,10 +40,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2024/06/03/Docker-Healthcheck/","path":"2024/06/03/Docker-Healthcheck/","title":"Docker: healthcheck 和 depends_on"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2024/06/03/Docker-Healthcheck/","path":"2024/06/03/Docker-Healthcheck/","title":"Docker: healthcheck and depends_on"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Docker: healthcheck 和 depends_on | Gustav's blog</title>
+<title>Docker: healthcheck and depends_on | Gustav's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBFGGZ14VS"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-SBFGGZ14VS","only_pageview":false}</script>
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">healthcheck 机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">healthcheck 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug-test-%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.</span> <span class="nav-text">debug test 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%81%E7%94%A8-healthcheck"><span class="nav-number">3.3.</span> <span class="nav-text">禁用 healthcheck</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">depends_on 机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">depends_on 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE"><span class="nav-number">5.1.</span> <span class="nav-text">简单配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE"><span class="nav-number">5.2.</span> <span class="nav-text">详细配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">healthcheck Mechanism</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">healthcheck Syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Syntax"><span class="nav-number">3.1.</span> <span class="nav-text">Syntax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugging-test-Command"><span class="nav-number">3.2.</span> <span class="nav-text">Debugging test Command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disabling-healthcheck"><span class="nav-number">3.3.</span> <span class="nav-text">Disabling healthcheck</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">depends_on Mechanism</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">depends_on Syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Simple-Configuration"><span class="nav-number">5.1.</span> <span class="nav-text">Simple Configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Detailed-Configuration"><span class="nav-number">5.2.</span> <span class="nav-text">Detailed Configuration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -217,6 +217,13 @@
       Common Commands for pip & conda
       </a>
     </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/02/11/Jellyfin-Docker/" rel="bookmark">
+        <time class="popular-posts-time">2024-02-11</time>
+        <br>
+      Install Jellyfin in Docker
+      </a>
+    </li>
   </ul>
 
           </div>
@@ -251,12 +258,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Docker: healthcheck 和 depends_on | Gustav's blog">
+      <meta itemprop="name" content="Docker: healthcheck and depends_on | Gustav's blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Docker: healthcheck 和 depends_on
+          Docker: healthcheck and depends_on
         </h1>
 
         <div class="post-meta-container">
@@ -294,14 +301,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>980</span>
+      <span>758</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>4 mins.</span>
+      <span>3 mins.</span>
     </span>
 </div>
 
@@ -311,123 +318,123 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>序言</h1>
-<p>本文主要包括 Docker healthcheck 的机制、语法，以及 Docker compose 的 <code>depends_on</code> 机制、语法。本文可以视作一个 cheat sheet。</p>
-<h1>healthcheck 机制</h1>
+    <div class="post-body" itemprop="articleBody"><h1>Introduction</h1>
+<p>This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s <code>depends_on</code>. This post can be viewd as a cheat sheet.</p>
+<h1>healthcheck Mechanism</h1>
 <blockquote>
 <p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
 </blockquote>
 <span id="more"></span>
-<p>healthcheck 有如下参数：</p>
+<p>healthcheck has the following parameters:</p>
 <table>
 <thead>
 <tr>
-<th>参数</th>
-<th>默认值</th>
-<th>说明</th>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>--interval=DURATION</code></td>
 <td><code>30s</code></td>
-<td>间隔多久执行一次 healthcheck。</td>
+<td>Interval between healthchecks.</td>
 </tr>
 <tr>
 <td><code>--timeout=DURATION</code></td>
 <td><code>30s</code></td>
-<td>每一次 healthcheck 最多执行多久。如果超过该时间，视为失败。</td>
+<td>How long to wait for the healthcheck to complete. If it exceeds this time, it’s considered a failure.</td>
 </tr>
 <tr>
 <td><code>--retries=N</code></td>
 <td><code>3</code></td>
-<td>如果连续 <code>retries</code> 次失败，则容器状态变为 <code>unhealthy</code>。</td>
+<td>After <code>retries</code> consecutive failures, the container status changes to <code>unhealthy</code>.</td>
 </tr>
 <tr>
 <td><code>--start-period=DURATION</code></td>
 <td><code>0s</code></td>
-<td>在这段时间内，如果 healthcheck 失败了，不会记录到累计 <code>retries</code> 次数中。但是，只要 healthcheck 成功了，容器视作启动成功，start period 自动结束。</td>
+<td>Failures during this period are not counted towards the <code>retries</code> limit. However, once a healthcheck succeeds, the container is considered started and the start period ends automatically.</td>
 </tr>
 <tr>
 <td><code>--start-interval=DURATION</code></td>
 <td><code>5s</code></td>
-<td>在 start period 内，间隔多久执行一次 healthcheck。</td>
+<td>Interval between healthchecks during the start period.</td>
 </tr>
 </tbody>
 </table>
-<p>容器启动后，它处于 <code>starting</code> 状态，也就是处于 start period。start period 内，容器只可能变为 <code>healthy</code> 状态，不可能变为 <code>unhealthy</code> 状态。</p>
-<h1>healthcheck 语法</h1>
-<h2 id="语法">语法</h2>
+<p>After the container starts, it is in the <code>starting</code> state, i.e., the start period. During the start period, the container can only become <code>healthy</code>, not <code>unhealthy</code>.</p>
+<h1>healthcheck Syntax</h1>
+<h2 id="Syntax">Syntax</h2>
 <blockquote>
-<p>本文不考虑 dockerfile 和 cli 中的语法，只考虑 compose 中的语法。</p>
+<p>This post focuses on the syntax in Compose, not in Dockerfile or CLI.</p>
 </blockquote>
-<p>compose 内的 healthcheck 会覆盖 dockerfile 中的 healthcheck 。</p>
-<p>例子：</p>
+<p>A healthcheck in Compose will override the one in Dockerfile.</p>
+<p>An Example:</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">interval:</span> <span class="string">1m30s</span></span><br><span class="line">  <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">start_period:</span> <span class="string">40s</span></span><br><span class="line">  <span class="attr">start_interval:</span> <span class="string">5s</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><code>test</code> defines the command Compose runs to check container health. It can be <strong>either a string or a list</strong>.</p>
 <p>If it’s a list, the first item must be either <code>NONE</code>, <code>CMD</code> or <code>CMD-SHELL</code>.</p>
 <p>If it’s a string, it’s equivalent to specifying <code>CMD-SHELL</code> followed by that string.</p>
 </blockquote>
-<p>以下两种形式等价：</p>
+<p>The following two forms are equivalent:</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;curl -f http://localhost || exit 1&quot;</span>]</span><br></pre></td></tr></table></figure>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>显然，第二种更方便。</p>
-<h2 id="debug-test-命令">debug <code>test</code> 命令</h2>
-<p>常用的 <code>test</code> 命令模板见<a href="/2024/04/12/MySQL-Docker/#healthcheck">之前的文章</a>。如何 debug 自己写的 <code>test</code> 命令？—— 使用 <code>docker inspect</code>。healthcheck 信息在 <code>State.Health</code> 中，可以直接用以下命令获得：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format=<span class="string">&#x27;&#123;&#123;json .State.Health&#125;&#125;&#x27;</span> 容器</span><br></pre></td></tr></table></figure>
-<p>例子：</p>
+<p>Clearly, the second form is more convenient.</p>
+<h2 id="Debugging-test-Command">Debugging <code>test</code> Command</h2>
+<p>Common <code>test</code> command templates can be found in <a href="/en/2024/04/12/MySQL-Docker/#healthcheck">the previous post</a>. How to debug our <code>test</code> command? Use <code>docker inspect</code>. Healthcheck information is in <code>State.Health</code>, and we can get it with the following command:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format=<span class="string">&#x27;&#123;&#123;json .State.Health&#125;&#125;&#x27;</span> container</span><br></pre></td></tr></table></figure>
+<p>An example:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;healthy&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;FailingStreak&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Log&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.110841425+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.178282083+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.208737778+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.261481813+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<p><code>Log</code> 元素的属性的含义：</p>
+<p>Attributes of the <code>Log</code> element:</p>
 <ul>
-<li><code>Output</code> ：执行命令后的输出，用来 debug。</li>
-<li><code>Exitcode</code>：<code>0</code> 表示容器健康，<code>1</code> 表示不健康。</li>
+<li><code>Output</code>: The output of the command, used for debugging.</li>
+<li><code>Exitcode</code>: <code>0</code> indicates the container is healthy, <code>1</code> indicates it is unhealthy.</li>
 </ul>
-<h2 id="禁用-healthcheck">禁用 healthcheck</h2>
+<h2 id="Disabling-healthcheck">Disabling healthcheck</h2>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">disable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h1>depends_on 机制</h1>
+<h1>depends_on Mechanism</h1>
 <blockquote>
 <p>You can <strong>control the order of service startup and shutdown</strong> with the <code>depends_on</code> attribute. Compose always starts and stops containers in dependency order.</p>
 <p>It is useful if services are closely coupled, and the startup sequence impacts the application’s functionality.</p>
 </blockquote>
-<p>要注意，<code>depends_on</code> 只是表示启动顺序，不代表先启动的容器准备好了。</p>
+<p>Note that <code>depends_on</code> only indicates startup order and does not guarantee the container starting earlier is ready.</p>
 <blockquote>
 <p>On startup, Compose <strong>does not wait until a container is “ready”, only until it’s running</strong>.</p>
 </blockquote>
-<p>通过设置 <code>depends_on</code> 的 <code>condition</code> 属性，可以指定依赖 A 的容器 B 何时启动。该属性有如下值：</p>
+<p>By setting the <code>condition</code> attribute of <code>depends_on</code>, you can specify when container B, which is dependent on container A, will start. This attribute has the following values:</p>
 <table>
 <thead>
 <tr>
-<th>值</th>
-<th>说明</th>
+<th>Value</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>service_started</code></td>
-<td>默认值，只要 A 启动了 B 就启动。</td>
+<td>Default value, B starts after A starts.</td>
 </tr>
 <tr>
 <td><code>service_healthy</code></td>
-<td>只有 A 变为 <code>healthy</code> 状态，B 才能启动。</td>
+<td>B starts after A is <code>healthy</code>.</td>
 </tr>
 <tr>
 <td><code>service_completed_successfully</code></td>
-<td>当 A 成功执行完它的 <code>command</code> 命令，B 才能启动。这里 A 通常用来执行一个命令/脚本（而不是作为一个服务），执行完毕后 A 停止。命令/脚本退出码为 0 表示成功。可以看这个<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/69612290/23172420">具体的例子</a>。</td>
+<td>B starts after A successfully completes its <code>command</code>. Here, A typically executes a command/script and stops after completion. A successful exit is indicated by exit code 0. Check this <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/69612290/23172420">specific example</a>.</td>
 </tr>
 </tbody>
 </table>
-<p>因此，如果要求 compose 中作为服务启动的多个容器实现真正的有序启动，需要利用 healthcheck 机制，同时设置 <code>condition</code> 为 <code>service_healthy</code>。</p>
+<p>Therefore, to achieve truly ordered startup of multiple containers as services in Compose, use the healthcheck mechanism and set <code>condition</code> to <code>service_healthy</code>.</p>
 <hr>
-<p>需要注意的是，利用 <code>depends_on</code> 只是在使用 <code>docker compose up|start</code> 启动时有效。如果容器的 <code>restart</code> 设置为 <code>unless-stopped</code> 或者 <code>always</code>，那么在服务器重启后，这些容器<strong>不会</strong>按照 <code>depends_on</code> 的顺序启动。</p>
-<h1>depends_on 语法</h1>
-<h2 id="简单配置">简单配置</h2>
+<p>Note that using <code>depends_on</code> is only effective when using <code>docker compose up|start</code>. If the container’s <code>restart</code> policy is set to <code>unless-stopped</code> or <code>always</code>, these containers <strong>will not</strong> restart in <code>depends_on</code> order after the server restarts.</p>
+<h1>depends_on Syntax</h1>
+<h2 id="Simple-Configuration">Simple Configuration</h2>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
-<p>此时 <code>condition</code> 默认为 <code>service_started</code>。</p>
-<h2 id="详细配置">详细配置</h2>
-<p>这种配置可以指定 <code>condition</code>。</p>
+<p>Here, the <code>condition</code> defaults to <code>service_started</code>.</p>
+<h2 id="Detailed-Configuration">Detailed Configuration</h2>
+<p>This kind of configuration allows specifying the <code>condition</code>.</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">      <span class="attr">redis:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_started</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
-<h1>参考</h1>
+<h1>References</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.docker.com/reference/dockerfile/#healthcheck">Dockerfile HEALTHCHECK</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/compose-file/05-services/#healthcheck">Docker compose healthcheck</a></li>
@@ -452,7 +459,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://gustaavv.github.io/en/2024/06/03/Docker-Healthcheck/" title="Docker: healthcheck 和 depends_on">https://gustaavv.github.io/en/2024/06/03/Docker-Healthcheck/</a>
+      <a href="https://gustaavv.github.io/en/2024/06/03/Docker-Healthcheck/" title="Docker: healthcheck and depends_on">https://gustaavv.github.io/en/2024/06/03/Docker-Healthcheck/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -522,7 +529,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:39</span>
+    <span title="Reading time total">1:38</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
