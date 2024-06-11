@@ -284,70 +284,6 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
-    <title>the Architecture of Azure Pipelines</title>
-    <url>/en/2023/10/06/Azure-Pipelines-Architecture/</url>
-    <content><![CDATA[<h1>Introduction</h1>
-<p>Azure Pipelines is a component of Azure DevOps (a SaaS platform) and serves as an automated CI/CD pipeline. Similar technologies include <a href="https://github.com/features/actions">GitHub Actions</a> and <a href="https://www.jenkins.io/">Jenkins</a>.</p>
-<p>As users, we only need to define various tasks in YAML, trigger the pipeline, and Azure Pipelines automatically executes these tasks for us.</p>
-<p>So, how are tasks executed? Is there a limit to parallel tasks? How can we design YAML more efficiently to make a pipeline run faster? This article will analyze the architecture of Azure Pipelines from the perspective of task scheduling, providing answers to these questions along the way.</p>
-<span id="more"></span>
-<h1>Azure Pipelines Terminology</h1>
-<p><img src="/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png" alt="img"></p>
-<p><strong>For users of Azure Pipelines</strong>, a YAML file uniquely defines the logic of a pipeline run:</p>
-<ul>
-<li>A pipeline can contain multiple stages.</li>
-<li>A stage can contain multiple jobs.</li>
-<li>A job can contain multiple steps.</li>
-<li>A step can contain multiple tasks.</li>
-</ul>
-<p><strong>For Azure Pipelines itself</strong>, when a pipeline is triggered, it needs to invoke computing resources to execute the pipeline’s logic. Specifically, a machine (agent) is responsible for executing a job.</p>
-<p>A job runs on only one agent, and it is not further divided. However, all jobs of a pipeline may be assigned to different agents for execution.</p>
-<p>How is this distribution of jobs accomplished?</p>
-<h1>Azure Pipelines Task Scheduling</h1>
-<p>Azure Pipelines task scheduling follows a typical distributed task scheduling model (similar technologies include <a href="http://www.quartz-scheduler.org/">QUARTZ</a> and <a href="https://github.com/xuxueli/xxl-job">xxl-job</a>):</p>
-<ul>
-<li>Azure Pipelines has a <strong>‘Task Queue’</strong> containing all pending <u>jobs</u> (referring to both the job/task in the task scheduling model and the job term in the pipeline).</li>
-<li>The agent is a worker that periodically checks whether there are jobs to run in the <strong>‘Task Queue’</strong>. If there are, some agent will compete to gain the right to execute that job while obtaining access to the relevant resources. At this point, it can start executing the job.</li>
-</ul>
-<p>Therefore, a pipeline is executed as follows:</p>
-<ol>
-<li>Trigger the pipeline. Azure Pipelines parses YAML, splits it into multiple jobs, and stores them in the <strong>‘Task Queue’</strong>.</li>
-<li>If there is an idle agent at this time (indicating that the <strong>‘Task Queue’</strong> was empty), it listens for the event that a new job is pushed to the queue and begins competing to execute that job with other agents (if any).
-<ul>
-<li>If successful, it starts execution.</li>
-<li>If unsuccessful, it continues to listen.</li>
-</ul>
-</li>
-<li>If there is no idle agent at this time (indicating that the <strong>‘Task Queue’</strong> previously had jobs or no agent completed its previously assigned job), these newly generated jobs will wait for an agent to execute them in an orderly manner (jobs are queued based on the time the pipeline was triggered, ensuring fairness).</li>
-</ol>
-<h1>Parallel Jobs</h1>
-<p>The task scheduling framework implies <strong>parallelism</strong>. This means that when defining YAML, <strong>steps or tasks without dependencies should be elevated to jobs, allowing them to run in parallel and reduce execution time</strong>.</p>
-<blockquote>
-<p>However, during internships, few people do this, and most people use the default step level, even when many agents are often idle. 🤔</p>
-</blockquote>
-<p>Now, since the immediate execution of a new job depends on the presence of idle agents, does increasing the number of agents improve overall throughput (the number of jobs completed in a unit of time)? Unfortunately, not really.</p>
-<p>After all, Microsoft needs to profit from Azure, so they introduced the concept of ‘Parallel Jobs’, indicating a limit to the number of jobs that can run in parallel. This limit requires purchasing.</p>
-<p>In other words, to run jobs in parallel, we not only need to purchase Azure VM agents but also Parallel Jobs. Even if we have many machines locally, we still need to buy Parallel Jobs.</p>
-<h1>Reference</h1>
-<ul>
-<li><a href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/3-describe-azure-pipelines">Describe Azure Pipelines</a></li>
-<li><a href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/4-understand-key-terms">Understand Azure Pipelines key terms</a></li>
-<li><a href="https://learn.microsoft.com/en-us/training/modules/manage-azure-pipeline-agents-pools/7-communicate-with-azure-pipelines">Communicate with Azure Pipelines</a></li>
-<li><a href="https://azure.microsoft.com/en-us/products/devops/pipelines#overview">Azure Pipelines Product Overview</a></li>
-<li><a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents">Azure Pipelines agents</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Azure</category>
-      </categories>
-      <tags>
-        <tag>Azure</tag>
-        <tag>Azure Pipelines</tag>
-        <tag>Architecture</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Algorithm Problem 005: Maximum Balanced Subsequence Sum</title>
     <url>/en/2023/11/06/Algorithm-Problem-005-maximum-balanced-subsequence-sum/</url>
     <content><![CDATA[<h1>Problem</h1>
@@ -454,6 +390,62 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
+    <title>Dashy Installation and Config</title>
+    <url>/en/2024/04/04/Dashy-install-and-config/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p><a href="https://github.com/Lissy93/dashy">Dashy</a> is an open-source customizable dashboard software that requires self-deployment. My use case is to place links of frequently visited websites. This post mainly documents some problems encountered during installation and usage.</p>
+<h1>Installation</h1>
+<span id="more"></span>
+<p>Docker compose：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">dashy:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">lissy93/dashy:2.1.2</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dashy</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/dashy/conf.yml:/app/public/conf.yml</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/dashy/dashboard-icons:/app/public/item-icons</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">bridge</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">54000</span><span class="string">:80</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&#x27;CMD&#x27;</span>, <span class="string">&#x27;node&#x27;</span>, <span class="string">&#x27;/app/services/healthcheck&#x27;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">1m30s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">40s</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>config.yml</code> is the core configuration file. I prefer directly modifying it rather than using the UI to make changes and then save them to disk.</li>
+</ul>
+<h1>Setting Icons</h1>
+<p>There are many types of icons. I often use “Local Icons”, “<a href="https://fontawesome.com/search">Font Awesome</a>”, and “<a href="https://simpleicons.org/">Simple Icons</a>”.</p>
+<h2 id="Local-Icons">Local Icons</h2>
+<p>Local icons are simply local images. The file extensions can be <code>png</code> and <code>svg</code>, but not <code>ico</code>.</p>
+<p>Local icons <strong>must</strong> be placed under <code>/app/public/item-icons/</code>. Dashy <strong>only</strong> recognizes <strong>relative paths</strong> within this directory. In Docker compose, I map the local directory <code>/opt/docker/dashy/dashboard-icons</code> to that directory. This local directory is a clone of the <a href="https://github.com/walkxcode/dashboard-icons">dashboard-icons</a> project.</p>
+<p>The icons in the dashboard-icons project are some commonly used software icons, but there are no icons for Chinese software. Of course, we can also download icons and put them in this directory.</p>
+<p>Since the icons in this directory are all colored images, while the latter two types of icons are black and white, <strong>I prefer this method</strong>.</p>
+<p>Some examples:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Icons from the dashboard-icons project</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">icon:</span> <span class="string">svg/portainer.svg</span></span><br><span class="line"><span class="comment"># Icons downloaded and stored in the &#x27;downloaded&#x27; folder</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">icon:</span> <span class="string">downloaded/AutoBangumi.svg</span></span><br></pre></td></tr></table></figure>
+<h2 id="Font-Awesome">Font Awesome</h2>
+<p>Naming convention: <code>[category] [name]</code></p>
+<p>Examples: <code>fas fa-rocket</code>, <code>fab fa-monero</code></p>
+<p>Taking the envelope as an example:</p>
+<p>In HTML code, the <code>name</code> is <code>fa-envelope</code>, but the <code>category</code> needs to be abbreviated by ourselves as <code>far</code>.</p>
+<p><img src="/MarkDownImages/image-20240404105243668.png" alt="image-20240404105243668"></p>
+<p>In VUE code, the <code>category</code> is correct, but the <code>name</code> is not.</p>
+<p><img src="/MarkDownImages/image-20240404105359193.png" alt="image-20240404105359193"></p>
+<p>It’s not clear where to directly copy the value of <code>icon</code>.</p>
+<p>If you want to use pro icons, you need to configure the license key in <code>appConfig.fontAwesomeKey</code>, usually a 10-character string.</p>
+<h2 id="Simple-Icons">Simple Icons</h2>
+<p>The icons on this website are also commonly used software, however, including Chinese software.</p>
+<p>Naming convention: <code>si-[name]</code></p>
+<p>Examples: <code>si-googlechrome</code>、<code>si-bilibili</code></p>
+<p>The <code>name</code> here can be directly copied from the official website (click on the text and it will be automatically copied):</p>
+<p><img src="/MarkDownImages/image-20240404110008224.png" alt="image-20240404110008224"><img src="/MarkDownImages/image-20240404110022088.png" alt="image-20240404110022088"></p>
+<p>Clicking on ‘.NET’ will copy <code>dotnet</code>, while clicking on ‘365 Data Science’ will copy <code>365datascience</code>. It can be seen that manual typing these words should be avoided as it is prone to errors.</p>
+<h2 id="Example-Display">Example Display</h2>
+<p><img src="/MarkDownImages/image-20240404110533178.png" alt="image-20240404110533178"></p>
+<h1>Reference</h1>
+<ul>
+<li><a href="https://github.com/Lissy93/dashy">Dashy</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>NAS</category>
+        <category>tech</category>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>NAS</tag>
+        <tag>Docker</tag>
+        <tag>Dashy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Algorithm Problem 006: Construct Binary Tree from Preorder and Postorder Traversal</title>
     <url>/en/2024/02/22/Algorithm-Problem-006-construct-binary-tree-from-preorder-and-postorder-traversal/</url>
     <content><![CDATA[<h1>Problem</h1>
@@ -516,59 +508,67 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
-    <title>Dashy Installation and Config</title>
-    <url>/en/2024/04/04/Dashy-install-and-config/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p><a href="https://github.com/Lissy93/dashy">Dashy</a> is an open-source customizable dashboard software that requires self-deployment. My use case is to place links of frequently visited websites. This post mainly documents some problems encountered during installation and usage.</p>
-<h1>Installation</h1>
+    <title>the Architecture of Azure Pipelines</title>
+    <url>/en/2023/10/06/Azure-Pipelines-Architecture/</url>
+    <content><![CDATA[<h1>Introduction</h1>
+<p>Azure Pipelines is a component of Azure DevOps (a SaaS platform) and serves as an automated CI/CD pipeline. Similar technologies include <a href="https://github.com/features/actions">GitHub Actions</a> and <a href="https://www.jenkins.io/">Jenkins</a>.</p>
+<p>As users, we only need to define various tasks in YAML, trigger the pipeline, and Azure Pipelines automatically executes these tasks for us.</p>
+<p>So, how are tasks executed? Is there a limit to parallel tasks? How can we design YAML more efficiently to make a pipeline run faster? This article will analyze the architecture of Azure Pipelines from the perspective of task scheduling, providing answers to these questions along the way.</p>
 <span id="more"></span>
-<p>Docker compose：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">dashy:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">lissy93/dashy:2.1.2</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dashy</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/dashy/conf.yml:/app/public/conf.yml</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/docker/dashy/dashboard-icons:/app/public/item-icons</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">bridge</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">54000</span><span class="string">:80</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&#x27;CMD&#x27;</span>, <span class="string">&#x27;node&#x27;</span>, <span class="string">&#x27;/app/services/healthcheck&#x27;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">1m30s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">40s</span></span><br></pre></td></tr></table></figure>
+<h1>Azure Pipelines Terminology</h1>
+<p><img src="/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png" alt="img"></p>
+<p><strong>For users of Azure Pipelines</strong>, a YAML file uniquely defines the logic of a pipeline run:</p>
 <ul>
-<li><code>config.yml</code> is the core configuration file. I prefer directly modifying it rather than using the UI to make changes and then save them to disk.</li>
+<li>A pipeline can contain multiple stages.</li>
+<li>A stage can contain multiple jobs.</li>
+<li>A job can contain multiple steps.</li>
+<li>A step can contain multiple tasks.</li>
 </ul>
-<h1>Setting Icons</h1>
-<p>There are many types of icons. I often use “Local Icons”, “<a href="https://fontawesome.com/search">Font Awesome</a>”, and “<a href="https://simpleicons.org/">Simple Icons</a>”.</p>
-<h2 id="Local-Icons">Local Icons</h2>
-<p>Local icons are simply local images. The file extensions can be <code>png</code> and <code>svg</code>, but not <code>ico</code>.</p>
-<p>Local icons <strong>must</strong> be placed under <code>/app/public/item-icons/</code>. Dashy <strong>only</strong> recognizes <strong>relative paths</strong> within this directory. In Docker compose, I map the local directory <code>/opt/docker/dashy/dashboard-icons</code> to that directory. This local directory is a clone of the <a href="https://github.com/walkxcode/dashboard-icons">dashboard-icons</a> project.</p>
-<p>The icons in the dashboard-icons project are some commonly used software icons, but there are no icons for Chinese software. Of course, we can also download icons and put them in this directory.</p>
-<p>Since the icons in this directory are all colored images, while the latter two types of icons are black and white, <strong>I prefer this method</strong>.</p>
-<p>Some examples:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Icons from the dashboard-icons project</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">icon:</span> <span class="string">svg/portainer.svg</span></span><br><span class="line"><span class="comment"># Icons downloaded and stored in the &#x27;downloaded&#x27; folder</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">icon:</span> <span class="string">downloaded/AutoBangumi.svg</span></span><br></pre></td></tr></table></figure>
-<h2 id="Font-Awesome">Font Awesome</h2>
-<p>Naming convention: <code>[category] [name]</code></p>
-<p>Examples: <code>fas fa-rocket</code>, <code>fab fa-monero</code></p>
-<p>Taking the envelope as an example:</p>
-<p>In HTML code, the <code>name</code> is <code>fa-envelope</code>, but the <code>category</code> needs to be abbreviated by ourselves as <code>far</code>.</p>
-<p><img src="/MarkDownImages/image-20240404105243668.png" alt="image-20240404105243668"></p>
-<p>In VUE code, the <code>category</code> is correct, but the <code>name</code> is not.</p>
-<p><img src="/MarkDownImages/image-20240404105359193.png" alt="image-20240404105359193"></p>
-<p>It’s not clear where to directly copy the value of <code>icon</code>.</p>
-<p>If you want to use pro icons, you need to configure the license key in <code>appConfig.fontAwesomeKey</code>, usually a 10-character string.</p>
-<h2 id="Simple-Icons">Simple Icons</h2>
-<p>The icons on this website are also commonly used software, however, including Chinese software.</p>
-<p>Naming convention: <code>si-[name]</code></p>
-<p>Examples: <code>si-googlechrome</code>、<code>si-bilibili</code></p>
-<p>The <code>name</code> here can be directly copied from the official website (click on the text and it will be automatically copied):</p>
-<p><img src="/MarkDownImages/image-20240404110008224.png" alt="image-20240404110008224"><img src="/MarkDownImages/image-20240404110022088.png" alt="image-20240404110022088"></p>
-<p>Clicking on ‘.NET’ will copy <code>dotnet</code>, while clicking on ‘365 Data Science’ will copy <code>365datascience</code>. It can be seen that manual typing these words should be avoided as it is prone to errors.</p>
-<h2 id="Example-Display">Example Display</h2>
-<p><img src="/MarkDownImages/image-20240404110533178.png" alt="image-20240404110533178"></p>
+<p><strong>For Azure Pipelines itself</strong>, when a pipeline is triggered, it needs to invoke computing resources to execute the pipeline’s logic. Specifically, a machine (agent) is responsible for executing a job.</p>
+<p>A job runs on only one agent, and it is not further divided. However, all jobs of a pipeline may be assigned to different agents for execution.</p>
+<p>How is this distribution of jobs accomplished?</p>
+<h1>Azure Pipelines Task Scheduling</h1>
+<p>Azure Pipelines task scheduling follows a typical distributed task scheduling model (similar technologies include <a href="http://www.quartz-scheduler.org/">QUARTZ</a> and <a href="https://github.com/xuxueli/xxl-job">xxl-job</a>):</p>
+<ul>
+<li>Azure Pipelines has a <strong>‘Task Queue’</strong> containing all pending <u>jobs</u> (referring to both the job/task in the task scheduling model and the job term in the pipeline).</li>
+<li>The agent is a worker that periodically checks whether there are jobs to run in the <strong>‘Task Queue’</strong>. If there are, some agent will compete to gain the right to execute that job while obtaining access to the relevant resources. At this point, it can start executing the job.</li>
+</ul>
+<p>Therefore, a pipeline is executed as follows:</p>
+<ol>
+<li>Trigger the pipeline. Azure Pipelines parses YAML, splits it into multiple jobs, and stores them in the <strong>‘Task Queue’</strong>.</li>
+<li>If there is an idle agent at this time (indicating that the <strong>‘Task Queue’</strong> was empty), it listens for the event that a new job is pushed to the queue and begins competing to execute that job with other agents (if any).
+<ul>
+<li>If successful, it starts execution.</li>
+<li>If unsuccessful, it continues to listen.</li>
+</ul>
+</li>
+<li>If there is no idle agent at this time (indicating that the <strong>‘Task Queue’</strong> previously had jobs or no agent completed its previously assigned job), these newly generated jobs will wait for an agent to execute them in an orderly manner (jobs are queued based on the time the pipeline was triggered, ensuring fairness).</li>
+</ol>
+<h1>Parallel Jobs</h1>
+<p>The task scheduling framework implies <strong>parallelism</strong>. This means that when defining YAML, <strong>steps or tasks without dependencies should be elevated to jobs, allowing them to run in parallel and reduce execution time</strong>.</p>
+<blockquote>
+<p>However, during internships, few people do this, and most people use the default step level, even when many agents are often idle. 🤔</p>
+</blockquote>
+<p>Now, since the immediate execution of a new job depends on the presence of idle agents, does increasing the number of agents improve overall throughput (the number of jobs completed in a unit of time)? Unfortunately, not really.</p>
+<p>After all, Microsoft needs to profit from Azure, so they introduced the concept of ‘Parallel Jobs’, indicating a limit to the number of jobs that can run in parallel. This limit requires purchasing.</p>
+<p>In other words, to run jobs in parallel, we not only need to purchase Azure VM agents but also Parallel Jobs. Even if we have many machines locally, we still need to buy Parallel Jobs.</p>
 <h1>Reference</h1>
 <ul>
-<li><a href="https://github.com/Lissy93/dashy">Dashy</a></li>
+<li><a href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/3-describe-azure-pipelines">Describe Azure Pipelines</a></li>
+<li><a href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/4-understand-key-terms">Understand Azure Pipelines key terms</a></li>
+<li><a href="https://learn.microsoft.com/en-us/training/modules/manage-azure-pipeline-agents-pools/7-communicate-with-azure-pipelines">Communicate with Azure Pipelines</a></li>
+<li><a href="https://azure.microsoft.com/en-us/products/devops/pipelines#overview">Azure Pipelines Product Overview</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents">Azure Pipelines agents</a></li>
 </ul>
 ]]></content>
       <categories>
         <category>tech</category>
-        <category>NAS</category>
-        <category>Docker</category>
+        <category>Azure</category>
       </categories>
       <tags>
-        <tag>NAS</tag>
-        <tag>Docker</tag>
-        <tag>Dashy</tag>
+        <tag>Azure</tag>
+        <tag>Azure Pipelines</tag>
+        <tag>Architecture</tag>
       </tags>
   </entry>
   <entry>
@@ -591,6 +591,7 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network create my_network</span><br><span class="line">docker run -d --name web --network my_network mywebapp</span><br><span class="line">docker run -d --name db --network my_network mysql</span><br></pre></td></tr></table></figure>
 <p>两种情况下，都可以通过容器名访问（使用容器端口）。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl http://web:80</span><br></pre></td></tr></table></figure>
+<p><strong>注意，如果目标容器在 bridge 网络中，则不属于这种情况。需要通过 IP 访问。</strong></p>
 <h2 id="两者不在同一个网络中">两者不在同一个网络中</h2>
 <p>需要使用目标容器的 IP。</p>
 <p>首先获得容器 IP，然后通过 IP 访问：</p>
@@ -616,6 +617,173 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </categories>
       <tags>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker: healthcheck and depends_on</title>
+    <url>/en/2024/06/03/Docker-Healthcheck/</url>
+    <content><![CDATA[<h1>Introduction</h1>
+<p>This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s <code>depends_on</code>. This post can be viewd as a cheat sheet.</p>
+<h1>healthcheck Mechanism</h1>
+<blockquote>
+<p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
+</blockquote>
+<span id="more"></span>
+<p>healthcheck has the following parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--interval=DURATION</code></td>
+<td><code>30s</code></td>
+<td>Interval between healthchecks.</td>
+</tr>
+<tr>
+<td><code>--timeout=DURATION</code></td>
+<td><code>30s</code></td>
+<td>How long to wait for the healthcheck to complete. If it exceeds this time, it’s considered a failure.</td>
+</tr>
+<tr>
+<td><code>--retries=N</code></td>
+<td><code>3</code></td>
+<td>After <code>retries</code> consecutive failures, the container status changes to <code>unhealthy</code>.</td>
+</tr>
+<tr>
+<td><code>--start-period=DURATION</code></td>
+<td><code>0s</code></td>
+<td>Failures during this period are not counted towards the <code>retries</code> limit. However, once a healthcheck succeeds, the container is considered started and the start period ends automatically.</td>
+</tr>
+<tr>
+<td><code>--start-interval=DURATION</code></td>
+<td><code>5s</code></td>
+<td>Interval between healthchecks during the start period.</td>
+</tr>
+</tbody>
+</table>
+<p>After the container starts, it is in the <code>starting</code> state, i.e., the start period. During the start period, the container can only become <code>healthy</code>, not <code>unhealthy</code>.</p>
+<h1>healthcheck Syntax</h1>
+<h2 id="Syntax">Syntax</h2>
+<blockquote>
+<p>This post focuses on the syntax in Compose, not in Dockerfile or CLI.</p>
+</blockquote>
+<p>A healthcheck in Compose will override the one in Dockerfile.</p>
+<p>An Example:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">interval:</span> <span class="string">1m30s</span></span><br><span class="line">  <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">start_period:</span> <span class="string">40s</span></span><br><span class="line">  <span class="attr">start_interval:</span> <span class="string">5s</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>test</code> defines the command Compose runs to check container health. It can be <strong>either a string or a list</strong>.</p>
+<p>If it’s a list, the first item must be either <code>NONE</code>, <code>CMD</code> or <code>CMD-SHELL</code>.</p>
+<p>If it’s a string, it’s equivalent to specifying <code>CMD-SHELL</code> followed by that string.</p>
+</blockquote>
+<p>The following two forms are equivalent:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;curl -f http://localhost || exit 1&quot;</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>Clearly, the second form is more convenient.</p>
+<h2 id="Debugging-test-Command">Debugging <code>test</code> Command</h2>
+<p>Common <code>test</code> command templates can be found in <a href="/en/2024/04/12/MySQL-Docker/#healthcheck">the previous post</a>. How to debug our <code>test</code> command? Use <code>docker inspect</code>. Healthcheck information is in <code>State.Health</code>, and we can get it with the following command:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker inspect --format=<span class="string">&#x27;&#123;&#123;json .State.Health&#125;&#125;&#x27;</span> container</span><br></pre></td></tr></table></figure>
+<p>An example:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;healthy&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;FailingStreak&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Log&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.110841425+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.178282083+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.208737778+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.261481813+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>Attributes of the <code>Log</code> element:</p>
+<ul>
+<li><code>Output</code>: The output of the command, used for debugging.</li>
+<li><code>Exitcode</code>: <code>0</code> indicates the container is healthy, <code>1</code> indicates it is unhealthy.</li>
+</ul>
+<h2 id="Disabling-healthcheck">Disabling healthcheck</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">disable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h1>depends_on Mechanism</h1>
+<blockquote>
+<p>You can <strong>control the order of service startup and shutdown</strong> with the <code>depends_on</code> attribute. Compose always starts and stops containers in dependency order.</p>
+<p>It is useful if services are closely coupled, and the startup sequence impacts the application’s functionality.</p>
+</blockquote>
+<p>Note that <code>depends_on</code> only indicates startup order and does not guarantee the container starting earlier is ready.</p>
+<blockquote>
+<p>On startup, Compose <strong>does not wait until a container is “ready”, only until it’s running</strong>.</p>
+</blockquote>
+<p>By setting the <code>condition</code> attribute of <code>depends_on</code>, you can specify when container B, which is dependent on container A, will start. This attribute has the following values:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>service_started</code></td>
+<td>Default value, B starts after A starts.</td>
+</tr>
+<tr>
+<td><code>service_healthy</code></td>
+<td>B starts after A is <code>healthy</code>.</td>
+</tr>
+<tr>
+<td><code>service_completed_successfully</code></td>
+<td>B starts after A successfully completes its <code>command</code>. Here, A typically executes a command/script and stops after completion. A successful exit is indicated by exit code 0. Check this <a href="https://stackoverflow.com/a/69612290/23172420">specific example</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, to achieve truly ordered startup of multiple containers as services in Compose, use the healthcheck mechanism and set <code>condition</code> to <code>service_healthy</code>.</p>
+<hr>
+<p>Note that using <code>depends_on</code> is only effective when using <code>docker compose up|start</code>. If the container’s <code>restart</code> policy is set to <code>unless-stopped</code> or <code>always</code>, these containers <strong>will not</strong> restart in <code>depends_on</code> order after the server restarts.</p>
+<h1>depends_on Syntax</h1>
+<h2 id="Simple-Configuration">Simple Configuration</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
+<p>Here, the <code>condition</code> defaults to <code>service_started</code>.</p>
+<h2 id="Detailed-Configuration">Detailed Configuration</h2>
+<p>This kind of configuration allows specifying the <code>condition</code>.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">      <span class="attr">redis:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_started</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
+<h1>References</h1>
+<ul>
+<li><a href="https://docs.docker.com/reference/dockerfile/#healthcheck">Dockerfile HEALTHCHECK</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/05-services/#healthcheck">Docker compose healthcheck</a></li>
+<li><a href="https://docs.docker.com/compose/startup-order/">Control startup and shutdown order in Compose</a></li>
+<li><a href="https://stackoverflow.com/a/69612290/23172420">How to start service only when other service had completed?</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/05-services/#depends_on">Docker compose depends_on</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Docker</category>
+        <category>cheat sheet</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo自定义404页面</title>
+    <url>/en/2023/07/04/Hexo-custom-404/</url>
+    <content><![CDATA[<h1>自定义 404 页面</h1>
+<p>首先，创建一个名为 <code>404</code> 的 post</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new <span class="number">404</span></span><br></pre></td></tr></table></figure>
+<p>在对应的 md 文件中，我们可以自定义 404 页面。由于 Hexo 框架的特性，我们可以编写 JS 脚本，让页面动起来。</p>
+<p>这里给出<a href="/404" target="_blank">我的 404 页面</a>。可以看到，上面有一个倒计时。当倒计时为 0 时，会自动跳转到首页。当然，用户也可以手动点击，从而返回首页。</p>
+<p>下面是对应的代码，直接放在 md 文件中即可：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./../js/jquery-3.3.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>您正在访问一个不存在的地址🤔<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>系统会在 <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;seconds&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span> 秒后自动跳转到首页,<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span> 您也可以点此 <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_self&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span> &gt;</span>链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>, 手动跳转!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="built_in">setInterval</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> seconds = $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript">            $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>(--seconds);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (seconds == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                location.<span class="property">href</span> = <span class="string">&quot;/&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我选择将 jQuery 代码放在本地，这样页面响应更快。</p>
+<p>jQuery 在这里只是用于获取 DOM 对象，因此也完全可以用原生 JS 函数来写。</p>
+<h1>如何让网站跳转到自定义页面？</h1>
+<span id="more"></span>
+<p>注意：以下方法仅限于 Github Pages，其他平台的方式可能不同。</p>
+<p>在<code>front-matter</code>中添加如下内容，Github Pages 就能设置该页面为 404 页面</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">permalink:</span> <span class="string">/404.html</span></span><br></pre></td></tr></table></figure>
+<p>不妨随机访问一个不存在的网页？看看效果如何：▶ <a href="/hsfh/40u235u/jasdlafn" target="_blank">点我</a></p>
+<h1>参考文章</h1>
+<p><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site">Creating a custom 404 page for your GitHub Pages site</a></p>
+<p><a href="https://theme-next.js.org/docs/theme-settings/custom-pages.html#Custom-404-Page">theme-next: custom-pages</a></p>
+]]></content>
+      <categories>
+        <category>softwares</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -792,181 +960,14 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
         <tag>NAS</tag>
         <tag>Docker</tag>
         <tag>Glances</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo自定义404页面</title>
-    <url>/en/2023/07/04/Hexo-custom-404/</url>
-    <content><![CDATA[<h1>自定义 404 页面</h1>
-<p>首先，创建一个名为 <code>404</code> 的 post</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new <span class="number">404</span></span><br></pre></td></tr></table></figure>
-<p>在对应的 md 文件中，我们可以自定义 404 页面。由于 Hexo 框架的特性，我们可以编写 JS 脚本，让页面动起来。</p>
-<p>这里给出<a href="/404" target="_blank">我的 404 页面</a>。可以看到，上面有一个倒计时。当倒计时为 0 时，会自动跳转到首页。当然，用户也可以手动点击，从而返回首页。</p>
-<p>下面是对应的代码，直接放在 md 文件中即可：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./../js/jquery-3.3.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>您正在访问一个不存在的地址🤔<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>系统会在 <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;seconds&quot;</span>&gt;</span>10<span class="tag">&lt;/<span class="name">span</span>&gt;</span> 秒后自动跳转到首页,<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span> 您也可以点此 <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_self&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span> &gt;</span>链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>, 手动跳转!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="built_in">setInterval</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> seconds = $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript">            $(<span class="string">&quot;#seconds&quot;</span>).<span class="title function_">text</span>(--seconds);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (seconds == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                location.<span class="property">href</span> = <span class="string">&quot;/&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我选择将 jQuery 代码放在本地，这样页面响应更快。</p>
-<p>jQuery 在这里只是用于获取 DOM 对象，因此也完全可以用原生 JS 函数来写。</p>
-<h1>如何让网站跳转到自定义页面？</h1>
-<span id="more"></span>
-<p>注意：以下方法仅限于 Github Pages，其他平台的方式可能不同。</p>
-<p>在<code>front-matter</code>中添加如下内容，Github Pages 就能设置该页面为 404 页面</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">permalink:</span> <span class="string">/404.html</span></span><br></pre></td></tr></table></figure>
-<p>不妨随机访问一个不存在的网页？看看效果如何：▶ <a href="/hsfh/40u235u/jasdlafn" target="_blank">点我</a></p>
-<h1>参考文章</h1>
-<p><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site">Creating a custom 404 page for your GitHub Pages site</a></p>
-<p><a href="https://theme-next.js.org/docs/theme-settings/custom-pages.html#Custom-404-Page">theme-next: custom-pages</a></p>
-]]></content>
-      <categories>
-        <category>softwares</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker: healthcheck and depends_on</title>
-    <url>/en/2024/06/03/Docker-Healthcheck/</url>
-    <content><![CDATA[<h1>Introduction</h1>
-<p>This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s <code>depends_on</code>. This post can be viewd as a cheat sheet.</p>
-<h1>healthcheck Mechanism</h1>
-<blockquote>
-<p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
-</blockquote>
-<span id="more"></span>
-<p>healthcheck has the following parameters:</p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--interval=DURATION</code></td>
-<td><code>30s</code></td>
-<td>Interval between healthchecks.</td>
-</tr>
-<tr>
-<td><code>--timeout=DURATION</code></td>
-<td><code>30s</code></td>
-<td>How long to wait for the healthcheck to complete. If it exceeds this time, it’s considered a failure.</td>
-</tr>
-<tr>
-<td><code>--retries=N</code></td>
-<td><code>3</code></td>
-<td>After <code>retries</code> consecutive failures, the container status changes to <code>unhealthy</code>.</td>
-</tr>
-<tr>
-<td><code>--start-period=DURATION</code></td>
-<td><code>0s</code></td>
-<td>Failures during this period are not counted towards the <code>retries</code> limit. However, once a healthcheck succeeds, the container is considered started and the start period ends automatically.</td>
-</tr>
-<tr>
-<td><code>--start-interval=DURATION</code></td>
-<td><code>5s</code></td>
-<td>Interval between healthchecks during the start period.</td>
-</tr>
-</tbody>
-</table>
-<p>After the container starts, it is in the <code>starting</code> state, i.e., the start period. During the start period, the container can only become <code>healthy</code>, not <code>unhealthy</code>.</p>
-<h1>healthcheck Syntax</h1>
-<h2 id="Syntax">Syntax</h2>
-<blockquote>
-<p>This post focuses on the syntax in Compose, not in Dockerfile or CLI.</p>
-</blockquote>
-<p>A healthcheck in Compose will override the one in Dockerfile.</p>
-<p>An Example:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">interval:</span> <span class="string">1m30s</span></span><br><span class="line">  <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">start_period:</span> <span class="string">40s</span></span><br><span class="line">  <span class="attr">start_interval:</span> <span class="string">5s</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>test</code> defines the command Compose runs to check container health. It can be <strong>either a string or a list</strong>.</p>
-<p>If it’s a list, the first item must be either <code>NONE</code>, <code>CMD</code> or <code>CMD-SHELL</code>.</p>
-<p>If it’s a string, it’s equivalent to specifying <code>CMD-SHELL</code> followed by that string.</p>
-</blockquote>
-<p>The following two forms are equivalent:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;curl -f http://localhost || exit 1&quot;</span>]</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>Clearly, the second form is more convenient.</p>
-<h2 id="Debugging-test-Command">Debugging <code>test</code> Command</h2>
-<p>Common <code>test</code> command templates can be found in <a href="/en/2024/04/12/MySQL-Docker/#healthcheck">the previous post</a>. How to debug our <code>test</code> command? Use <code>docker inspect</code>. Healthcheck information is in <code>State.Health</code>, and we can get it with the following command:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker inspect --format=<span class="string">&#x27;&#123;&#123;json .State.Health&#125;&#125;&#x27;</span> container</span><br></pre></td></tr></table></figure>
-<p>An example:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;healthy&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;FailingStreak&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Log&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.110841425+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.178282083+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.208737778+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.261481813+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>Attributes of the <code>Log</code> element:</p>
-<ul>
-<li><code>Output</code>: The output of the command, used for debugging.</li>
-<li><code>Exitcode</code>: <code>0</code> indicates the container is healthy, <code>1</code> indicates it is unhealthy.</li>
-</ul>
-<h2 id="Disabling-healthcheck">Disabling healthcheck</h2>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">disable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h1>depends_on Mechanism</h1>
-<blockquote>
-<p>You can <strong>control the order of service startup and shutdown</strong> with the <code>depends_on</code> attribute. Compose always starts and stops containers in dependency order.</p>
-<p>It is useful if services are closely coupled, and the startup sequence impacts the application’s functionality.</p>
-</blockquote>
-<p>Note that <code>depends_on</code> only indicates startup order and does not guarantee the container starting earlier is ready.</p>
-<blockquote>
-<p>On startup, Compose <strong>does not wait until a container is “ready”, only until it’s running</strong>.</p>
-</blockquote>
-<p>By setting the <code>condition</code> attribute of <code>depends_on</code>, you can specify when container B, which is dependent on container A, will start. This attribute has the following values:</p>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>service_started</code></td>
-<td>Default value, B starts after A starts.</td>
-</tr>
-<tr>
-<td><code>service_healthy</code></td>
-<td>B starts after A is <code>healthy</code>.</td>
-</tr>
-<tr>
-<td><code>service_completed_successfully</code></td>
-<td>B starts after A successfully completes its <code>command</code>. Here, A typically executes a command/script and stops after completion. A successful exit is indicated by exit code 0. Check this <a href="https://stackoverflow.com/a/69612290/23172420">specific example</a>.</td>
-</tr>
-</tbody>
-</table>
-<p>Therefore, to achieve truly ordered startup of multiple containers as services in Compose, use the healthcheck mechanism and set <code>condition</code> to <code>service_healthy</code>.</p>
-<hr>
-<p>Note that using <code>depends_on</code> is only effective when using <code>docker compose up|start</code>. If the container’s <code>restart</code> policy is set to <code>unless-stopped</code> or <code>always</code>, these containers <strong>will not</strong> restart in <code>depends_on</code> order after the server restarts.</p>
-<h1>depends_on Syntax</h1>
-<h2 id="Simple-Configuration">Simple Configuration</h2>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
-<p>Here, the <code>condition</code> defaults to <code>service_started</code>.</p>
-<h2 id="Detailed-Configuration">Detailed Configuration</h2>
-<p>This kind of configuration allows specifying the <code>condition</code>.</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">      <span class="attr">redis:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_started</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
-<h1>References</h1>
-<ul>
-<li><a href="https://docs.docker.com/reference/dockerfile/#healthcheck">Dockerfile HEALTHCHECK</a></li>
-<li><a href="https://docs.docker.com/compose/compose-file/05-services/#healthcheck">Docker compose healthcheck</a></li>
-<li><a href="https://docs.docker.com/compose/startup-order/">Control startup and shutdown order in Compose</a></li>
-<li><a href="https://stackoverflow.com/a/69612290/23172420">How to start service only when other service had completed?</a></li>
-<li><a href="https://docs.docker.com/compose/compose-file/05-services/#depends_on">Docker compose depends_on</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Docker</category>
-        <category>cheat sheet</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -1435,8 +1436,8 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
@@ -1509,8 +1510,8 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
@@ -1518,6 +1519,74 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>Docker</tag>
         <tag>Jellyfin</tag>
         <tag>LANraragi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jellyfin 自定义扫描频率</title>
+    <url>/en/2024/06/11/Jellyfin-custom-scan-frequency/</url>
+    <content><![CDATA[<h1>序言</h1>
+<p>在<a href="/2024/02/20/LANraragi-Using-Experience">之前的文章</a>中，我提到“Jellyfin 计划任务『扫描媒体库』并不吃资源，频繁运行也没事”。实际上，这不准确。这个任务对于资源的占用取决于媒体/文件的数量。</p>
+<p>最近我写了一个项目，用来爬取视频，同时自动生成 nfo 文件和视频海报。在这个新的视频目录中，最多有 2000 个文件（大部分是 nfo 和海报图片，视频还没怎么下载），有四级子目录。但此时计划任务的 CPU 占用量已经大幅增加。这显然有问题。</p>
+<p>经过一番研究，我发现使用 crontab 定时调用 Jellyfin API，是目前唯一实现不同媒体库不同扫描频率的解决方案。</p>
+<span id="more"></span>
+<h1>步骤</h1>
+<h2 id="关闭计划任务">关闭计划任务</h2>
+<p>进入『控制台 | 计划任务 | 扫描媒体库』，删除现有任务：</p>
+<p><img src="/MarkDownImages/image-20240611131240942.png" alt="image-20240611131240942"></p>
+<h2 id="申请一个-API-密钥">申请一个 API 密钥</h2>
+<p>进入『控制台 | API 密钥』，创建一个：</p>
+<p><img src="/MarkDownImages/image-20240611131529710.png" alt="image-20240611131529710"></p>
+<h2 id="获得-API-端口">获得 API 端口</h2>
+<p>我建议直接用 F12 抓包：</p>
+<img src="/MarkDownImages/image-20240611131657198.png" alt="image-20240611131657198" style="zoom:50%;" />
+<p>点击『刷新』前，先按下 F12。然后找到对应的请求</p>
+<img src="/MarkDownImages/image-20240611131710749.png" alt="image-20240611131710749" style="zoom: 33%;" />
+<p><code>/Items/媒体库ID/Refresh?扫描参数</code>，这个 URL 可以直接拿来用。</p>
+<p><img src="/MarkDownImages/image-20240611131902161.png" alt="image-20240611131902161"></p>
+<h2 id="crontab">crontab</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编辑</span></span><br><span class="line">crontab -e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
+<p>curl 格式如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -k -X POST <span class="string">&quot;https://IP地址:端口/Items/媒体库ID/Refresh?Recursive=true&amp;ImageRefreshMode=Default&amp;MetadataRefreshMode=Default&amp;ReplaceAllImages=false&amp;ReplaceAllMetadata=false&quot;</span> -H <span class="string">&quot;Authorization: MediaBrowser Token=API密钥&quot;</span></span><br></pre></td></tr></table></figure>
+<p>crontab 格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新番：每十分钟一次</span></span><br><span class="line">*/10 * * * * curl -k -X POST &quot;https://IP地址:端口/Items/媒体库ID/Refresh?Recursive=true&amp;ImageRefreshMode=Default&amp;MetadataRefreshMode=Default&amp;ReplaceAllImages=false&amp;ReplaceAllMetadata=false&quot; -H &quot;Authorization: MediaBrowser Token=API密钥&quot;</span><br></pre></td></tr></table></figure>
+<p>其他时间配置：</p>
+<ul>
+<li>每小时一次：<code>0 * * * *</code>；</li>
+<li>每周一次：比如 <code>0 17 * * 0</code>，每周天下午 5 点；</li>
+<li>每两周一次：比如 <code>0 11 1,15 * *</code>，每月1号和15号的早上11点；</li>
+</ul>
+<hr>
+<p>查看 crontab 的日志：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 使用journalctl</span> </span><br><span class="line">journalctl -u crond</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 直接查看日志文件，这个更全</span></span><br><span class="line">cat /var/log/cron</span><br></pre></td></tr></table></figure>
+<h1>实际效果</h1>
+<p><img src="/MarkDownImages/image-20240611154250550.png" alt="image-20240611154250550"></p>
+<blockquote>
+<p>这个软件是 NetData，我之后会写一篇关于它的博文。</p>
+</blockquote>
+<p>红色的是扫描爬取的视频的媒体库，而蓝色的是扫描本季新番的媒体库。</p>
+<p>可以看到：</p>
+<ul>
+<li>
+<p>蓝色的平均值不超过 5%，因此每十分钟执行一次没问题 —— 这个频率也可以及时地让 Jellyfin 刮削新下载好的番剧。</p>
+</li>
+<li>
+<p>如果按照之前 Jellyfin 的计划任务，所有媒体库都一小时扫描一次，那么对 CPU 的占用显然太大了。</p>
+</li>
+</ul>
+<h1>参考</h1>
+<ul>
+<li><a href="https://www.reddit.com/r/jellyfin/comments/jjxbko/disabling_automatic_scan_per_library/">Disabling automatic scan per library</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>NAS</category>
+        <category>tech</category>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>NAS</tag>
+        <tag>Docker</tag>
+        <tag>Jellyfin</tag>
       </tags>
   </entry>
   <entry>
@@ -1642,82 +1711,14 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
         <tag>NAS</tag>
         <tag>Docker</tag>
         <tag>LANraragi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Jellyfin 自定义扫描频率</title>
-    <url>/en/2024/06/11/Jellyfin-custom-scan-frequency/</url>
-    <content><![CDATA[<h1>序言</h1>
-<p>在<a href="/2024/02/20/LANraragi-Using-Experience">之前的文章</a>中，我提到“Jellyfin 计划任务『扫描媒体库』并不吃资源，频繁运行也没事”。实际上，这不准确。这个任务对于资源的占用取决于媒体/文件的数量。</p>
-<p>最近我写了一个项目，用来爬取视频，同时自动生成 nfo 文件和视频海报。在这个新的视频目录中，最多有 2000 个文件（大部分是 nfo 和海报图片，视频还没怎么下载），有四级子目录。但此时计划任务的 CPU 占用量已经大幅增加。这显然有问题。</p>
-<p>经过一番研究，我发现使用 crontab 定时调用 Jellyfin API，是目前唯一实现不同媒体库不同扫描频率的解决方案。</p>
-<span id="more"></span>
-<h1>步骤</h1>
-<h2 id="关闭计划任务">关闭计划任务</h2>
-<p>进入『控制台 | 计划任务 | 扫描媒体库』，删除现有任务：</p>
-<p><img src="/MarkDownImages/image-20240611131240942.png" alt="image-20240611131240942"></p>
-<h2 id="申请一个-API-密钥">申请一个 API 密钥</h2>
-<p>进入『控制台 | API 密钥』，创建一个：</p>
-<p><img src="/MarkDownImages/image-20240611131529710.png" alt="image-20240611131529710"></p>
-<h2 id="获得-API-端口">获得 API 端口</h2>
-<p>我建议直接用 F12 抓包：</p>
-<img src="/MarkDownImages/image-20240611131657198.png" alt="image-20240611131657198" style="zoom:50%;" />
-<p>点击『刷新』前，先按下 F12。然后找到对应的请求</p>
-<img src="/MarkDownImages/image-20240611131710749.png" alt="image-20240611131710749" style="zoom: 33%;" />
-<p><code>/Items/媒体库ID/Refresh?扫描参数</code>，这个 URL 可以直接拿来用。</p>
-<p><img src="/MarkDownImages/image-20240611131902161.png" alt="image-20240611131902161"></p>
-<h2 id="crontab">crontab</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编辑</span></span><br><span class="line">crontab -e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
-<p>curl 格式如下：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -k -X POST <span class="string">&quot;https://IP地址:端口/Items/媒体库ID/Refresh?Recursive=true&amp;ImageRefreshMode=Default&amp;MetadataRefreshMode=Default&amp;ReplaceAllImages=false&amp;ReplaceAllMetadata=false&quot;</span> -H <span class="string">&quot;Authorization: MediaBrowser Token=API密钥&quot;</span></span><br></pre></td></tr></table></figure>
-<p>crontab 格式如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新番：每十分钟一次</span></span><br><span class="line">*/10 * * * * curl -k -X POST &quot;https://IP地址:端口/Items/媒体库ID/Refresh?Recursive=true&amp;ImageRefreshMode=Default&amp;MetadataRefreshMode=Default&amp;ReplaceAllImages=false&amp;ReplaceAllMetadata=false&quot; -H &quot;Authorization: MediaBrowser Token=API密钥&quot;</span><br></pre></td></tr></table></figure>
-<p>其他时间配置：</p>
-<ul>
-<li>每小时一次：<code>0 * * * *</code>；</li>
-<li>每周一次：比如 <code>0 17 * * 0</code>，每周天下午 5 点；</li>
-<li>每两周一次：比如 <code>0 11 1,15 * *</code>，每月1号和15号的早上11点；</li>
-</ul>
-<hr>
-<p>查看 crontab 的日志：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 使用journalctl</span> </span><br><span class="line">journalctl -u crond</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 直接查看日志文件，这个更全</span></span><br><span class="line">cat /var/log/cron</span><br></pre></td></tr></table></figure>
-<h1>实际效果</h1>
-<p><img src="/MarkDownImages/image-20240611154250550.png" alt="image-20240611154250550"></p>
-<blockquote>
-<p>这个软件是 NetData，我之后会写一篇关于它的博文。</p>
-</blockquote>
-<p>红色的是扫描爬取的视频的媒体库，而蓝色的是扫描本季新番的媒体库。</p>
-<p>可以看到：</p>
-<ul>
-<li>
-<p>蓝色的平均值不超过 5%，因此每十分钟执行一次没问题 —— 这个频率也可以及时地让 Jellyfin 刮削新下载好的番剧。</p>
-</li>
-<li>
-<p>如果按照之前 Jellyfin 的计划任务，所有媒体库都一小时扫描一次，那么对 CPU 的占用显然太大了。</p>
-</li>
-</ul>
-<h1>参考</h1>
-<ul>
-<li><a href="https://www.reddit.com/r/jellyfin/comments/jjxbko/disabling_automatic_scan_per_library/">Disabling automatic scan per library</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>NAS</category>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>NAS</tag>
-        <tag>Docker</tag>
-        <tag>Jellyfin</tag>
       </tags>
   </entry>
   <entry>
@@ -1799,50 +1800,6 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
-    <title>Install and Use Metabase</title>
-    <url>/en/2024/05/02/Metabase-install-and-usage/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>Metabase is an open-source data analysis tool that is easy to operate and can connect to various data sources. Although its data analysis capabilities are not as powerful as Excel, Metabase is sufficient for daily use. Moreover, I am more capable of writing SQL than clicking Excel sheets, so Metabase is a good choice for me.</p>
-<span id="more"></span>
-<h1>Docker compose</h1>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">metabase:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">metabase/metabase:v0.49.5</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">metabase</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_TIMEZONE:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">42233</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">metabase_data:/metabase.db</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> <span class="string">out=$$(curl</span> <span class="string">localhost:3000/api/health);</span> <span class="string">echo</span> <span class="string">$$out</span> <span class="string">|</span> <span class="string">grep</span> <span class="string">&#x27;&quot;status&quot;:&quot;ok&quot;&#x27;</span> <span class="string">||</span> &#123; <span class="string">echo</span> <span class="string">$$out;</span> <span class="string">exit</span> <span class="number">1</span><span class="string">;</span> &#125;</span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">2m</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">metabase_data:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>Metabase uses the h2 database by default, stored in the <code>/metabase.db</code> directory. In the production environment, it is recommended to use MySQL or PostgreSQL (this step is not necessary for personal use).</li>
-</ul>
-<h1>Usage</h1>
-<p>You can refer to <a href="https://www.youtube.com/playlist?list=PL5ZlXxM-0LTF7jb-bn0vLv7IIS3Peg3YK">this tutorial</a> for basic usage of Metabase, which covers most types of charts and is suitable for beginners who have not been exposed to data analysis before.</p>
-<hr>
-<p>It is worth mentioning how to delete a question or dashboard:</p>
-<ul>
-<li>
-<p>First, archive the question or dashboard you want to delete:</p>
-<p><img src="/MarkDownImages/image-20240502141222546.png" alt="image-20240502141222546"></p>
-</li>
-<li>
-<p>Then go to the Archive page (or enter from <code>/archive</code>):</p>
-<p><img src="/MarkDownImages/image-20240502141306567.png" alt="image-20240502141306567"></p>
-</li>
-<li>
-<p>Click delete here:</p>
-<p><img src="/MarkDownImages/image-20240502141533004.png" alt="image-20240502141533004"></p>
-</li>
-</ul>
-<h1>References</h1>
-<ul>
-<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker">Metabase doc: Running Metabase on Docker</a></li>
-<li><a href="https://discourse.metabase.com/t/how-to-delete-charts-and-dashboards/5835">How to delete charts and dashboards？</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Metabase</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Automatically Copying Images When Inserting into Markdown – Using Typora and VS Code as Examples</title>
     <url>/en/2023/07/22/Markdown-Automatically-Copy-When-Inserting-Images-Using-Typora-and-VS-Code-as-Examples/</url>
     <content><![CDATA[<h1>Preface</h1>
@@ -1910,85 +1867,47 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
-    <title>Mapping MySQL JSON Fields with MyBatis-Plus</title>
-    <url>/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/</url>
+    <title>Install and Use Metabase</title>
+    <url>/en/2024/05/02/Metabase-install-and-usage/</url>
     <content><![CDATA[<h1>Preface</h1>
-<p>MySQL supports fields of type JSON. In comparison to string-type fields, JSON fields offer the following advantages:</p>
+<p>Metabase is an open-source data analysis tool that is easy to operate and can connect to various data sources. Although its data analysis capabilities are not as powerful as Excel, Metabase is sufficient for daily use. Moreover, I am more capable of writing SQL than clicking Excel sheets, so Metabase is a good choice for me.</p>
+<span id="more"></span>
+<h1>Docker compose</h1>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">metabase:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">metabase/metabase:v0.49.5</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">metabase</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_TIMEZONE:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">42233</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">metabase_data:/metabase.db</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> <span class="string">out=$$(curl</span> <span class="string">localhost:3000/api/health);</span> <span class="string">echo</span> <span class="string">$$out</span> <span class="string">|</span> <span class="string">grep</span> <span class="string">&#x27;&quot;status&quot;:&quot;ok&quot;&#x27;</span> <span class="string">||</span> &#123; <span class="string">echo</span> <span class="string">$$out;</span> <span class="string">exit</span> <span class="number">1</span><span class="string">;</span> &#125;</span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">2m</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">metabase_data:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>Automatic validation of JSON syntax</li>
-<li>Underlying support for quick access to elements within the JSON. There’s no need to read the entire string and then parse it into a JSON object.</li>
+<li>Metabase uses the h2 database by default, stored in the <code>/metabase.db</code> directory. In the production environment, it is recommended to use MySQL or PostgreSQL (this step is not necessary for personal use).</li>
 </ul>
-<p>Logically, JSON is no different from a POJO. Spring MVC has already implemented automatic conversion between the two at the Controller tier, evident in request parameters and return values. So, how can the Repository tier achieve automatic conversion?</p>
-<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping (ORM) between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
-<h1>Demo</h1>
-<h2 id="Table">Table</h2>
-<span id="more"></span>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE `person` (</span><br><span class="line">  `id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(255) NOT NULL,</span><br><span class="line">  `log` json NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
-<h2 id="Dependencies">Dependencies</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="entity">entity</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@TableName(value = &quot;person&quot;, autoResultMap = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TableField(typeHandler = JacksonTypeHandler.class)</span></span><br><span class="line">    <span class="keyword">private</span> PersonLog log;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PersonLog</span> &#123;</span><br><span class="line">        List&lt;String&gt; hobbies;</span><br><span class="line">        Integer age;</span><br><span class="line">        String address;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The <code>PersonLog</code> here is the focal point of our discussion, aiming to map it to JSON.</p>
-<p>The <code>Person</code> class needs two annotations, usually used together:</p>
-<p><code>TableName#autoResultMap</code>: Responsible for converting JSON to POJO during <strong>query</strong>.</p>
-<p><code>TableField#typeHandler</code>: Responsible for converting POJO to JSON during <strong>insert</strong>. Since spring-web-starter has already imported the Jackson dependency, we can directly use <code>JacksonTypeHandler</code>.</p>
-<h2 id="mapper-xml">mapper.xml</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.demo.mapper.PersonMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.example.demo.entity.Person&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;BIGINT&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;log&quot;</span> <span class="attr">property</span>=<span class="string">&quot;log&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;LONGVARCHAR&quot;</span> <span class="attr">typeHandler</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;Base_Column_List&quot;</span>&gt;</span></span><br><span class="line">        id, name, log</span><br><span class="line">    <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>In the mapper file, specify the full class name of the <code>typeHandler</code> for the <code>log</code> field.</p>
-<h2 id="Testing">Testing</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">PersonMapper</span> <span class="keyword">extends</span> <span class="title class_">BaseMapper</span>&lt;Person&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Service tier is omitted.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PersonController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PersonMapper personMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/json&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">testJSON2BeanMap</span><span class="params">(<span class="meta">@RequestBody</span> Person person)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.insert(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/json/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Person <span class="title function_">getPersonById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.selectById(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Test both methods; if no errors occur, it indicates success. We can also check the database after insertion.</p>
-<p>The <strong>non-intrusive ORM</strong> mentioned in the <a href="#Preface">Preface</a> implies that we don’t need to manually execute the conversion between JSON and <code>PersonLog</code> in the code.</p>
-<h1>Conclusion</h1>
-<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
-<p>My exploration of this issue originated from the requirements of a business logic during my internship. When I searched for information online, I found that the descriptions in the posts were not quite complete or intuitive. Therefore, I documented the solution and wrote this article.</p>
-<h1>Reference</h1>
-<p><a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">The JSON Data Type</a></p>
-<p><a href="https://blog.csdn.net/qq_33360626/article/details/119836835">mybatis-plus处理mysql中json格式方法</a></p>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Spring Boot</tag>
-        <tag>MySQL</tag>
-        <tag>MyBatis-Plus</tag>
-        <tag>JDBC</tag>
-        <tag>Repository</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Using Python venv</title>
-    <url>/en/2023/12/20/Python-venv-use/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>Python is renowned for its rich set of modules. However, unlike in Java development where Maven uses group Id, artifact Id, and version to uniquely identify a dependency, in practice, most Python projects differentiate modules <strong>solely</strong> by their names. Run <code>pip install &lt;module&gt;</code>, and you’ve got the module. But what about the module version? Most project requirements do not specify versions, leading to constant errors for those who run the project later.</p>
-<p>Hence, the concept of a weakened version number undoubtedly does more harm than good. How to solve this issue? By using venv (virtual environment).</p>
-<p>If you directly use <code>pip install</code>, all Python projects share these modules, leading to potential compatibility issues. Venv copies the original Python environment. The virtual environment runs only on the copied Python, and the installed modules exist only in that virtual environment. Multiple virtual environments are isolated from each other.</p>
 <h1>Usage</h1>
-<p>1️⃣Create venv:</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">python <span class="literal">-m</span> venv C:\Users\Gustav\Desktop\test\venv</span><br></pre></td></tr></table></figure>
-<p>The directory <code>C:\Users\Gustav\Desktop\test\venv</code> is the virtual environment.</p>
-<span id="more"></span>
-<p>2️⃣Activate:</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">venv\Scripts\activate</span><br></pre></td></tr></table></figure>
-<p>If <code>(venv)</code> appears in front of the prompt, it means activation is successful, and you can now freely work inside.</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;pip list</span><br></pre></td></tr></table></figure>
-<p>3️⃣Deactivate:</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;deactivate</span><br><span class="line">C:\Users\Gustav\Desktop\test&gt;</span><br></pre></td></tr></table></figure>
-<h1>Reference</h1>
-<p><a href="https://docs.python.org/3/library/venv.html">venv — Creation of virtual environments</a></p>
+<p>You can refer to <a href="https://www.youtube.com/playlist?list=PL5ZlXxM-0LTF7jb-bn0vLv7IIS3Peg3YK">this tutorial</a> for basic usage of Metabase, which covers most types of charts and is suitable for beginners who have not been exposed to data analysis before.</p>
+<hr>
+<p>It is worth mentioning how to delete a question or dashboard:</p>
+<ul>
+<li>
+<p>First, archive the question or dashboard you want to delete:</p>
+<p><img src="/MarkDownImages/image-20240502141222546.png" alt="image-20240502141222546"></p>
+</li>
+<li>
+<p>Then go to the Archive page (or enter from <code>/archive</code>):</p>
+<p><img src="/MarkDownImages/image-20240502141306567.png" alt="image-20240502141306567"></p>
+</li>
+<li>
+<p>Click delete here:</p>
+<p><img src="/MarkDownImages/image-20240502141533004.png" alt="image-20240502141533004"></p>
+</li>
+</ul>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker">Metabase doc: Running Metabase on Docker</a></li>
+<li><a href="https://discourse.metabase.com/t/how-to-delete-charts-and-dashboards/5835">How to delete charts and dashboards？</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>tech</category>
-        <category>Python</category>
+        <category>Docker</category>
       </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>venv</tag>
+        <tag>Docker</tag>
+        <tag>Metabase</tag>
       </tags>
   </entry>
   <entry>
@@ -2048,64 +1967,55 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
-    <title>Automatic Validation of Request Parameters in Spring MVC</title>
-    <url>/en/2023/07/05/Spring-MVC-Automatic-Validation-of-Request-Parameters-Using-Validation-Annotations/</url>
+    <title>Mapping MySQL JSON Fields with MyBatis-Plus</title>
+    <url>/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/</url>
     <content><![CDATA[<h1>Preface</h1>
-<p>The controller methods (handlers) are responsible for validating request parameters.</p>
-<p>In traditional approaches, validation of request parameters is performed at the beginning of each method. If any parameter fails to meet the conditions, an exception is thrown, or an HTTP error is returned early.</p>
-<p>The Validation API provides a series of annotations. By placing these annotations on the properties of an entity class, Spring MVC automatically performs request parameter validation based on the semantics of these annotations. If a parameter does not meet the conditions, an exception is thrown. This saves developers from manually validating request parameters.</p>
-<p>The class responsible for automatic parameter validation is actually imported by Spring Boot through automatic configuration, so we need to use the corresponding starter dependencies.</p>
+<p>MySQL supports fields of type JSON. In comparison to string-type fields, JSON fields offer the following advantages:</p>
+<ul>
+<li>Automatic validation of JSON syntax</li>
+<li>Underlying support for quick access to elements within the JSON. There’s no need to read the entire string and then parse it into a JSON object.</li>
+</ul>
+<p>Logically, JSON is no different from a POJO. Spring MVC has already implemented automatic conversion between the two at the Controller tier, evident in request parameters and return values. So, how can the Repository tier achieve automatic conversion?</p>
+<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping (ORM) between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
 <h1>Demo</h1>
-<h2 id="Dependencies">Dependencies</h2>
+<h2 id="Table">Table</h2>
 <span id="more"></span>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-validation<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>validation-api</code> is the focus of this post.</p>
-<img src="/MarkDownImages/image-20230705200537754.png" alt="image-20230705200537754" style="zoom:80%;" />
-<h2 id="Project-Structure">Project Structure</h2>
-<p>A standard Spring Boot project generated by Spring Initializer.</p>
-<img src="/MarkDownImages/image-20230705200916180.png" alt="image-20230705200916180" style="zoom: 80%;" />
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE `person` (</span><br><span class="line">  `id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(255) NOT NULL,</span><br><span class="line">  `log` json NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
+<h2 id="Dependencies">Dependencies</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="entity">entity</h2>
-<h3 id="User">User</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.gustav.springmvcvalidatordemo.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    <span class="meta">@Size(max = 5, message = &quot;Name cannot exceed 5 characters&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Min(value = 0, message = &quot;Age cannot be less than 0&quot;)</span></span><br><span class="line">    <span class="meta">@Max(value = 200, message = &quot;Age cannot be greater than 200&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><code>@NotBlank</code>: Used on properties of type <code>CharSequence</code>, indicating that the field is non-empty and must have a length of at least 1.</p>
-<p><code>@Size</code>: Used on properties of type <code>CharSequence</code> and collection classes, indicating the number of characters/elements in the field. <code>max = 5</code> is the upper bound, and the value cannot exceed this limit. When the property value does not meet the conditions, Spring MVC throws an exception. If the <code>message</code> property is set, the exception content will include the value of <code>message</code>.</p>
-<p><code>@NotNull</code>: Literally means the field cannot be <code>null</code>.</p>
-<p><code>@Min</code>, <code>@Max</code>: Used on numeric types to constrain the size of the numeric value.</p>
-<h3 id="Pet">Pet</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.gustav.springmvcvalidatordemo.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Pet</span> &#123;</span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    <span class="keyword">private</span> String type;</span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="UserAndPet">UserAndPet</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.gustav.springmvcvalidatordemo.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.Valid;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserAndPet</span> &#123;</span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Valid</span> <span class="comment">// This annotation ensures that the fields inside the User class are also validated</span></span><br><span class="line">    <span class="keyword">private</span> User user;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Valid</span></span><br><span class="line">    <span class="keyword">private</span> Pet pet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The <code>@Valid</code> annotation tells Spring MVC that the class it annotates also has fields that need validation.</p>
-<h2 id="controller">controller</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.gustav.springmvcvalidatordemo.Controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.gustav.springmvcvalidatordemo.entity.UserAndPet;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.validation.annotation.Validated;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoController</span> &#123;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/test&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> UserAndPet <span class="title function_">test</span><span class="params">(<span class="meta">@Validated</span> <span class="meta">@RequestBody</span> UserAndPet userAndPet)</span> &#123;</span><br><span class="line">        System.out.println(userAndPet);</span><br><span class="line">        <span class="keyword">return</span> userAndPet;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>@Validated</code> instructs Spring MVC that the current request parameters need to be validated.</p>
-<h2 id="Sending-Requests-Using-Postman">Sending Requests Using Postman</h2>
-<h3 id="Valid-Request">Valid Request</h3>
-<p>The request body is as follows:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;adam&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">15</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pet&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cat&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;east wind&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<img src="/MarkDownImages/image-20230705202651511.png" alt="image-20230705202651511" style="zoom:67%;" />
-<h3 id="Invalid-Request">Invalid Request</h3>
-<p>Intentionally exceeding the length limit of <code>user.name</code>. The request body is as follows:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;adam williams&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">15</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pet&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cat&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;east wind&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>The server returns a 400 error.</p>
-<p><img src="/MarkDownImages/image-20230705202748075.png" alt="image-20230705202748075"></p>
-<p>The server throws a <code>MethodArgumentNotValidException</code> exception. The content indicates that <code>user.name</code> is an illegal parameter, and our custom <code>message</code> is also displayed.</p>
-<p><img src="/MarkDownImages/image-20230705202916086.png" alt="image-20230705202916086"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@TableName(value = &quot;person&quot;, autoResultMap = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TableField(typeHandler = JacksonTypeHandler.class)</span></span><br><span class="line">    <span class="keyword">private</span> PersonLog log;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PersonLog</span> &#123;</span><br><span class="line">        List&lt;String&gt; hobbies;</span><br><span class="line">        Integer age;</span><br><span class="line">        String address;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>PersonLog</code> here is the focal point of our discussion, aiming to map it to JSON.</p>
+<p>The <code>Person</code> class needs two annotations, usually used together:</p>
+<p><code>TableName#autoResultMap</code>: Responsible for converting JSON to POJO during <strong>query</strong>.</p>
+<p><code>TableField#typeHandler</code>: Responsible for converting POJO to JSON during <strong>insert</strong>. Since spring-web-starter has already imported the Jackson dependency, we can directly use <code>JacksonTypeHandler</code>.</p>
+<h2 id="mapper-xml">mapper.xml</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.demo.mapper.PersonMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.example.demo.entity.Person&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;BIGINT&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;log&quot;</span> <span class="attr">property</span>=<span class="string">&quot;log&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;LONGVARCHAR&quot;</span> <span class="attr">typeHandler</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;Base_Column_List&quot;</span>&gt;</span></span><br><span class="line">        id, name, log</span><br><span class="line">    <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In the mapper file, specify the full class name of the <code>typeHandler</code> for the <code>log</code> field.</p>
+<h2 id="Testing">Testing</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">PersonMapper</span> <span class="keyword">extends</span> <span class="title class_">BaseMapper</span>&lt;Person&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Service tier is omitted.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PersonController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PersonMapper personMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/json&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">testJSON2BeanMap</span><span class="params">(<span class="meta">@RequestBody</span> Person person)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.insert(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/json/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Person <span class="title function_">getPersonById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.selectById(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Test both methods; if no errors occur, it indicates success. We can also check the database after insertion.</p>
+<p>The <strong>non-intrusive ORM</strong> mentioned in the <a href="#Preface">Preface</a> implies that we don’t need to manually execute the conversion between JSON and <code>PersonLog</code> in the code.</p>
 <h1>Conclusion</h1>
-<p>By using Validation annotations, we can easily implement request parameter validation without writing a lot of code.</p>
-<p>Imagine if we were to validate request parameters using traditional approach. Just validating <code>user.name</code> would require writing a lot of code:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/test&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> UserAndPet <span class="title function_">test</span><span class="params">(<span class="meta">@Validated</span> <span class="meta">@RequestBody</span> UserAndPet userAndPet)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (userAndPet == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (userAndPet.getUser() == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> userAndPet.getUser().getName();</span><br><span class="line">    <span class="keyword">if</span> (!(name != <span class="literal">null</span> &amp;&amp; name.length() &gt;= <span class="number">1</span> &amp;&amp; name.length() &lt;= <span class="number">5</span>)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Validate other request parameters</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Business logic</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Note that this convenient validation is based on the foundation of Spring MVC and Spring Boot. What classes Spring Boot automatically configures, and how Spring MVC uses these classes to do request parameter validation, are beyond the scope of this article. Readers can read the source code on their own or explore other articles.</p>
+<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
+<p>My exploration of this issue originated from the requirements of a business logic during my internship. When I searched for information online, I found that the descriptions in the posts were not quite complete or intuitive. Therefore, I documented the solution and wrote this article.</p>
+<h1>Reference</h1>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">The JSON Data Type</a></p>
+<p><a href="https://blog.csdn.net/qq_33360626/article/details/119836835">mybatis-plus处理mysql中json格式方法</a></p>
 ]]></content>
       <categories>
         <category>tech</category>
         <category>Java</category>
       </categories>
       <tags>
+        <tag>MySQL</tag>
         <tag>Java</tag>
         <tag>Spring Boot</tag>
-        <tag>Spring MVC</tag>
-        <tag>Controller</tag>
+        <tag>MyBatis-Plus</tag>
+        <tag>JDBC</tag>
+        <tag>Repository</tag>
       </tags>
   </entry>
   <entry>
@@ -2152,52 +2062,6 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>PotPlayer</tag>
         <tag>Nvidia</tag>
         <tag>VSR</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Display Original Filenames in Jellyfin</title>
-    <url>/en/2024/02/17/jellyfin-original-filename/</url>
-    <content><![CDATA[<h1>Preface</h1>
-<p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
-<p>To fit this demand, I have created a script using <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> to batch rename all media in a specific media library. Additionally, this article explores some previous solutions, none of which were satisfactory in my opinion.</p>
-<span id="more"></span>
-<h1>Existing Solution 1</h1>
-<p>When creating a media library, choose ‘Music Videos’ as its content type and select ‘Prefer embedded titles over filenames’.</p>
-<p>What is this “embedded title”? Open the ‘Properties’ of a video and go to ‘Details’.</p>
-<p><img src="/MarkDownImages/image-20240217135326419.png" alt="image-20240217135326419"></p>
-<p>Any content in the ‘Title’ field will be displayed as the media title in Jellyfin without any modifications. However, this approach has two issues:</p>
-<p>1️⃣ For most anime published, the values of their ‘Title’ are their series names, as shown in the image, lacking episode numbers, making it hard for me to distinguish.</p>
-<p>This issue can be easily solved by copying the file name to ‘Title’ or clearing the ‘Title’ field. In either case, the original filename will be displayed eventually. For automation in Python, the <a href="https://github.com/quodlibet/mutagen">mutagen</a> module is handy to use.</p>
-<p>2️⃣ Media libraries of type ‘Music Videos’ cannot display folder structures, which I find unacceptable. In fact, only ‘Mixed Movies and Shows’ will be presented in a pure folder format.</p>
-<h1>Existing Solution 2</h1>
-<p>Directly modify the database, as referenced in <a href="https://www.cnblogs.com/toumingbai/p/15514526.html">‘Manually Correcting Titles to File (Folder) Names’</a>。</p>
-<p>Bypassing the Service Tier to directly manipulate the database is too risky. I will never use this approach.</p>
-<h1>My Solution</h1>
-<p>Since directly manipulating the database in Solution 2 is bad, why not use the Jellyfin API?</p>
-<p>The first step is to find which API corresponds to the required functionality. Instead of referring to the official documentation first, inspect the browser’s network traffic in Developer tools and then refer to the documentation. However, in most cases, the documentation is still useless, because there is no description. Under such circumstances, we need perform experiments to guess the usage of an API.</p>
-<p>Fortunately, <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> provides a ready-made API, eliminating the need to start from <code>requests</code>. I quickly completed the script:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python <span class="keyword">import</span> JellyfinClient</span><br><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python.api <span class="keyword">import</span> API</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_to_filename</span>(<span class="params">jellyfin: API, item_id: <span class="built_in">str</span></span>):</span><br><span class="line">    metadata: <span class="built_in">dict</span> = jellyfin.get_item(item_id)</span><br><span class="line">    <span class="keyword">assert</span> metadata[<span class="string">&#x27;Id&#x27;</span>] == item_id</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(metadata[<span class="string">&#x27;MediaSources&#x27;</span>]) == <span class="number">1</span></span><br><span class="line">    path: <span class="built_in">str</span> = metadata[<span class="string">&#x27;MediaSources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;Path&#x27;</span>]</span><br><span class="line">    filename = path.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Only modify Name, keep other info unchanged</span></span><br><span class="line">    metadata.update(&#123;<span class="string">&#x27;Name&#x27;</span>: filename&#125;)</span><br><span class="line">    <span class="keyword">return</span> jellyfin.items(<span class="string">&#x27;/&#x27;</span> + item_id, action=<span class="string">&#x27;POST&#x27;</span>, params=<span class="literal">None</span>, json=metadata)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_items_in_library</span>(<span class="params">jellyfin: API, library_id: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="comment"># get_items_by_letter recursively retrieves elements in all subfolders</span></span><br><span class="line">    res = jellyfin.get_items_by_letter(parent_id=library_id)</span><br><span class="line">    res = res[<span class="string">&#x27;Items&#x27;</span>]</span><br><span class="line">    item_count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> res:</span><br><span class="line">        <span class="keyword">if</span> r[<span class="string">&#x27;Type&#x27;</span>] == <span class="string">&#x27;Folder&#x27;</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        rename_to_filename(jellyfin, r[<span class="string">&#x27;Id&#x27;</span>])</span><br><span class="line">        item_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;total renamed item count: <span class="subst">&#123;item_count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client = JellyfinClient()</span><br><span class="line"><span class="comment"># Modify these client infos as needed; it doesn&#x27;t affect the result</span></span><br><span class="line">client.config.app(<span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;0.0.1&#x27;</span>, <span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;kufhskdf&#x27;</span>)</span><br><span class="line">client.config.data[<span class="string">&quot;auth.ssl&quot;</span>] = <span class="literal">True</span></span><br><span class="line">client.authenticate(&#123;<span class="string">&quot;Servers&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;AccessToken&quot;</span>: <span class="string">&quot;xxx&quot;</span>,  <span class="comment"># Create one in &#x27;Dashboard | API Keys&#x27;</span></span><br><span class="line">        <span class="string">&quot;address&quot;</span>: <span class="string">&quot;zzz&quot;</span>, <span class="comment"># Jellyfin server address</span></span><br><span class="line">        <span class="string">&quot;DateLastAccessed&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;UserId&quot;</span>: <span class="string">&quot;yyy&quot;</span>  <span class="comment"># This user should have the privilege to manage media library</span></span><br><span class="line">    &#125;</span><br><span class="line">]&#125;, discover=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(client.logged_in)</span><br><span class="line"></span><br><span class="line">rename_items_in_library(client.jellyfin, <span class="string">&#x27;uuu&#x27;</span>)  <span class="comment"># Fill in the media library ID</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>By the way, the documentation for this module is also poor; I only figured out how to connect to the server through Issues.</p>
-</blockquote>
-<p>My Jellyfin server’s certificate is self-signed, and it seems Python’s SSL cannot use the certificates installed on OS. We can resolve this by setting the environment variable <code>REQUESTS_CA_BUNDLE=&lt;certificate_path&gt;</code>.</p>
-<p>My solution perfectly addresses the drawbacks of the two aforementioned solutions.</p>
-<h1>References</h1>
-<ul>
-<li><a href="https://www.reddit.com/r/jellyfin/comments/pcptfz/possible_to_use_original_filenames_only/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Possible to use original filenames only?</a></li>
-<li><a href="https://www.cnblogs.com/toumingbai/p/15514526.html">jellyfin手动修正标题为文件（夹）名</a></li>
-<li><a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>NAS</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>NAS</tag>
-        <tag>Jellyfin</tag>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -2427,6 +2291,97 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
+    <title>Using Python venv</title>
+    <url>/en/2023/12/20/Python-venv-use/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>Python is renowned for its rich set of modules. However, unlike in Java development where Maven uses group Id, artifact Id, and version to uniquely identify a dependency, in practice, most Python projects differentiate modules <strong>solely</strong> by their names. Run <code>pip install &lt;module&gt;</code>, and you’ve got the module. But what about the module version? Most project requirements do not specify versions, leading to constant errors for those who run the project later.</p>
+<p>Hence, the concept of a weakened version number undoubtedly does more harm than good. How to solve this issue? By using venv (virtual environment).</p>
+<p>If you directly use <code>pip install</code>, all Python projects share these modules, leading to potential compatibility issues. Venv copies the original Python environment. The virtual environment runs only on the copied Python, and the installed modules exist only in that virtual environment. Multiple virtual environments are isolated from each other.</p>
+<h1>Usage</h1>
+<p>1️⃣Create venv:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">python <span class="literal">-m</span> venv C:\Users\Gustav\Desktop\test\venv</span><br></pre></td></tr></table></figure>
+<p>The directory <code>C:\Users\Gustav\Desktop\test\venv</code> is the virtual environment.</p>
+<span id="more"></span>
+<p>2️⃣Activate:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">venv\Scripts\activate</span><br></pre></td></tr></table></figure>
+<p>If <code>(venv)</code> appears in front of the prompt, it means activation is successful, and you can now freely work inside.</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;pip list</span><br></pre></td></tr></table></figure>
+<p>3️⃣Deactivate:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;deactivate</span><br><span class="line">C:\Users\Gustav\Desktop\test&gt;</span><br></pre></td></tr></table></figure>
+<h1>Reference</h1>
+<p><a href="https://docs.python.org/3/library/venv.html">venv — Creation of virtual environments</a></p>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>venv</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Automatic Validation of Request Parameters in Spring MVC</title>
+    <url>/en/2023/07/05/Spring-MVC-Automatic-Validation-of-Request-Parameters-Using-Validation-Annotations/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>The controller methods (handlers) are responsible for validating request parameters.</p>
+<p>In traditional approaches, validation of request parameters is performed at the beginning of each method. If any parameter fails to meet the conditions, an exception is thrown, or an HTTP error is returned early.</p>
+<p>The Validation API provides a series of annotations. By placing these annotations on the properties of an entity class, Spring MVC automatically performs request parameter validation based on the semantics of these annotations. If a parameter does not meet the conditions, an exception is thrown. This saves developers from manually validating request parameters.</p>
+<p>The class responsible for automatic parameter validation is actually imported by Spring Boot through automatic configuration, so we need to use the corresponding starter dependencies.</p>
+<h1>Demo</h1>
+<h2 id="Dependencies">Dependencies</h2>
+<span id="more"></span>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-validation<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>validation-api</code> is the focus of this post.</p>
+<img src="/MarkDownImages/image-20230705200537754.png" alt="image-20230705200537754" style="zoom:80%;" />
+<h2 id="Project-Structure">Project Structure</h2>
+<p>A standard Spring Boot project generated by Spring Initializer.</p>
+<img src="/MarkDownImages/image-20230705200916180.png" alt="image-20230705200916180" style="zoom: 80%;" />
+<h2 id="entity">entity</h2>
+<h3 id="User">User</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.gustav.springmvcvalidatordemo.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    <span class="meta">@Size(max = 5, message = &quot;Name cannot exceed 5 characters&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Min(value = 0, message = &quot;Age cannot be less than 0&quot;)</span></span><br><span class="line">    <span class="meta">@Max(value = 200, message = &quot;Age cannot be greater than 200&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>@NotBlank</code>: Used on properties of type <code>CharSequence</code>, indicating that the field is non-empty and must have a length of at least 1.</p>
+<p><code>@Size</code>: Used on properties of type <code>CharSequence</code> and collection classes, indicating the number of characters/elements in the field. <code>max = 5</code> is the upper bound, and the value cannot exceed this limit. When the property value does not meet the conditions, Spring MVC throws an exception. If the <code>message</code> property is set, the exception content will include the value of <code>message</code>.</p>
+<p><code>@NotNull</code>: Literally means the field cannot be <code>null</code>.</p>
+<p><code>@Min</code>, <code>@Max</code>: Used on numeric types to constrain the size of the numeric value.</p>
+<h3 id="Pet">Pet</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.gustav.springmvcvalidatordemo.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Pet</span> &#123;</span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    <span class="keyword">private</span> String type;</span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="UserAndPet">UserAndPet</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.gustav.springmvcvalidatordemo.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.Valid;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserAndPet</span> &#123;</span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Valid</span> <span class="comment">// This annotation ensures that the fields inside the User class are also validated</span></span><br><span class="line">    <span class="keyword">private</span> User user;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Valid</span></span><br><span class="line">    <span class="keyword">private</span> Pet pet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>@Valid</code> annotation tells Spring MVC that the class it annotates also has fields that need validation.</p>
+<h2 id="controller">controller</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.gustav.springmvcvalidatordemo.Controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.gustav.springmvcvalidatordemo.entity.UserAndPet;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.validation.annotation.Validated;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoController</span> &#123;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/test&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> UserAndPet <span class="title function_">test</span><span class="params">(<span class="meta">@Validated</span> <span class="meta">@RequestBody</span> UserAndPet userAndPet)</span> &#123;</span><br><span class="line">        System.out.println(userAndPet);</span><br><span class="line">        <span class="keyword">return</span> userAndPet;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@Validated</code> instructs Spring MVC that the current request parameters need to be validated.</p>
+<h2 id="Sending-Requests-Using-Postman">Sending Requests Using Postman</h2>
+<h3 id="Valid-Request">Valid Request</h3>
+<p>The request body is as follows:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;adam&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">15</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pet&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cat&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;east wind&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<img src="/MarkDownImages/image-20230705202651511.png" alt="image-20230705202651511" style="zoom:67%;" />
+<h3 id="Invalid-Request">Invalid Request</h3>
+<p>Intentionally exceeding the length limit of <code>user.name</code>. The request body is as follows:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;adam williams&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">15</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pet&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cat&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;east wind&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>The server returns a 400 error.</p>
+<p><img src="/MarkDownImages/image-20230705202748075.png" alt="image-20230705202748075"></p>
+<p>The server throws a <code>MethodArgumentNotValidException</code> exception. The content indicates that <code>user.name</code> is an illegal parameter, and our custom <code>message</code> is also displayed.</p>
+<p><img src="/MarkDownImages/image-20230705202916086.png" alt="image-20230705202916086"></p>
+<h1>Conclusion</h1>
+<p>By using Validation annotations, we can easily implement request parameter validation without writing a lot of code.</p>
+<p>Imagine if we were to validate request parameters using traditional approach. Just validating <code>user.name</code> would require writing a lot of code:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/test&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> UserAndPet <span class="title function_">test</span><span class="params">(<span class="meta">@Validated</span> <span class="meta">@RequestBody</span> UserAndPet userAndPet)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (userAndPet == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (userAndPet.getUser() == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> userAndPet.getUser().getName();</span><br><span class="line">    <span class="keyword">if</span> (!(name != <span class="literal">null</span> &amp;&amp; name.length() &gt;= <span class="number">1</span> &amp;&amp; name.length() &lt;= <span class="number">5</span>)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Validate other request parameters</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Business logic</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Note that this convenient validation is based on the foundation of Spring MVC and Spring Boot. What classes Spring Boot automatically configures, and how Spring MVC uses these classes to do request parameter validation, are beyond the scope of this article. Readers can read the source code on their own or explore other articles.</p>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring Boot</tag>
+        <tag>Spring MVC</tag>
+        <tag>Controller</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LeetCode Weekly Contest 370 Summary</title>
     <url>/en/2023/11/05/leetcode-370-weekly-contest-summary/</url>
     <content><![CDATA[<h1>Overview</h1>
@@ -2589,6 +2544,52 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>Simulation</tag>
         <tag>DP</tag>
         <tag>Tree</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Display Original Filenames in Jellyfin</title>
+    <url>/en/2024/02/17/jellyfin-original-filename/</url>
+    <content><![CDATA[<h1>Preface</h1>
+<p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
+<p>To fit this demand, I have created a script using <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> to batch rename all media in a specific media library. Additionally, this article explores some previous solutions, none of which were satisfactory in my opinion.</p>
+<span id="more"></span>
+<h1>Existing Solution 1</h1>
+<p>When creating a media library, choose ‘Music Videos’ as its content type and select ‘Prefer embedded titles over filenames’.</p>
+<p>What is this “embedded title”? Open the ‘Properties’ of a video and go to ‘Details’.</p>
+<p><img src="/MarkDownImages/image-20240217135326419.png" alt="image-20240217135326419"></p>
+<p>Any content in the ‘Title’ field will be displayed as the media title in Jellyfin without any modifications. However, this approach has two issues:</p>
+<p>1️⃣ For most anime published, the values of their ‘Title’ are their series names, as shown in the image, lacking episode numbers, making it hard for me to distinguish.</p>
+<p>This issue can be easily solved by copying the file name to ‘Title’ or clearing the ‘Title’ field. In either case, the original filename will be displayed eventually. For automation in Python, the <a href="https://github.com/quodlibet/mutagen">mutagen</a> module is handy to use.</p>
+<p>2️⃣ Media libraries of type ‘Music Videos’ cannot display folder structures, which I find unacceptable. In fact, only ‘Mixed Movies and Shows’ will be presented in a pure folder format.</p>
+<h1>Existing Solution 2</h1>
+<p>Directly modify the database, as referenced in <a href="https://www.cnblogs.com/toumingbai/p/15514526.html">‘Manually Correcting Titles to File (Folder) Names’</a>。</p>
+<p>Bypassing the Service Tier to directly manipulate the database is too risky. I will never use this approach.</p>
+<h1>My Solution</h1>
+<p>Since directly manipulating the database in Solution 2 is bad, why not use the Jellyfin API?</p>
+<p>The first step is to find which API corresponds to the required functionality. Instead of referring to the official documentation first, inspect the browser’s network traffic in Developer tools and then refer to the documentation. However, in most cases, the documentation is still useless, because there is no description. Under such circumstances, we need perform experiments to guess the usage of an API.</p>
+<p>Fortunately, <a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> provides a ready-made API, eliminating the need to start from <code>requests</code>. I quickly completed the script:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python <span class="keyword">import</span> JellyfinClient</span><br><span class="line"><span class="keyword">from</span> jellyfin_apiclient_python.api <span class="keyword">import</span> API</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_to_filename</span>(<span class="params">jellyfin: API, item_id: <span class="built_in">str</span></span>):</span><br><span class="line">    metadata: <span class="built_in">dict</span> = jellyfin.get_item(item_id)</span><br><span class="line">    <span class="keyword">assert</span> metadata[<span class="string">&#x27;Id&#x27;</span>] == item_id</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(metadata[<span class="string">&#x27;MediaSources&#x27;</span>]) == <span class="number">1</span></span><br><span class="line">    path: <span class="built_in">str</span> = metadata[<span class="string">&#x27;MediaSources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;Path&#x27;</span>]</span><br><span class="line">    filename = path.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Only modify Name, keep other info unchanged</span></span><br><span class="line">    metadata.update(&#123;<span class="string">&#x27;Name&#x27;</span>: filename&#125;)</span><br><span class="line">    <span class="keyword">return</span> jellyfin.items(<span class="string">&#x27;/&#x27;</span> + item_id, action=<span class="string">&#x27;POST&#x27;</span>, params=<span class="literal">None</span>, json=metadata)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_items_in_library</span>(<span class="params">jellyfin: API, library_id: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="comment"># get_items_by_letter recursively retrieves elements in all subfolders</span></span><br><span class="line">    res = jellyfin.get_items_by_letter(parent_id=library_id)</span><br><span class="line">    res = res[<span class="string">&#x27;Items&#x27;</span>]</span><br><span class="line">    item_count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> res:</span><br><span class="line">        <span class="keyword">if</span> r[<span class="string">&#x27;Type&#x27;</span>] == <span class="string">&#x27;Folder&#x27;</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        rename_to_filename(jellyfin, r[<span class="string">&#x27;Id&#x27;</span>])</span><br><span class="line">        item_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;total renamed item count: <span class="subst">&#123;item_count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client = JellyfinClient()</span><br><span class="line"><span class="comment"># Modify these client infos as needed; it doesn&#x27;t affect the result</span></span><br><span class="line">client.config.app(<span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;0.0.1&#x27;</span>, <span class="string">&#x27;pycharm&#x27;</span>, <span class="string">&#x27;kufhskdf&#x27;</span>)</span><br><span class="line">client.config.data[<span class="string">&quot;auth.ssl&quot;</span>] = <span class="literal">True</span></span><br><span class="line">client.authenticate(&#123;<span class="string">&quot;Servers&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;AccessToken&quot;</span>: <span class="string">&quot;xxx&quot;</span>,  <span class="comment"># Create one in &#x27;Dashboard | API Keys&#x27;</span></span><br><span class="line">        <span class="string">&quot;address&quot;</span>: <span class="string">&quot;zzz&quot;</span>, <span class="comment"># Jellyfin server address</span></span><br><span class="line">        <span class="string">&quot;DateLastAccessed&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;UserId&quot;</span>: <span class="string">&quot;yyy&quot;</span>  <span class="comment"># This user should have the privilege to manage media library</span></span><br><span class="line">    &#125;</span><br><span class="line">]&#125;, discover=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(client.logged_in)</span><br><span class="line"></span><br><span class="line">rename_items_in_library(client.jellyfin, <span class="string">&#x27;uuu&#x27;</span>)  <span class="comment"># Fill in the media library ID</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>By the way, the documentation for this module is also poor; I only figured out how to connect to the server through Issues.</p>
+</blockquote>
+<p>My Jellyfin server’s certificate is self-signed, and it seems Python’s SSL cannot use the certificates installed on OS. We can resolve this by setting the environment variable <code>REQUESTS_CA_BUNDLE=&lt;certificate_path&gt;</code>.</p>
+<p>My solution perfectly addresses the drawbacks of the two aforementioned solutions.</p>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.reddit.com/r/jellyfin/comments/pcptfz/possible_to_use_original_filenames_only/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Possible to use original filenames only?</a></li>
+<li><a href="https://www.cnblogs.com/toumingbai/p/15514526.html">jellyfin手动修正标题为文件（夹）名</a></li>
+<li><a href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>NAS</category>
+        <category>tech</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>NAS</tag>
+        <tag>Jellyfin</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>

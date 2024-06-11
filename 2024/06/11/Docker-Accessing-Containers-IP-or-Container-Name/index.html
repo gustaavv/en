@@ -287,7 +287,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>466</span>
+      <span>494</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -321,6 +321,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker network create my_network</span><br><span class="line">docker run -d --name web --network my_network mywebapp</span><br><span class="line">docker run -d --name db --network my_network mysql</span><br></pre></td></tr></table></figure>
 <p>两种情况下，都可以通过容器名访问（使用容器端口）。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://web:80</span><br></pre></td></tr></table></figure>
+<p><strong>注意，如果目标容器在 bridge 网络中，则不属于这种情况。需要通过 IP 访问。</strong></p>
 <h2 id="两者不在同一个网络中">两者不在同一个网络中</h2>
 <p>需要使用目标容器的 IP。</p>
 <p>首先获得容器 IP，然后通过 IP 访问：</p>
