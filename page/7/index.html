@@ -160,7 +160,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -202,6 +202,229 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
+      <meta itemprop="name" content="Gustav">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gustav's blog">
+      <meta itemprop="description" content="Hi, I am Gustav.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Gustav's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/" class="post-title-link" itemprop="url">Mapping MySQL JSON Fields with MyBatis-Plus</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-08 08:50:02" itemprop="dateCreated datePublished" datetime="2023-07-08T08:50:02+08:00">2023-07-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/tech/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>515</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>2 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1>Preface</h1>
+<p>MySQL supports fields of type JSON. In comparison to string-type fields, JSON fields offer the following advantages:</p>
+<ul>
+<li>Automatic validation of JSON syntax</li>
+<li>Underlying support for quick access to elements within the JSON. There’s no need to read the entire string and then parse it into a JSON object.</li>
+</ul>
+<p>Logically, JSON is no different from a POJO. Spring MVC has already implemented automatic conversion between the two at the Controller tier, evident in request parameters and return values. So, how can the Repository tier achieve automatic conversion?</p>
+<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping (ORM) between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
+<h1>Demo</h1>
+<h2 id="Table">Table</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2023/07/05/Spring-MVC-Automatic-Validation-of-Request-Parameters-Using-Validation-Annotations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
+      <meta itemprop="name" content="Gustav">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gustav's blog">
+      <meta itemprop="description" content="Hi, I am Gustav.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Gustav's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/en/2023/07/05/Spring-MVC-Automatic-Validation-of-Request-Parameters-Using-Validation-Annotations/" class="post-title-link" itemprop="url">Automatic Validation of Request Parameters in Spring MVC</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-05 19:52:10" itemprop="dateCreated datePublished" datetime="2023-07-05T19:52:10+08:00">2023-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/tech/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>708</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>3 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1>Preface</h1>
+<p>The controller methods (handlers) are responsible for validating request parameters.</p>
+<p>In traditional approaches, validation of request parameters is performed at the beginning of each method. If any parameter fails to meet the conditions, an exception is thrown, or an HTTP error is returned early.</p>
+<p>The Validation API provides a series of annotations. By placing these annotations on the properties of an entity class, Spring MVC automatically performs request parameter validation based on the semantics of these annotations. If a parameter does not meet the conditions, an exception is thrown. This saves developers from manually validating request parameters.</p>
+<p>The class responsible for automatic parameter validation is actually imported by Spring Boot through automatic configuration, so we need to use the corresponding starter dependencies.</p>
+<h1>Demo</h1>
+<h2 id="Dependencies">Dependencies</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/en/2023/07/05/Spring-MVC-Automatic-Validation-of-Request-Parameters-Using-Validation-Annotations/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -340,14 +563,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">27k</span>
+    <span title="Word count total">28k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:38</span>
+    <span title="Reading time total">1:42</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
