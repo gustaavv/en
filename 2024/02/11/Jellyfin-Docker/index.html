@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Install Jellyfin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Jellyfin Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-Users"><span class="nav-number">3.1.</span> <span class="nav-text">Server | Users</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advanced-Networking"><span class="nav-number">3.2.</span> <span class="nav-text">Advanced | Networking</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">SSL Certificate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">Local Network Settings</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">Some Bugs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Font-Issue-1"><span class="nav-number">6.1.</span> <span class="nav-text">Font Issue 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Font-Issue-2"><span class="nav-number">6.2.</span> <span class="nav-text">Font Issue 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbolic-Links"><span class="nav-number">6.3.</span> <span class="nav-text">Symbolic Links</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">Docker Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPOSE"><span class="nav-number">7.1.</span> <span class="nav-text">EXPOSE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Memory"><span class="nav-number">7.2.</span> <span class="nav-text">Cache Memory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Install-Jellyfin"><span class="nav-number">2.</span> <span class="nav-text">Install Jellyfin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jellyfin-Configuration"><span class="nav-number">3.</span> <span class="nav-text">Jellyfin Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-Users"><span class="nav-number">3.1.</span> <span class="nav-text">Server | Users</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advanced-Networking"><span class="nav-number">3.2.</span> <span class="nav-text">Advanced | Networking</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSL-Certificate"><span class="nav-number">4.</span> <span class="nav-text">SSL Certificate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Local-Network-Settings"><span class="nav-number">5.</span> <span class="nav-text">Local Network Settings</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Some-Bugs"><span class="nav-number">6.</span> <span class="nav-text">Some Bugs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Font-Issue-1"><span class="nav-number">6.1.</span> <span class="nav-text">Font Issue 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Font-Issue-2"><span class="nav-number">6.2.</span> <span class="nav-text">Font Issue 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbolic-Links"><span class="nav-number">6.3.</span> <span class="nav-text">Symbolic Links</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Knowledge"><span class="nav-number">7.</span> <span class="nav-text">Docker Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPOSE"><span class="nav-number">7.1.</span> <span class="nav-text">EXPOSE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Memory"><span class="nav-number">7.2.</span> <span class="nav-text">Cache Memory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -341,7 +341,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Preface</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Preface">Preface</h1>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://jellyfin.org/">Jellyfin</a> is an open-source media server. Here is my way of using Jellyfin: download anime using qBittorrent, start Jellyfin, and then watch the anime on iPad through the client.</p>
 </blockquote>
@@ -349,7 +349,7 @@
 <p>Although Jellyfin itself is cross-platform, its configuration is still OS-dependent, especially when moving from Windows to Docker. Despite the availability of a <a target="_blank" rel="noopener" href="https://github.com/MMMZZZZ/Jellyfin-Migrator">third-party script</a>, I chose to reconfigure it for safety, which does not require much effort.</p>
 <p>This article mainly talks about how to install Jellyfin using Docker, along with any issues encountered and their solutions.</p>
 <span id="more"></span>
-<h1>Install Jellyfin</h1>
+<h1 id="Install-Jellyfin">Install Jellyfin</h1>
 <p>Firstly, create two volumes:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker volume create jellyfin-config</span><br><span class="line">docker volume create jellyfin-cache</span><br></pre></td></tr></table></figure>
 <p>Docker Compose:</p>
@@ -408,7 +408,7 @@
 <p><code>TZ=Asia/Shanghai</code>: Set the time zone to make the log time consistent with the local machine.</p>
 </li>
 </ul>
-<h1>Jellyfin Configuration</h1>
+<h1 id="Jellyfin-Configuration">Jellyfin Configuration</h1>
 <p>Since it’s a fresh installation, all configurations need to be set up again. Here are some key points.</p>
 <h2 id="Server-Users">Server | Users</h2>
 <p>Disable transcoding: Even if the client doesn’t support the codec, server-side software decoding is not allowed, as it can lead to high pressure on the system.</p>
@@ -421,11 +421,11 @@
 <p>Check ‘Enable HTTPS’ and restart the container.</p>
 <p><img src="/MarkDownImages/image-20240213140600270.png" alt="image-20240213140600270"></p>
 <p>There’s no need to enable ‘Force HTTPS’ because the firewall will only allow devices on the local network to access the HTTPS port; the local machine can still access Jellyfin via HTTP.</p>
-<h1>SSL Certificate</h1>
+<h1 id="SSL-Certificate">SSL Certificate</h1>
 <p>Firstly, you need the private key <code>jellyfin-priv-key.key</code> and the certificate <code>jellyfin.crt</code> (refer to the <a href="/en/2024/01/31/Docker-Nginx-SSL-Local-Network/#SSL-Certificate">previous article</a>).</p>
 <p>Then, use the following command to generate the <code>.pfx</code> file:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -<span class="built_in">export</span> -out jellyfin.pfx -inkey jellyfin-priv-key.key -<span class="keyword">in</span> jellyfin.crt  -passout pass:</span><br></pre></td></tr></table></figure>
-<h1>Local Network Settings</h1>
+<h1 id="Local-Network-Settings">Local Network Settings</h1>
 <blockquote>
 <p>Here is my network topology:</p>
 <p>Windows host with a Linux virtual machine installed by VMware, and Docker runs on this virtual machine.</p>
@@ -447,7 +447,7 @@
 </ol>
 <hr>
 <p>Jellyfin on Windows had port 58920 open, and after switching to the Docker version, it still uses the same port. We can access the web client through <code>https://hostIP:58920</code> in a browser. This ‘tricks’ Google Password Manager in some sense, allowing me to directly use the previous account and password.</p>
-<h1>Some Bugs</h1>
+<h1 id="Some-Bugs">Some Bugs</h1>
 <h2 id="Font-Issue-1">Font Issue 1</h2>
 <p>After creating the container, enter the container and execute the following command:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update &amp;&amp; apt install fonts-noto-cjk-extra</span><br></pre></td></tr></table></figure>
@@ -468,7 +468,7 @@
 <p>Moreover, creating symbolic links this way causes videos to be unplayable, and Jellyfin reports errors when reading media data. I suspect this is due to symbolic links because many articles about NAS use hard links rather than symbolic links. However, I don’t prefer using hard links, especially on Windows.</p>
 <p>Creating symbolic links for folders is still possible. For example, if the shared folder is <code>jellyfin-docker-media</code>, you can create symbolic links for the <code>films</code> and <code>animes</code> folders in other paths, putting them all under <code>jellyfin-docker-media</code>. This essentially adds an extra layer of abstraction and reduces the number of shared folders for the virtual machine.</p>
 <p>In fact, this is what I did. The <code>/mnt/hgfs/jellyfin-media</code> in Docker-compose is the host’s <code>jellyfin-docker-media</code> shared folder.</p>
-<h1>Docker Knowledge</h1>
+<h1 id="Docker-Knowledge">Docker Knowledge</h1>
 <p>By installing Jellyfin, I deepened my understanding of Docker through practical experiences.</p>
 <h2 id="EXPOSE">EXPOSE</h2>
 <p>I always thought that using the <code>EXPOSE</code> keyword in the Dockerfile was necessary for mapping ports when starting a container. However, that’s not the case.</p>
@@ -488,7 +488,7 @@
 <blockquote>
 <p><code>Inactive(file)</code> — The amount of file cache memory, in kibibytes, that is newly loaded from the disk, or is a candidate for reclaiming.</p>
 </blockquote>
-<h1>References</h1>
+<h1 id="References">References</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/624670198">在Docker下安装Jellyfin并正确开启硬件解码</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/640489824">Docker部署开源流媒体软件Jellyfin</a></li>

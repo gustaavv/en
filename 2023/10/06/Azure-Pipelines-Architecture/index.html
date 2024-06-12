@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Azure Pipelines Terminology</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Azure Pipelines Task Scheduling</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Parallel Jobs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Azure-Pipelines-Terminology"><span class="nav-number">2.</span> <span class="nav-text">Azure Pipelines Terminology</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Azure-Pipelines-Task-Scheduling"><span class="nav-number">3.</span> <span class="nav-text">Azure Pipelines Task Scheduling</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parallel-Jobs"><span class="nav-number">4.</span> <span class="nav-text">Parallel Jobs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -287,12 +287,12 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Introduction</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Introduction">Introduction</h1>
 <p>Azure Pipelines is a component of Azure DevOps (a SaaS platform) and serves as an automated CI/CD pipeline. Similar technologies include <a target="_blank" rel="noopener" href="https://github.com/features/actions">GitHub Actions</a> and <a target="_blank" rel="noopener" href="https://www.jenkins.io/">Jenkins</a>.</p>
 <p>As users, we only need to define various tasks in YAML, trigger the pipeline, and Azure Pipelines automatically executes these tasks for us.</p>
 <p>So, how are tasks executed? Is there a limit to parallel tasks? How can we design YAML more efficiently to make a pipeline run faster? This article will analyze the architecture of Azure Pipelines from the perspective of task scheduling, providing answers to these questions along the way.</p>
 <span id="more"></span>
-<h1>Azure Pipelines Terminology</h1>
+<h1 id="Azure-Pipelines-Terminology">Azure Pipelines Terminology</h1>
 <p><img src="/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png" alt="img"></p>
 <p><strong>For users of Azure Pipelines</strong>, a YAML file uniquely defines the logic of a pipeline run:</p>
 <ul>
@@ -304,7 +304,7 @@
 <p><strong>For Azure Pipelines itself</strong>, when a pipeline is triggered, it needs to invoke computing resources to execute the pipeline’s logic. Specifically, a machine (agent) is responsible for executing a job.</p>
 <p>A job runs on only one agent, and it is not further divided. However, all jobs of a pipeline may be assigned to different agents for execution.</p>
 <p>How is this distribution of jobs accomplished?</p>
-<h1>Azure Pipelines Task Scheduling</h1>
+<h1 id="Azure-Pipelines-Task-Scheduling">Azure Pipelines Task Scheduling</h1>
 <p>Azure Pipelines task scheduling follows a typical distributed task scheduling model (similar technologies include <a target="_blank" rel="noopener" href="http://www.quartz-scheduler.org/">QUARTZ</a> and <a target="_blank" rel="noopener" href="https://github.com/xuxueli/xxl-job">xxl-job</a>):</p>
 <ul>
 <li>Azure Pipelines has a <strong>‘Task Queue’</strong> containing all pending <u>jobs</u> (referring to both the job/task in the task scheduling model and the job term in the pipeline).</li>
@@ -321,7 +321,7 @@
 </li>
 <li>If there is no idle agent at this time (indicating that the <strong>‘Task Queue’</strong> previously had jobs or no agent completed its previously assigned job), these newly generated jobs will wait for an agent to execute them in an orderly manner (jobs are queued based on the time the pipeline was triggered, ensuring fairness).</li>
 </ol>
-<h1>Parallel Jobs</h1>
+<h1 id="Parallel-Jobs">Parallel Jobs</h1>
 <p>The task scheduling framework implies <strong>parallelism</strong>. This means that when defining YAML, <strong>steps or tasks without dependencies should be elevated to jobs, allowing them to run in parallel and reduce execution time</strong>.</p>
 <blockquote>
 <p>However, during internships, few people do this, and most people use the default step level, even when many agents are often idle. 🤔</p>
@@ -329,7 +329,7 @@
 <p>Now, since the immediate execution of a new job depends on the presence of idle agents, does increasing the number of agents improve overall throughput (the number of jobs completed in a unit of time)? Unfortunately, not really.</p>
 <p>After all, Microsoft needs to profit from Azure, so they introduced the concept of ‘Parallel Jobs’, indicating a limit to the number of jobs that can run in parallel. This limit requires purchasing.</p>
 <p>In other words, to run jobs in parallel, we not only need to purchase Azure VM agents but also Parallel Jobs. Even if we have many machines locally, we still need to buy Parallel Jobs.</p>
-<h1>Reference</h1>
+<h1 id="Reference">Reference</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/3-describe-azure-pipelines">Describe Azure Pipelines</a></li>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/4-understand-key-terms">Understand Azure Pipelines key terms</a></li>

@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">healthcheck Mechanism</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">healthcheck Syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Syntax"><span class="nav-number">3.1.</span> <span class="nav-text">Syntax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugging-test-Command"><span class="nav-number">3.2.</span> <span class="nav-text">Debugging test Command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disabling-healthcheck"><span class="nav-number">3.3.</span> <span class="nav-text">Disabling healthcheck</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">depends_on Mechanism</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">depends_on Syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Simple-Configuration"><span class="nav-number">5.1.</span> <span class="nav-text">Simple Configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Detailed-Configuration"><span class="nav-number">5.2.</span> <span class="nav-text">Detailed Configuration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#healthcheck-Mechanism"><span class="nav-number">2.</span> <span class="nav-text">healthcheck Mechanism</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#healthcheck-Syntax"><span class="nav-number">3.</span> <span class="nav-text">healthcheck Syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Syntax"><span class="nav-number">3.1.</span> <span class="nav-text">Syntax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugging-test-Command"><span class="nav-number">3.2.</span> <span class="nav-text">Debugging test Command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disabling-healthcheck"><span class="nav-number">3.3.</span> <span class="nav-text">Disabling healthcheck</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#depends-on-Mechanism"><span class="nav-number">4.</span> <span class="nav-text">depends_on Mechanism</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#depends-on-Syntax"><span class="nav-number">5.</span> <span class="nav-text">depends_on Syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Simple-Configuration"><span class="nav-number">5.1.</span> <span class="nav-text">Simple Configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Detailed-Configuration"><span class="nav-number">5.2.</span> <span class="nav-text">Detailed Configuration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -325,9 +325,9 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Introduction</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Introduction">Introduction</h1>
 <p>This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s <code>depends_on</code>. This post can be viewd as a cheat sheet.</p>
-<h1>healthcheck Mechanism</h1>
+<h1 id="healthcheck-Mechanism">healthcheck Mechanism</h1>
 <blockquote>
 <p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
 </blockquote>
@@ -370,7 +370,7 @@
 </tbody>
 </table>
 <p>After the container starts, it is in the <code>starting</code> state, i.e., the start period. During the start period, the container can only become <code>healthy</code>, not <code>unhealthy</code>.</p>
-<h1>healthcheck Syntax</h1>
+<h1 id="healthcheck-Syntax">healthcheck Syntax</h1>
 <h2 id="Syntax">Syntax</h2>
 <blockquote>
 <p>This post focuses on the syntax in Compose, not in Dockerfile or CLI.</p>
@@ -399,7 +399,7 @@
 </ul>
 <h2 id="Disabling-healthcheck">Disabling healthcheck</h2>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">disable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h1>depends_on Mechanism</h1>
+<h1 id="depends-on-Mechanism">depends_on Mechanism</h1>
 <blockquote>
 <p>You can <strong>control the order of service startup and shutdown</strong> with the <code>depends_on</code> attribute. Compose always starts and stops containers in dependency order.</p>
 <p>It is useful if services are closely coupled, and the startup sequence impacts the application’s functionality.</p>
@@ -434,14 +434,14 @@
 <p>Therefore, to achieve truly ordered startup of multiple containers as services in Compose, use the healthcheck mechanism and set <code>condition</code> to <code>service_healthy</code>.</p>
 <hr>
 <p>Note that using <code>depends_on</code> is only effective when using <code>docker compose up|start</code>. If the container’s <code>restart</code> policy is set to <code>unless-stopped</code> or <code>always</code>, these containers <strong>will not</strong> restart in <code>depends_on</code> order after the server restarts.</p>
-<h1>depends_on Syntax</h1>
+<h1 id="depends-on-Syntax">depends_on Syntax</h1>
 <h2 id="Simple-Configuration">Simple Configuration</h2>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
 <p>Here, the <code>condition</code> defaults to <code>service_started</code>.</p>
 <h2 id="Detailed-Configuration">Detailed Configuration</h2>
 <p>This kind of configuration allows specifying the <code>condition</code>.</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">      <span class="attr">redis:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_started</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
-<h1>References</h1>
+<h1 id="References">References</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.docker.com/reference/dockerfile/#healthcheck">Dockerfile HEALTHCHECK</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/compose-file/05-services/#healthcheck">Docker compose healthcheck</a></li>

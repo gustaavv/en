@@ -375,7 +375,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>序言</h1>
+          <h1 id="序言">序言</h1>
 <p>在<a href="/2024/02/20/LANraragi-Using-Experience">之前的文章</a>中，我提到“Jellyfin 计划任务『扫描媒体库』并不吃资源，频繁运行也没事”。实际上，这不准确。这个任务对于资源的占用取决于媒体/文件的数量。</p>
 <p>最近我写了一个项目，用来爬取视频，同时自动生成 nfo 文件和视频海报。在这个新的视频目录中，最多有 2000 个文件（大部分是 nfo 和海报图片，视频还没怎么下载），有四级子目录。但此时计划任务的 CPU 占用量已经大幅增加。这显然有问题。</p>
 <p>经过一番研究，我发现使用 crontab 定时调用 Jellyfin API，是目前唯一实现不同媒体库不同扫描频率的解决方案。</p>
@@ -486,7 +486,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>序言</h1>
+          <h1 id="序言">序言</h1>
 <p>本文包括了多种访问 Docker 容器的情况，探讨了每种情况应该使用容器的 IP 地址还是容器名。本文的内容对于熟练使用 Docker 的人不值一提，但在实践中，我常常忘记这些基本概念，浪费了不少时间。因此，我决定以 cheat sheet 的形式写一篇博文。本文的大部分内容由 ChatGPT 生成的。</p>
 <p>总的来说，记住以下两点就够了：</p>
 <ul>
@@ -600,9 +600,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>Introduction</h1>
+          <h1 id="Introduction">Introduction</h1>
 <p>This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s <code>depends_on</code>. This post can be viewd as a cheat sheet.</p>
-<h1>healthcheck Mechanism</h1>
+<h1 id="healthcheck-Mechanism">healthcheck Mechanism</h1>
 <blockquote>
 <p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
 </blockquote>
@@ -705,7 +705,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>问题</h1>
+          <h1 id="问题">问题</h1>
 <p>最近外网爆出了 Intel 13、14 代 i9 打游戏会报显存错误。这个也许只是 CPU 不稳定导致的<strong>短时</strong>运算错误，不足为惧<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。但是，B站上有人讨论很多 14 代 i9 在待机模式下蓝屏，甚至 13700K 也出现了这种现象。如果消息准确，那么使用了半年的 14代 i9 就出现了“缩缸”现象（硬件损坏导致的<strong>永久</strong>性能损失）。理论上，CPU 的寿命至少是 10 年，而且大部分 CPU 都是不用了、而不是用坏了。我的 CPU 就是 13700K，这让我非常警惕。</p>
 <p>对于这个问题的讨论有两点需要厘清：</p>
 <ol>

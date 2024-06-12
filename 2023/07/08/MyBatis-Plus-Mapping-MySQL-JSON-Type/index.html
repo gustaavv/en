@@ -152,7 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Demo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table"><span class="nav-number">2.1.</span> <span class="nav-text">Table</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependencies"><span class="nav-number">2.2.</span> <span class="nav-text">Dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#entity"><span class="nav-number">2.3.</span> <span class="nav-text">entity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapper-xml"><span class="nav-number">2.4.</span> <span class="nav-text">mapper.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Testing"><span class="nav-number">2.5.</span> <span class="nav-text">Testing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demo"><span class="nav-number">2.</span> <span class="nav-text">Demo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table"><span class="nav-number">2.1.</span> <span class="nav-text">Table</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependencies"><span class="nav-number">2.2.</span> <span class="nav-text">Dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#entity"><span class="nav-number">2.3.</span> <span class="nav-text">entity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapper-xml"><span class="nav-number">2.4.</span> <span class="nav-text">mapper.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Testing"><span class="nav-number">2.5.</span> <span class="nav-text">Testing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-number">3.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -305,7 +305,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Preface</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Preface">Preface</h1>
 <p>MySQL supports fields of type JSON. In comparison to string-type fields, JSON fields offer the following advantages:</p>
 <ul>
 <li>Automatic validation of JSON syntax</li>
@@ -313,7 +313,7 @@
 </ul>
 <p>Logically, JSON is no different from a POJO. Spring MVC has already implemented automatic conversion between the two at the Controller tier, evident in request parameters and return values. So, how can the Repository tier achieve automatic conversion?</p>
 <p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping (ORM) between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
-<h1>Demo</h1>
+<h1 id="Demo">Demo</h1>
 <h2 id="Table">Table</h2>
 <span id="more"></span>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `person` (</span><br><span class="line">  `id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(255) NOT NULL,</span><br><span class="line">  `log` json NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
@@ -334,10 +334,10 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PersonController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PersonMapper personMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/json&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">testJSON2BeanMap</span><span class="params">(<span class="meta">@RequestBody</span> Person person)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.insert(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/json/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Person <span class="title function_">getPersonById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.selectById(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Test both methods; if no errors occur, it indicates success. We can also check the database after insertion.</p>
 <p>The <strong>non-intrusive ORM</strong> mentioned in the <a href="#Preface">Preface</a> implies that we don’t need to manually execute the conversion between JSON and <code>PersonLog</code> in the code.</p>
-<h1>Conclusion</h1>
+<h1 id="Conclusion">Conclusion</h1>
 <p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
 <p>My exploration of this issue originated from the requirements of a business logic during my internship. When I searched for information online, I found that the descriptions in the posts were not quite complete or intuitive. Therefore, I documented the solution and wrote this article.</p>
-<h1>Reference</h1>
+<h1 id="Reference">Reference</h1>
 <p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/json.html">The JSON Data Type</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33360626/article/details/119836835">mybatis-plus处理mysql中json格式方法</a></p>
 

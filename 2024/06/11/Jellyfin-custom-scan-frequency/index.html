@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">关闭计划任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B3%E8%AF%B7%E4%B8%80%E4%B8%AA-API-%E5%AF%86%E9%92%A5"><span class="nav-number">2.2.</span> <span class="nav-text">申请一个 API 密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%BE%97-API-%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.3.</span> <span class="nav-text">获得 API 端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab"><span class="nav-number">2.4.</span> <span class="nav-text">crontab</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">实际效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">关闭计划任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B3%E8%AF%B7%E4%B8%80%E4%B8%AA-API-%E5%AF%86%E9%92%A5"><span class="nav-number">2.2.</span> <span class="nav-text">申请一个 API 密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%BE%97-API-%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.3.</span> <span class="nav-text">获得 API 端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab"><span class="nav-number">2.4.</span> <span class="nav-text">crontab</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%95%88%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">实际效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -327,12 +327,12 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>序言</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="序言">序言</h1>
 <p>在<a href="/2024/02/20/LANraragi-Using-Experience">之前的文章</a>中，我提到“Jellyfin 计划任务『扫描媒体库』并不吃资源，频繁运行也没事”。实际上，这不准确。这个任务对于资源的占用取决于媒体/文件的数量。</p>
 <p>最近我写了一个项目，用来爬取视频，同时自动生成 nfo 文件和视频海报。在这个新的视频目录中，最多有 2000 个文件（大部分是 nfo 和海报图片，视频还没怎么下载），有四级子目录。但此时计划任务的 CPU 占用量已经大幅增加。这显然有问题。</p>
 <p>经过一番研究，我发现使用 crontab 定时调用 Jellyfin API，是目前唯一实现不同媒体库不同扫描频率的解决方案。</p>
 <span id="more"></span>
-<h1>步骤</h1>
+<h1 id="步骤">步骤</h1>
 <h2 id="关闭计划任务">关闭计划任务</h2>
 <p>进入『控制台 | 计划任务 | 扫描媒体库』，删除现有任务：</p>
 <p><img src="/MarkDownImages/image-20240611131240942.png" alt="image-20240611131240942"></p>
@@ -361,7 +361,7 @@
 <hr>
 <p>查看 crontab 的日志：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 使用journalctl</span> </span><br><span class="line">journalctl -u crond</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 直接查看日志文件，这个更全</span></span><br><span class="line">cat /var/log/cron</span><br></pre></td></tr></table></figure>
-<h1>实际效果</h1>
+<h1 id="实际效果">实际效果</h1>
 <p><img src="/MarkDownImages/image-20240611154250550.png" alt="image-20240611154250550"></p>
 <blockquote>
 <p>这个软件是 NetData，我之后会写一篇关于它的博文。</p>
@@ -376,7 +376,7 @@
 <p>如果按照之前 Jellyfin 的计划任务，所有媒体库都一小时扫描一次，那么对 CPU 的占用显然太大了。</p>
 </li>
 </ul>
-<h1>参考</h1>
+<h1 id="参考">参考</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.reddit.com/r/jellyfin/comments/jjxbko/disabling_automatic_scan_per_library/">Disabling automatic scan per library</a></li>
 </ul>

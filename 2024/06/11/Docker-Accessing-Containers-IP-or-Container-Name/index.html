@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">从容器中访问目标容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">2.1.</span> <span class="nav-text">两者在同一个网络中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E4%B8%8D%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">2.2.</span> <span class="nav-text">两者不在同一个网络中</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">从本地主机访问目标容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">从外部主机访问目标容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%AE%BF%E9%97%AE%E7%9B%AE%E6%A0%87%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">从容器中访问目标容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">2.1.</span> <span class="nav-text">两者在同一个网络中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E4%B8%8D%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">2.2.</span> <span class="nav-text">两者不在同一个网络中</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E6%9C%AC%E5%9C%B0%E4%B8%BB%E6%9C%BA%E8%AE%BF%E9%97%AE%E7%9B%AE%E6%A0%87%E5%AE%B9%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">从本地主机访问目标容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E5%A4%96%E9%83%A8%E4%B8%BB%E6%9C%BA%E8%AE%BF%E9%97%AE%E7%9B%AE%E6%A0%87%E5%AE%B9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">从外部主机访问目标容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -304,7 +304,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>序言</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="序言">序言</h1>
 <p>本文包括了多种访问 Docker 容器的情况，探讨了每种情况应该使用容器的 IP 地址还是容器名。本文的内容对于熟练使用 Docker 的人不值一提，但在实践中，我常常忘记这些基本概念，浪费了不少时间。因此，我决定以 cheat sheet 的形式写一篇博文。本文的大部分内容由 ChatGPT 生成的。</p>
 <p>总的来说，记住以下两点就够了：</p>
 <ul>
@@ -312,7 +312,7 @@
 <li>对于端口映射 <code>-p 8080:80</code> ：用容器名/容器 IP 访问容器时，用容器的端口 <code>80</code>；用主机访问容器时，用主机的端口 <code>8080</code>。</li>
 </ul>
 <span id="more"></span>
-<h1>从容器中访问目标容器</h1>
+<h1 id="从容器中访问目标容器">从容器中访问目标容器</h1>
 <p>此时要区分两个容器是否在一个 docker network 中。</p>
 <h2 id="两者在同一个网络中">两者在同一个网络中</h2>
 <p>情况一：两个容器属于同一个 Compose</p>
@@ -326,16 +326,16 @@
 <p>需要使用目标容器的 IP。</p>
 <p>首先获得容器 IP，然后通过 IP 访问：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER_IP=$(docker inspect -f &#x27;&#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27; 容器)</span><br><span class="line">curl http://$CONTAINER_IP:80</span><br></pre></td></tr></table></figure>
-<h1>从本地主机访问目标容器</h1>
+<h1 id="从本地主机访问目标容器">从本地主机访问目标容器</h1>
 <p>有两种方式：</p>
 <p>一、通过容器 IP 访问。</p>
 <p>二、使用本地端口访问：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:8080</span><br></pre></td></tr></table></figure>
 <p>注意，这里是本机端口，不再是容器端口。</p>
-<h1>从外部主机访问目标容器</h1>
+<h1 id="从外部主机访问目标容器">从外部主机访问目标容器</h1>
 <p>使用本地主机的 IP 访问：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://host_ip:8080</span><br></pre></td></tr></table></figure>
-<h1>参考</h1>
+<h1 id="参考">参考</h1>
 <ul>
 <li>ChatGPT</li>
 </ul>

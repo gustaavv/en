@@ -157,7 +157,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-1"><span class="nav-number">1.1.</span> <span class="nav-text">Example 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-number">1.2.</span> <span class="nav-text">Example 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-3"><span class="nav-number">1.3.</span> <span class="nav-text">Example 3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Approach</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Find-Cycles-in-the-Graph"><span class="nav-number">3.1.</span> <span class="nav-text">How to Find Cycles in the Graph?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Count-Node-Chains"><span class="nav-number">3.2.</span> <span class="nav-text">How to Count Node Chains?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Final-Code"><span class="nav-number">3.3.</span> <span class="nav-text">Final Code</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-1"><span class="nav-number">1.1.</span> <span class="nav-text">Example 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-number">1.2.</span> <span class="nav-text">Example 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-3"><span class="nav-number">1.3.</span> <span class="nav-text">Example 3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Approach"><span class="nav-number">2.</span> <span class="nav-text">Approach</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-number">3.</span> <span class="nav-text">Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Find-Cycles-in-the-Graph"><span class="nav-number">3.1.</span> <span class="nav-text">How to Find Cycles in the Graph?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Count-Node-Chains"><span class="nav-number">3.2.</span> <span class="nav-text">How to Count Node Chains?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Final-Code"><span class="nav-number">3.3.</span> <span class="nav-text">Final Code</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -334,7 +334,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Problem</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Problem">Problem</h1>
 <blockquote>
 <p>Source: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-employees-to-be-invited-to-a-meeting/">2127. Maximum Employees to Be Invited to a Meeting</a> (Daily Problem)</p>
 </blockquote>
@@ -360,7 +360,7 @@ Output: 3</p>
 Output: 4</p>
 </blockquote>
 <p><img src="/MarkDownImages/image-20231101115200232.png" alt="image-20231101115200232" style="zoom:65%;" /><img src="/MarkDownImages/image-20231101125539019.png" alt="image-20231101125539019" style="zoom:33%;" /></p>
-<h1>Approach</h1>
+<h1 id="Approach">Approach</h1>
 <p>By the definition of <code>favorite</code>, if we consider each employee as a node pointing to their favorite employee, we form a <strong>directed cyclic graph</strong> with <code>n</code> edges, <code>n</code> nodes, and each node having an out-degree of 1.</p>
 <p>Observing Examples 2 and 3, the employees attending the circular table meeting must form a cycle. This is because each node has an out-degree of 1, and an employee must sit next to his favorite employee. Therefore, the maximum number of employees attending the meeting is equal to the <strong>length of the longest cycle</strong> (Conclusion 1️⃣).</p>
 <p>Conclusion 1️⃣ can also be argued in reverse:</p>
@@ -379,7 +379,7 @@ Output: 4</p>
 </ul>
 <p>Observing the example below, the answer is three cycles of length 2 and their extended node chains, totaling 8 nodes. The remaining connected component is a cycle of length 4.</p>
 <img src="/MarkDownImages/image-20231101134045195.png" alt="image-20231101134045195" style="zoom: 50%;" />
-<h1>Code</h1>
+<h1 id="Code">Code</h1>
 <p>Based on the conclusions we drew earlier, the following information needs to be calculated in the code:</p>
 <ul>
 <li>The lengths of various cycles</li>

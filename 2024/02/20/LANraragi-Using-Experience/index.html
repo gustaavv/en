@@ -153,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Issue 1: Mounting Thumbnail Directory Causes Thumbnail Generation Failure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Issue 2: Real-Time File Monitoring Failure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-Time-Monitoring"><span class="nav-number">3.1.</span> <span class="nav-text">Real Time Monitoring</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Gains</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Issue-1-Mounting-Thumbnail-Directory-Causes-Thumbnail-Generation-Failure"><span class="nav-number">2.</span> <span class="nav-text">Issue 1: Mounting Thumbnail Directory Causes Thumbnail Generation Failure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Issue-2-Real-Time-File-Monitoring-Failure"><span class="nav-number">3.</span> <span class="nav-text">Issue 2: Real-Time File Monitoring Failure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-Time-Monitoring"><span class="nav-number">3.1.</span> <span class="nav-text">Real Time Monitoring</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gains"><span class="nav-number">4.</span> <span class="nav-text">Gains</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -338,9 +338,9 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Preface</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Preface">Preface</h1>
 <p>I have been using LANraragi for a while and encountered some issues. I managed to resolve them, and I thought it would be a good idea to document my experience in a post. You can refer to my <a href="/en/2024/01/25/LANraragi-manga-server/">previous article on installing LANraragi</a> first.</p>
-<h1>Issue 1: Mounting Thumbnail Directory Causes Thumbnail Generation Failure</h1>
+<h1 id="Issue-1-Mounting-Thumbnail-Directory-Causes-Thumbnail-Generation-Failure">Issue 1: Mounting Thumbnail Directory Causes Thumbnail Generation Failure</h1>
 <span id="more"></span>
 <p>When installing LANraragi, to ensure the <code>content</code> directory is read-only, I set the thumbnail directory as an internal path of the container. This means that every time I deleted and restarted the container, thumbnails will be regenerated. This practice not only wasted computational resources but also deviated from Docker’s best practices. To address this, I used a new volume to store the thumbnails.</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">lanraragi:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">difegue/lanraragi:v.0.9.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">lanraragi</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/mnt/hgfs/doujinshiArchives:/home/koyomi/lanraragi/content:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">lanraragi-database:/home/koyomi/lanraragi/database</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">lanraragi-thumbnail:/home/koyomi/lanraragi/thumb</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">lanraragi-database:</span></span><br><span class="line">  <span class="attr">lanraragi-thumbnail:</span></span><br></pre></td></tr></table></figure>
@@ -355,7 +355,7 @@
 <blockquote>
 <p>It’s also worth noting that the default manga directory, <code>content</code>, has elevated permissions intentionally set by the author. Therefore, using <code>content/thumb</code> as the default thumbnail directory will not cause this issue.</p>
 </blockquote>
-<h1>Issue 2: Real-Time File Monitoring Failure</h1>
+<h1 id="Issue-2-Real-Time-File-Monitoring-Failure">Issue 2: Real-Time File Monitoring Failure</h1>
 <p>Refer to the ‘Background Workers’ in the settings:</p>
 <blockquote>
 <p>This File Watcher is responsible for monitoring your content directory and automatically handling new archives as they come.
@@ -381,13 +381,13 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
 <li>Increase the frequency of the scheduled task ‘Scan Media Library’ – this task doesn’t consume many resources, so running it frequently is not an issue.</li>
 <li>Execute a refresh through the API.</li>
 </ul>
-<h1>Gains</h1>
+<h1 id="Gains">Gains</h1>
 <p>This script is quite useful:</p>
 <p><img src="/MarkDownImages/image-20240220131323937.png" alt="image-20240220131323937"></p>
 <p>My manga directory structure is:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">├── Author1</span><br><span class="line">│   ├── Manga Archive 1</span><br><span class="line">│   └── Manga Archive 2</span><br><span class="line">└── Author2</span><br><span class="line">    ├── Manga Archive 1</span><br><span class="line">    └── Manga Archive 2</span><br></pre></td></tr></table></figure>
 <p>This script categorizes the corresponding manga into a specific author’s category. Although I did not (and will not) tag manga, using author as a category achieves the same effect, allowing me to select manga based on the author.</p>
-<h1>References</h1>
+<h1 id="References">References</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man7/inotify.7.html">inotify(7) — Linux manual page</a></li>
 <li><a target="_blank" rel="noopener" href="https://sugoi.gitbook.io/lanraragi/api-documentation/shinobu-api">LANraragi doc: Shinobu API</a></li>

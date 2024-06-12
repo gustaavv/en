@@ -281,7 +281,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>Preface</h1>
+          <h1 id="Preface">Preface</h1>
 <p>Metabase is an open-source data analysis tool that is easy to operate and can connect to various data sources. Although its data analysis capabilities are not as powerful as Excel, Metabase is sufficient for daily use. Moreover, I am more capable of writing SQL than clicking Excel sheets, so Metabase is a good choice for me.</p>
           <!--noindex-->
             <div class="post-button">
@@ -391,9 +391,9 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>For developers, installing MySQL isn’t difficult, but it often involves several steps. I’ve documented a Docker Compose template that can directly launch a pre-configured MySQL container for development.</p>
-<h1>Docker compose</h1>
+<h1 id="Docker-compose">Docker compose</h1>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:5.7</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">&#x27;123456&#x27;</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">43306</span><span class="string">:3306</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql_data:/var/lib/mysql</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">mysqld</span> <span class="string">--character-set-server=utf8</span> <span class="string">--collation-server=utf8_general_ci</span> <span class="string">--character-set-client-handshake=FALSE</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> <span class="string">out=$$(mysqladmin</span> <span class="string">ping</span> <span class="string">-h</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="string">-u</span> <span class="string">root</span> <span class="string">--password=$$MYSQL_ROOT_PASSWORD);</span> <span class="string">echo</span> <span class="string">$$out</span> <span class="string">|</span> <span class="string">grep</span> <span class="string">&#x27;mysqld is alive&#x27;</span> <span class="string">||</span> &#123; <span class="string">echo</span> <span class="string">$$out;</span> <span class="string">exit</span> <span class="number">1</span><span class="string">;</span> &#125;</span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">0s</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">5s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">mysql_data:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h1>Configuration Explanation</h1>
+<h1 id="Configuration-Explanation">Configuration Explanation</h1>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/en/2024/04/12/MySQL-Docker/#more" rel="contents">
@@ -501,7 +501,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>Introduction to Glances</h1>
+          <h1 id="Introduction-to-Glances">Introduction to Glances</h1>
 <p>There are many configurable widgets in Dashy, among which the most practical one is resource monitoring. Displaying CPU usage on the panel is not useful for me —— I am more concerned about which program is causing high CPU usage. However, the Glances software on which this feature depends is very practical.</p>
 <p>Glances is similar to the <code>top</code> command, which can display system resource usage. However, it is better in the following aspects:</p>
 <ul>
@@ -618,9 +618,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>Preface</h1>
+          <h1 id="Preface">Preface</h1>
 <p><a target="_blank" rel="noopener" href="https://github.com/Lissy93/dashy">Dashy</a> is an open-source customizable dashboard software that requires self-deployment. My use case is to place links of frequently visited websites. This post mainly documents some problems encountered during installation and usage.</p>
-<h1>Installation</h1>
+<h1 id="Installation">Installation</h1>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/en/2024/04/04/Dashy-install-and-config/#more" rel="contents">
@@ -724,7 +724,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1>Preface</h1>
+          <h1 id="Preface">Preface</h1>
 <p>Recently, I’ve been using Python to write web crawlers for downloading manga (see <a href="/en/tags/LANraragi/">previous posts on LANraragi</a>). A typical page of a manga like this:</p>
 <img src="/MarkDownImages/image-20240329132644183.png" alt="image-20240329132644183" style="zoom: 33%;" />
 <p>All the data on this webpage can be retrieved using BeautifulSoup, and only one communication is needed per page. However, downloading images is different: each image requires a separate communication, and the response body is often quite large. Obviously, images don’t need to be downloaded sequentially, otherwise, it would waste a lot of time.</p>

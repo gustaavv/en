@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Existing Solution 1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Existing Solution 2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">My Solution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Existing-Solution-1"><span class="nav-number">2.</span> <span class="nav-text">Existing Solution 1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Existing-Solution-2"><span class="nav-number">3.</span> <span class="nav-text">Existing Solution 2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#My-Solution"><span class="nav-number">4.</span> <span class="nav-text">My Solution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -329,11 +329,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Preface</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Preface">Preface</h1>
 <p>The recommended usage of Jellyfin is that users create folders according to the media rules and place media files in them. After that, the media titles are automatically generated based on the metadata obtained from the scraper. However, this rule is so compulsory that this simple functionality of <strong>using the original file name as the title</strong> is not even available. While manual updating media titles is possible, it can be cumbersome.</p>
 <p>To fit this demand, I have created a script using <a target="_blank" rel="noopener" href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> to batch rename all media in a specific media library. Additionally, this article explores some previous solutions, none of which were satisfactory in my opinion.</p>
 <span id="more"></span>
-<h1>Existing Solution 1</h1>
+<h1 id="Existing-Solution-1">Existing Solution 1</h1>
 <p>When creating a media library, choose ‘Music Videos’ as its content type and select ‘Prefer embedded titles over filenames’.</p>
 <p>What is this “embedded title”? Open the ‘Properties’ of a video and go to ‘Details’.</p>
 <p><img src="/MarkDownImages/image-20240217135326419.png" alt="image-20240217135326419"></p>
@@ -341,10 +341,10 @@
 <p>1️⃣ For most anime published, the values of their ‘Title’ are their series names, as shown in the image, lacking episode numbers, making it hard for me to distinguish.</p>
 <p>This issue can be easily solved by copying the file name to ‘Title’ or clearing the ‘Title’ field. In either case, the original filename will be displayed eventually. For automation in Python, the <a target="_blank" rel="noopener" href="https://github.com/quodlibet/mutagen">mutagen</a> module is handy to use.</p>
 <p>2️⃣ Media libraries of type ‘Music Videos’ cannot display folder structures, which I find unacceptable. In fact, only ‘Mixed Movies and Shows’ will be presented in a pure folder format.</p>
-<h1>Existing Solution 2</h1>
+<h1 id="Existing-Solution-2">Existing Solution 2</h1>
 <p>Directly modify the database, as referenced in <a target="_blank" rel="noopener" href="https://www.cnblogs.com/toumingbai/p/15514526.html">‘Manually Correcting Titles to File (Folder) Names’</a>。</p>
 <p>Bypassing the Service Tier to directly manipulate the database is too risky. I will never use this approach.</p>
-<h1>My Solution</h1>
+<h1 id="My-Solution">My Solution</h1>
 <p>Since directly manipulating the database in Solution 2 is bad, why not use the Jellyfin API?</p>
 <p>The first step is to find which API corresponds to the required functionality. Instead of referring to the official documentation first, inspect the browser’s network traffic in Developer tools and then refer to the documentation. However, in most cases, the documentation is still useless, because there is no description. Under such circumstances, we need perform experiments to guess the usage of an API.</p>
 <p>Fortunately, <a target="_blank" rel="noopener" href="https://github.com/jellyfin/jellyfin-apiclient-python">jellyfin-apiclient-python</a> provides a ready-made API, eliminating the need to start from <code>requests</code>. I quickly completed the script:</p>
@@ -354,7 +354,7 @@
 </blockquote>
 <p>My Jellyfin server’s certificate is self-signed, and it seems Python’s SSL cannot use the certificates installed on OS. We can resolve this by setting the environment variable <code>REQUESTS_CA_BUNDLE=&lt;certificate_path&gt;</code>.</p>
 <p>My solution perfectly addresses the drawbacks of the two aforementioned solutions.</p>
-<h1>References</h1>
+<h1 id="References">References</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.reddit.com/r/jellyfin/comments/pcptfz/possible_to_use_original_filenames_only/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Possible to use original filenames only?</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/toumingbai/p/15514526.html">jellyfin手动修正标题为文件（夹）名</a></li>

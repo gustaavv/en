@@ -148,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-1"><span class="nav-number">2.1.</span> <span class="nav-text">Example 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-number">2.2.</span> <span class="nav-text">Example 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rereading-the-Problem"><span class="nav-number">3.1.</span> <span class="nav-text">Rereading the Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-1-Sorting"><span class="nav-number">3.2.</span> <span class="nav-text">Observation 1: Sorting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-2-Finding-a-Pattern"><span class="nav-number">3.3.</span> <span class="nav-text">Observation 2: Finding a Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-3-Sliding-Window"><span class="nav-number">3.4.</span> <span class="nav-text">Observation 3: Sliding Window</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">4.1.</span> <span class="nav-text">Java</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Examples"><span class="nav-number">2.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-1"><span class="nav-number">2.1.</span> <span class="nav-text">Example 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-number">2.2.</span> <span class="nav-text">Example 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Approach"><span class="nav-number">3.</span> <span class="nav-text">Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rereading-the-Problem"><span class="nav-number">3.1.</span> <span class="nav-text">Rereading the Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-1-Sorting"><span class="nav-number">3.2.</span> <span class="nav-text">Observation 1: Sorting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-2-Finding-a-Pattern"><span class="nav-number">3.3.</span> <span class="nav-text">Observation 2: Finding a Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observation-3-Sliding-Window"><span class="nav-number">3.4.</span> <span class="nav-text">Observation 3: Sliding Window</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-number">4.</span> <span class="nav-text">Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">4.1.</span> <span class="nav-text">Java</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -325,7 +325,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Problem</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Problem">Problem</h1>
 <blockquote>
 <p>Problem Source: NowCoder Online Test</p>
 </blockquote>
@@ -339,7 +339,7 @@
 <p>The array’s <strong>score</strong> is defined as the “maximum number of repeated elements in the array”.</p>
 <p>Note that you can only apply the operation <strong>once</strong> for each index.</p>
 <span id="more"></span>
-<h1>Examples</h1>
+<h1 id="Examples">Examples</h1>
 <h2 id="Example-1">Example 1</h2>
 <p>Input:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
@@ -360,7 +360,7 @@
 <p>Explanation:</p>
 <p>In this example, no operations are needed.</p>
 <p>The score of array nums is 4 (the entire array).</p>
-<h1>Approach</h1>
+<h1 id="Approach">Approach</h1>
 <h2 id="Rereading-the-Problem">Rereading the Problem</h2>
 <p>Let’s restate the problem:</p>
 <p>Given an array $nums$ and a natural number $k$.</p>
@@ -386,7 +386,7 @@
 <li>Among all possible intervals $[i, j]$, the maximum $j - i + 1$ is the answer.</li>
 </ul>
 <p>Now, using the <strong>sliding window</strong> algorithm can reduce the time complexity from $O(n^2)$ (brute-force) to $O(n)$.</p>
-<h1>Code</h1>
+<h1 id="Code">Code</h1>
 <h2 id="Java">Java</h2>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maximumScore</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line"></span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// sliding window</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; n &amp;&amp; nums[j] &lt;= nums[i] + <span class="number">2</span> * k) j++;</span><br><span class="line">            ans = Math.max(ans, j - i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

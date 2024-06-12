@@ -148,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Usage"><span class="nav-number">2.</span> <span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -315,11 +315,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>Preface</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="Preface">Preface</h1>
 <p>Python is renowned for its rich set of modules. However, unlike in Java development where Maven uses group Id, artifact Id, and version to uniquely identify a dependency, in practice, most Python projects differentiate modules <strong>solely</strong> by their names. Run <code>pip install &lt;module&gt;</code>, and you’ve got the module. But what about the module version? Most project requirements do not specify versions, leading to constant errors for those who run the project later.</p>
 <p>Hence, the concept of a weakened version number undoubtedly does more harm than good. How to solve this issue? By using venv (virtual environment).</p>
 <p>If you directly use <code>pip install</code>, all Python projects share these modules, leading to potential compatibility issues. Venv copies the original Python environment. The virtual environment runs only on the copied Python, and the installed modules exist only in that virtual environment. Multiple virtual environments are isolated from each other.</p>
-<h1>Usage</h1>
+<h1 id="Usage">Usage</h1>
 <p>1️⃣Create venv:</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python <span class="literal">-m</span> venv C:\Users\Gustav\Desktop\test\venv</span><br></pre></td></tr></table></figure>
 <p>The directory <code>C:\Users\Gustav\Desktop\test\venv</code> is the virtual environment.</p>
@@ -330,7 +330,7 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;pip list</span><br></pre></td></tr></table></figure>
 <p>3️⃣Deactivate:</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;deactivate</span><br><span class="line">C:\Users\Gustav\Desktop\test&gt;</span><br></pre></td></tr></table></figure>
-<h1>Reference</h1>
+<h1 id="Reference">Reference</h1>
 <p><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/venv.html">venv — Creation of virtual environments</a></p>
 
     </div>
