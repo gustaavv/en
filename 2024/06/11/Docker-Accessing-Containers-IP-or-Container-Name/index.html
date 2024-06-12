@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"gustaavv.github.io","root":"/en/","images":"/en/images","scheme":"Gemini","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#008000","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/en/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/en/js/config.js"></script>
 
-    <meta name="description" content="序言 本文包括了多种访问 Docker 容器的情况，探讨了每种情况应该使用容器的 IP 地址还是容器名。本文的内容对于熟练使用 Docker 的人不值一提，但在实践中，我常常忘记这些基本概念，浪费了不少时间。因此，我决定以 cheat sheet 的形式写一篇博文。本文的大部分内容由 ChatGPT 生成的。 总的来说，记住以下两点就够了：  尽管我们喜欢用容器名访问容器，但这个 DNS 服务是由">
+    <meta name="description" content="Introduction This post covers various scenarios for accessing Docker containers, exploring whether to use the container’s IP address or name in each case. While this information might be trivial for s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何访问 Docker 容器？IP 地址还是容器名？">
+<meta property="og:title" content="How to Access Docker Containers? IP Address or Container Name?">
 <meta property="og:url" content="https://gustaavv.github.io/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/index.html">
 <meta property="og:site_name" content="Gustav&#39;s blog">
-<meta property="og:description" content="序言 本文包括了多种访问 Docker 容器的情况，探讨了每种情况应该使用容器的 IP 地址还是容器名。本文的内容对于熟练使用 Docker 的人不值一提，但在实践中，我常常忘记这些基本概念，浪费了不少时间。因此，我决定以 cheat sheet 的形式写一篇博文。本文的大部分内容由 ChatGPT 生成的。 总的来说，记住以下两点就够了：  尽管我们喜欢用容器名访问容器，但这个 DNS 服务是由">
+<meta property="og:description" content="Introduction This post covers various scenarios for accessing Docker containers, exploring whether to use the container’s IP address or name in each case. While this information might be trivial for s">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-06-10T23:32:38.000Z">
 <meta property="article:modified_time" content="2024-06-10T23:32:38.000Z">
@@ -40,10 +40,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/","path":"2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/","title":"如何访问 Docker 容器？IP 地址还是容器名？"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/","path":"2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/","title":"How to Access Docker Containers? IP Address or Container Name?"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>如何访问 Docker 容器？IP 地址还是容器名？ | Gustav's blog</title>
+<title>How to Access Docker Containers? IP Address or Container Name? | Gustav's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBFGGZ14VS"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-SBFGGZ14VS","only_pageview":false}</script>
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%AE%BF%E9%97%AE%E7%9B%AE%E6%A0%87%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">从容器中访问目标容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">2.1.</span> <span class="nav-text">两者在同一个网络中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E4%B8%8D%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">2.2.</span> <span class="nav-text">两者不在同一个网络中</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E6%9C%AC%E5%9C%B0%E4%B8%BB%E6%9C%BA%E8%AE%BF%E9%97%AE%E7%9B%AE%E6%A0%87%E5%AE%B9%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">从本地主机访问目标容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E5%A4%96%E9%83%A8%E4%B8%BB%E6%9C%BA%E8%AE%BF%E9%97%AE%E7%9B%AE%E6%A0%87%E5%AE%B9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">从外部主机访问目标容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Accessing-the-Target-Container-from-Another-Container"><span class="nav-number">2.</span> <span class="nav-text">Accessing the Target Container from Another Container</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Both-Containers-are-on-the-Same-Network"><span class="nav-number">2.1.</span> <span class="nav-text">Both Containers are on the Same Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Containers-are-Not-on-the-Same-Network"><span class="nav-number">2.2.</span> <span class="nav-text">Containers are Not on the Same Network</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Accessing-the-Target-Container-from-the-Host"><span class="nav-number">3.</span> <span class="nav-text">Accessing the Target Container from the Host</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Accessing-the-Target-Container-from-an-External-Host"><span class="nav-number">4.</span> <span class="nav-text">Accessing the Target Container from an External Host</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -210,6 +210,34 @@
       Docker: healthcheck and depends_on
       </a>
     </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/02/11/Jellyfin-Docker/" rel="bookmark">
+        <time class="popular-posts-time">2024-02-11</time>
+        <br>
+      Install Jellyfin in Docker
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/04/08/Glances-Docker/" rel="bookmark">
+        <time class="popular-posts-time">2024-04-08</time>
+        <br>
+      Install Glances in Docker
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/04/12/MySQL-Docker/" rel="bookmark">
+        <time class="popular-posts-time">2024-04-12</time>
+        <br>
+      Install MySQL in Docker
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/01/31/Docker-Nginx-SSL-Local-Network/" rel="bookmark">
+        <time class="popular-posts-time">2024-01-31</time>
+        <br>
+      Deploying Nginx in Docker and Configuring SSL Certificate for Local Network
+      </a>
+    </li>
   </ul>
 
           </div>
@@ -244,12 +272,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="如何访问 Docker 容器？IP 地址还是容器名？ | Gustav's blog">
+      <meta itemprop="name" content="How to Access Docker Containers? IP Address or Container Name? | Gustav's blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          如何访问 Docker 容器？IP 地址还是容器名？
+          How to Access Docker Containers? IP Address or Container Name?
         </h1>
 
         <div class="post-meta-container">
@@ -287,14 +315,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>494</span>
+      <span>362</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>2 mins.</span>
+      <span>1 mins.</span>
     </span>
 </div>
 
@@ -304,38 +332,44 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="序言">序言</h1>
-<p>本文包括了多种访问 Docker 容器的情况，探讨了每种情况应该使用容器的 IP 地址还是容器名。本文的内容对于熟练使用 Docker 的人不值一提，但在实践中，我常常忘记这些基本概念，浪费了不少时间。因此，我决定以 cheat sheet 的形式写一篇博文。本文的大部分内容由 ChatGPT 生成的。</p>
-<p>总的来说，记住以下两点就够了：</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="Introduction">Introduction</h1>
+<p>This post covers various scenarios for accessing Docker containers, exploring whether to use the container’s IP address or name in each case. While this information might be trivial for seasoned Docker users, I often find myself forgetting these basic concepts, wasting a lot of time. Hence, I decided to write a blog post in the form of a cheat sheet. Most of the content here is generated by ChatGPT.</p>
+<p>In general, just remember these two points:</p>
 <ul>
-<li>尽管我们喜欢用容器名访问容器，但这个 DNS 服务是由 docker 提供的，因此<strong>只能被容器使用</strong>。</li>
-<li>对于端口映射 <code>-p 8080:80</code> ：用容器名/容器 IP 访问容器时，用容器的端口 <code>80</code>；用主机访问容器时，用主机的端口 <code>8080</code>。</li>
+<li>Although we prefer to access containers by their names, this DNS service is provided by Docker and <strong>can only be used by containers</strong>.</li>
+<li>For port mapping <code>-p 8080:80</code>: Use the container’s port <code>80</code> when accessing the container via container name/IP, and use the host’s port <code>8080</code> when accessing from the host.</li>
 </ul>
 <span id="more"></span>
-<h1 id="从容器中访问目标容器">从容器中访问目标容器</h1>
-<p>此时要区分两个容器是否在一个 docker network 中。</p>
-<h2 id="两者在同一个网络中">两者在同一个网络中</h2>
-<p>情况一：两个容器属于同一个 Compose</p>
+<h1 id="Accessing-the-Target-Container-from-Another-Container">Accessing the Target Container from Another Container</h1>
+<p>Here, we should distinguish whether the two containers are on the same Docker network.</p>
+<h2 id="Both-Containers-are-on-the-Same-Network">Both Containers are on the Same Network</h2>
+<p>Scenario 1: Both Containers are Part of the Same Compose</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mywebapp</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:80&quot;</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql</span></span><br></pre></td></tr></table></figure>
-<p>情况二：创建容器时使用 <code>--network</code> 选项使两个容器在一个网络中。</p>
+<p>Scenario 2: Use the <code>--network</code> Option When Creating Containers to Place Them on the Same Network</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker network create my_network</span><br><span class="line">docker run -d --name web --network my_network mywebapp</span><br><span class="line">docker run -d --name db --network my_network mysql</span><br></pre></td></tr></table></figure>
-<p>两种情况下，都可以通过容器名访问（使用容器端口）。</p>
+<p>In both cases, you can access the containers by their names (using the container’s port).</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://web:80</span><br></pre></td></tr></table></figure>
-<p><strong>注意，如果目标容器在 bridge 网络中，则不属于这种情况。需要通过 IP 访问。</strong></p>
-<h2 id="两者不在同一个网络中">两者不在同一个网络中</h2>
-<p>需要使用目标容器的 IP。</p>
-<p>首先获得容器 IP，然后通过 IP 访问：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER_IP=$(docker inspect -f &#x27;&#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27; 容器)</span><br><span class="line">curl http://$CONTAINER_IP:80</span><br></pre></td></tr></table></figure>
-<h1 id="从本地主机访问目标容器">从本地主机访问目标容器</h1>
-<p>有两种方式：</p>
-<p>一、通过容器 IP 访问。</p>
-<p>二、使用本地端口访问：</p>
+<p><strong>Note: If the target container is on the bridge network, this does not apply. You need to access it via IP.</strong></p>
+<h2 id="Containers-are-Not-on-the-Same-Network">Containers are Not on the Same Network</h2>
+<p>You need to use the target container’s IP.</p>
+<p>First, obtain the container’s IP, then access it via IP:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER_IP=$(docker inspect -f &#x27;&#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27; container)</span><br><span class="line">curl http://$CONTAINER_IP:80</span><br></pre></td></tr></table></figure>
+<h1 id="Accessing-the-Target-Container-from-the-Host">Accessing the Target Container from the Host</h1>
+<p>There are two methods:</p>
+<ol>
+<li>
+<p>Access via the container’s IP.</p>
+</li>
+<li>
+<p>Use the host’s port to access:</p>
+</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:8080</span><br></pre></td></tr></table></figure>
-<p>注意，这里是本机端口，不再是容器端口。</p>
-<h1 id="从外部主机访问目标容器">从外部主机访问目标容器</h1>
-<p>使用本地主机的 IP 访问：</p>
+<p>Note, in this case, this is the host’s port, not the container’s port.</p>
+<h1 id="Accessing-the-Target-Container-from-an-External-Host">Accessing the Target Container from an External Host</h1>
+<p>Use the host’s IP to access:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://host_ip:8080</span><br></pre></td></tr></table></figure>
-<h1 id="参考">参考</h1>
+<h1 id="References">References</h1>
 <ul>
 <li>ChatGPT</li>
 </ul>
@@ -356,7 +390,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://gustaavv.github.io/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/" title="如何访问 Docker 容器？IP 地址还是容器名？">https://gustaavv.github.io/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/</a>
+      <a href="https://gustaavv.github.io/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/" title="How to Access Docker Containers? IP Address or Container Name?">https://gustaavv.github.io/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
