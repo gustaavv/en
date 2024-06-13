@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"gustaavv.github.io","root":"/en/","images":"/en/images","scheme":"Gemini","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#008000","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/en/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/en/js/config.js"></script>
 
-    <meta name="description" content="序言 在之前的文章中，我提到“Jellyfin 计划任务『扫描媒体库』并不吃资源，频繁运行也没事”。实际上，这不准确。这个任务对于资源的占用取决于媒体&#x2F;文件的数量。 最近我写了一个项目，用来爬取视频，同时自动生成 nfo 文件和视频海报。在这个新的视频目录中，最多有 2000 个文件（大部分是 nfo 和海报图片，视频还没怎么下载），有四级子目录。但此时计划任务的 CPU 占用量已经大幅增加。这显">
+    <meta name="description" content="Introduction In a previous article, I mentioned that ‘Jellyfin’s scheduled task “Scan Media Library” does not consume resources and can run frequently without issues’. In fact, this statement is not e">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jellyfin 自定义扫描频率">
+<meta property="og:title" content="Customize Jellyfin Scan Frequencies">
 <meta property="og:url" content="https://gustaavv.github.io/en/2024/06/11/Jellyfin-custom-scan-frequency/index.html">
 <meta property="og:site_name" content="Gustav&#39;s blog">
-<meta property="og:description" content="序言 在之前的文章中，我提到“Jellyfin 计划任务『扫描媒体库』并不吃资源，频繁运行也没事”。实际上，这不准确。这个任务对于资源的占用取决于媒体&#x2F;文件的数量。 最近我写了一个项目，用来爬取视频，同时自动生成 nfo 文件和视频海报。在这个新的视频目录中，最多有 2000 个文件（大部分是 nfo 和海报图片，视频还没怎么下载），有四级子目录。但此时计划任务的 CPU 占用量已经大幅增加。这显">
+<meta property="og:description" content="Introduction In a previous article, I mentioned that ‘Jellyfin’s scheduled task “Scan Media Library” does not consume resources and can run frequently without issues’. In fact, this statement is not e">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131240942.png">
 <meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131529710.png">
@@ -38,8 +38,8 @@
 <meta property="article:published_time" content="2024-06-11T07:51:07.000Z">
 <meta property="article:modified_time" content="2024-06-11T07:51:07.000Z">
 <meta property="article:author" content="Gustav">
-<meta property="article:tag" content="Docker">
 <meta property="article:tag" content="NAS">
+<meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Jellyfin">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131240942.png">
@@ -49,10 +49,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2024/06/11/Jellyfin-custom-scan-frequency/","path":"2024/06/11/Jellyfin-custom-scan-frequency/","title":"Jellyfin 自定义扫描频率"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2024/06/11/Jellyfin-custom-scan-frequency/","path":"2024/06/11/Jellyfin-custom-scan-frequency/","title":"Customize Jellyfin Scan Frequencies"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Jellyfin 自定义扫描频率 | Gustav's blog</title>
+<title>Customize Jellyfin Scan Frequencies | Gustav's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBFGGZ14VS"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-SBFGGZ14VS","only_pageview":false}</script>
@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">关闭计划任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B3%E8%AF%B7%E4%B8%80%E4%B8%AA-API-%E5%AF%86%E9%92%A5"><span class="nav-number">2.2.</span> <span class="nav-text">申请一个 API 密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%BE%97-API-%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.3.</span> <span class="nav-text">获得 API 端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab"><span class="nav-number">2.4.</span> <span class="nav-text">crontab</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%95%88%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">实际效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Steps"><span class="nav-number">2.</span> <span class="nav-text">Steps</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Disable-Scheduled-Task"><span class="nav-number">2.1.</span> <span class="nav-text">Disable Scheduled Task</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Obtain-an-API-Key"><span class="nav-number">2.2.</span> <span class="nav-text">Obtain an API Key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-the-API-Endpoint"><span class="nav-number">2.3.</span> <span class="nav-text">Get the API Endpoint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab"><span class="nav-number">2.4.</span> <span class="nav-text">crontab</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Results"><span class="nav-number">3.</span> <span class="nav-text">Results</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -220,17 +220,17 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/en/2024/02/20/LANraragi-Using-Experience/" rel="bookmark">
-        <time class="popular-posts-time">2024-02-20</time>
-        <br>
-      LANraragi Using Experience
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/en/2024/02/17/jellyfin-original-filename/" rel="bookmark">
         <time class="popular-posts-time">2024-02-17</time>
         <br>
       Display Original Filenames in Jellyfin
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/02/20/LANraragi-Using-Experience/" rel="bookmark">
+        <time class="popular-posts-time">2024-02-20</time>
+        <br>
+      LANraragi Using Experience
       </a>
     </li>
   </ul>
@@ -267,12 +267,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Jellyfin 自定义扫描频率 | Gustav's blog">
+      <meta itemprop="name" content="Customize Jellyfin Scan Frequencies | Gustav's blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Jellyfin 自定义扫描频率
+          Customize Jellyfin Scan Frequencies
         </h1>
 
         <div class="post-meta-container">
@@ -310,7 +310,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>652</span>
+      <span>440</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -327,56 +327,56 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="序言">序言</h1>
-<p>在<a href="/2024/02/20/LANraragi-Using-Experience">之前的文章</a>中，我提到“Jellyfin 计划任务『扫描媒体库』并不吃资源，频繁运行也没事”。实际上，这不准确。这个任务对于资源的占用取决于媒体/文件的数量。</p>
-<p>最近我写了一个项目，用来爬取视频，同时自动生成 nfo 文件和视频海报。在这个新的视频目录中，最多有 2000 个文件（大部分是 nfo 和海报图片，视频还没怎么下载），有四级子目录。但此时计划任务的 CPU 占用量已经大幅增加。这显然有问题。</p>
-<p>经过一番研究，我发现使用 crontab 定时调用 Jellyfin API，是目前唯一实现不同媒体库不同扫描频率的解决方案。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="Introduction">Introduction</h1>
+<p>In a <a href="/en/2024/02/20/LANraragi-Using-Experience">previous article</a>, I mentioned that ‘Jellyfin’s scheduled task “Scan Media Library” does not consume resources and can run frequently without issues’. In fact, this statement is not entirely correct. The resource consumption of the task depends on the number of media/files.</p>
+<p>Recently, I developed a project to scrape videos while automatically generating NFO files and video posters. In this new video directory, there are up to 2000 files (mostly NFO and poster images, with videos not yet downloaded), organized into four-level subdirectories. However, the CPU usage of the scheduled task has increased significantly, indicating an issue.</p>
+<p>After some research, I found that using crontab to periodically call the Jellyfin API is currently the only solution to customize scan frequencies for different media libraries.</p>
 <span id="more"></span>
-<h1 id="步骤">步骤</h1>
-<h2 id="关闭计划任务">关闭计划任务</h2>
-<p>进入『控制台 | 计划任务 | 扫描媒体库』，删除现有任务：</p>
+<h1 id="Steps">Steps</h1>
+<h2 id="Disable-Scheduled-Task">Disable Scheduled Task</h2>
+<p>Navigate to ‘Dashboard | Scheduled Tasks | Scan Media Library’ and delete the existing task:</p>
 <p><img src="/MarkDownImages/image-20240611131240942.png" alt="image-20240611131240942"></p>
-<h2 id="申请一个-API-密钥">申请一个 API 密钥</h2>
-<p>进入『控制台 | API 密钥』，创建一个：</p>
+<h2 id="Obtain-an-API-Key">Obtain an API Key</h2>
+<p>Navigate to ‘Dashboard | API Keys’ and create a new one:</p>
 <p><img src="/MarkDownImages/image-20240611131529710.png" alt="image-20240611131529710"></p>
-<h2 id="获得-API-端口">获得 API 端口</h2>
-<p>我建议直接用 F12 抓包：</p>
+<h2 id="Get-the-API-Endpoint">Get the API Endpoint</h2>
+<p>I recommend using F12 to capture the request:</p>
 <img src="/MarkDownImages/image-20240611131657198.png" alt="image-20240611131657198" style="zoom:50%;" />
-<p>点击『刷新』前，先按下 F12。然后找到对应的请求</p>
+<p>Press F12 before clicking ‘Refresh’ and find the corresponding request:</p>
 <img src="/MarkDownImages/image-20240611131710749.png" alt="image-20240611131710749" style="zoom: 33%;" />
-<p><code>/Items/媒体库ID/Refresh?扫描参数</code>，这个 URL 可以直接拿来用。</p>
+<p><code>/Items/LibraryID/Refresh?ScanParameters</code> – we can directly use this URL.</p>
 <p><img src="/MarkDownImages/image-20240611131902161.png" alt="image-20240611131902161"></p>
 <h2 id="crontab">crontab</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编辑</span></span><br><span class="line">crontab -e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
-<p>curl 格式如下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -k -X POST <span class="string">&quot;https://IP地址:端口/Items/媒体库ID/Refresh?Recursive=true&amp;ImageRefreshMode=Default&amp;MetadataRefreshMode=Default&amp;ReplaceAllImages=false&amp;ReplaceAllMetadata=false&quot;</span> -H <span class="string">&quot;Authorization: MediaBrowser Token=API密钥&quot;</span></span><br></pre></td></tr></table></figure>
-<p>crontab 格式如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新番：每十分钟一次</span></span><br><span class="line">*/10 * * * * curl -k -X POST &quot;https://IP地址:端口/Items/媒体库ID/Refresh?Recursive=true&amp;ImageRefreshMode=Default&amp;MetadataRefreshMode=Default&amp;ReplaceAllImages=false&amp;ReplaceAllMetadata=false&quot; -H &quot;Authorization: MediaBrowser Token=API密钥&quot;</span><br></pre></td></tr></table></figure>
-<p>其他时间配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Edit</span></span><br><span class="line">crontab -e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">View</span></span><br><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
+<p>curl format:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -k -X POST <span class="string">&quot;https://IPAddress:Port/Items/LibraryID/Refresh?Recursive=true&amp;ImageRefreshMode=Default&amp;MetadataRefreshMode=Default&amp;ReplaceAllImages=false&amp;ReplaceAllMetadata=false&quot;</span> -H <span class="string">&quot;Authorization: MediaBrowser Token=APIKey&quot;</span></span><br></pre></td></tr></table></figure>
+<p>crontab format:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">New Episodes: every ten minutes</span></span><br><span class="line">*/10 * * * * curl -k -X POST &quot;https://IPAddress:Port/Items/LibraryID/Refresh?Recursive=true&amp;ImageRefreshMode=Default&amp;MetadataRefreshMode=Default&amp;ReplaceAllImages=false&amp;ReplaceAllMetadata=false&quot; -H &quot;Authorization: MediaBrowser Token=APIKey&quot;</span><br></pre></td></tr></table></figure>
+<p>Other frequency configurations:</p>
 <ul>
-<li>每小时一次：<code>0 * * * *</code>；</li>
-<li>每周一次：比如 <code>0 17 * * 0</code>，每周天下午 5 点；</li>
-<li>每两周一次：比如 <code>0 11 1,15 * *</code>，每月1号和15号的早上11点；</li>
+<li>Every hour: <code>0 * * * *</code>;</li>
+<li>Weekly: e.g., <code>0 17 * * 0</code>, every Sunday at 5 PM;</li>
+<li>Bi-weekly: e.g., <code>0 11 1,15 * *</code>, 11 AM on the 1st and 15th of every month;</li>
 </ul>
 <hr>
-<p>查看 crontab 的日志：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 使用journalctl</span> </span><br><span class="line">journalctl -u crond</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 直接查看日志文件，这个更全</span></span><br><span class="line">cat /var/log/cron</span><br></pre></td></tr></table></figure>
-<h1 id="实际效果">实际效果</h1>
+<p>View crontab logs:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. Use journalctl</span> </span><br><span class="line">journalctl -u crond</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. Directly view <span class="built_in">log</span> files, <span class="built_in">which</span> is more comprehensive</span></span><br><span class="line">cat /var/log/cron</span><br></pre></td></tr></table></figure>
+<h1 id="Results">Results</h1>
 <p><img src="/MarkDownImages/image-20240611154250550.png" alt="image-20240611154250550"></p>
 <blockquote>
-<p>这个软件是 NetData，我之后会写一篇关于它的博文。</p>
+<p>This software is NetData, and I will write a blog post about it later.</p>
 </blockquote>
-<p>红色的是扫描爬取的视频的媒体库，而蓝色的是扫描本季新番的媒体库。</p>
-<p>可以看到：</p>
+<p>The red one represents scanning the media library of scraped videos, while the blue one is for scanning the anime of the latest season.</p>
+<p>Observations:</p>
 <ul>
 <li>
-<p>蓝色的平均值不超过 5%，因此每十分钟执行一次没问题 —— 这个频率也可以及时地让 Jellyfin 刮削新下载好的番剧。</p>
+<p>The average value of the blue does not exceed 5%, so executing it every ten minutes is feasible — this frequency also ensures that Jellyfin scrapes newly downloaded anime promptly.</p>
 </li>
 <li>
-<p>如果按照之前 Jellyfin 的计划任务，所有媒体库都一小时扫描一次，那么对 CPU 的占用显然太大了。</p>
+<p>Compared to Jellyfin’s scheduled tasks, scanning all media libraries every hour would clearly impose a heavier CPU load.</p>
 </li>
 </ul>
-<h1 id="参考">参考</h1>
+<h1 id="References">References</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.reddit.com/r/jellyfin/comments/jjxbko/disabling_automatic_scan_per_library/">Disabling automatic scan per library</a></li>
 </ul>
@@ -397,7 +397,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://gustaavv.github.io/en/2024/06/11/Jellyfin-custom-scan-frequency/" title="Jellyfin 自定义扫描频率">https://gustaavv.github.io/en/2024/06/11/Jellyfin-custom-scan-frequency/</a>
+      <a href="https://gustaavv.github.io/en/2024/06/11/Jellyfin-custom-scan-frequency/" title="Customize Jellyfin Scan Frequencies">https://gustaavv.github.io/en/2024/06/11/Jellyfin-custom-scan-frequency/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -406,8 +406,8 @@
 </div>
 
           <div class="post-tags">
-              <a href="/en/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
               <a href="/en/tags/NAS/" rel="tag"><i class="fa fa-tag"></i> NAS</a>
+              <a href="/en/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
               <a href="/en/tags/Jellyfin/" rel="tag"><i class="fa fa-tag"></i> Jellyfin</a>
           </div>
 
@@ -469,7 +469,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:42</span>
+    <span title="Reading time total">1:41</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>

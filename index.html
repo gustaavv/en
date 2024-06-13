@@ -319,7 +319,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/en/2024/06/11/Jellyfin-custom-scan-frequency/" class="post-title-link" itemprop="url">Jellyfin 自定义扫描频率</a>
+          <a href="/en/2024/06/11/Jellyfin-custom-scan-frequency/" class="post-title-link" itemprop="url">Customize Jellyfin Scan Frequencies</a>
         </h2>
 
         <div class="post-meta-container">
@@ -357,7 +357,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>652</span>
+      <span>440</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -375,10 +375,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="序言">序言</h1>
-<p>在<a href="/2024/02/20/LANraragi-Using-Experience">之前的文章</a>中，我提到“Jellyfin 计划任务『扫描媒体库』并不吃资源，频繁运行也没事”。实际上，这不准确。这个任务对于资源的占用取决于媒体/文件的数量。</p>
-<p>最近我写了一个项目，用来爬取视频，同时自动生成 nfo 文件和视频海报。在这个新的视频目录中，最多有 2000 个文件（大部分是 nfo 和海报图片，视频还没怎么下载），有四级子目录。但此时计划任务的 CPU 占用量已经大幅增加。这显然有问题。</p>
-<p>经过一番研究，我发现使用 crontab 定时调用 Jellyfin API，是目前唯一实现不同媒体库不同扫描频率的解决方案。</p>
+          <h1 id="Introduction">Introduction</h1>
+<p>In a <a href="/en/2024/02/20/LANraragi-Using-Experience">previous article</a>, I mentioned that ‘Jellyfin’s scheduled task “Scan Media Library” does not consume resources and can run frequently without issues’. In fact, this statement is not entirely correct. The resource consumption of the task depends on the number of media/files.</p>
+<p>Recently, I developed a project to scrape videos while automatically generating NFO files and video posters. In this new video directory, there are up to 2000 files (mostly NFO and poster images, with videos not yet downloaded), organized into four-level subdirectories. However, the CPU usage of the scheduled task has increased significantly, indicating an issue.</p>
+<p>After some research, I found that using crontab to periodically call the Jellyfin API is currently the only solution to customize scan frequencies for different media libraries.</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/en/2024/06/11/Jellyfin-custom-scan-frequency/#more" rel="contents">
@@ -770,7 +770,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:42</span>
+    <span title="Reading time total">1:41</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
