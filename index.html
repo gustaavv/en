@@ -319,7 +319,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/en/2024/06/29/From-AutoBangumi-Back-to-qBittorrent-RSS/" class="post-title-link" itemprop="url">自动化追番：从 AutoBangumi 回到 qBittorrent RSS</a>
+          <a href="/en/2024/06/29/From-AutoBangumi-Back-to-qBittorrent-RSS/" class="post-title-link" itemprop="url">Automated Anime Tracking: From AutoBangumi Back to qBittorrent RSS</a>
         </h2>
 
         <div class="post-meta-container">
@@ -338,11 +338,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -357,14 +357,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>1.3k</span>
+      <span>903</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>5 mins.</span>
+      <span>3 mins.</span>
     </span>
 </div>
 
@@ -375,25 +375,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="序言">序言</h1>
-<p><a target="_blank" rel="noopener" href="https://github.com/EstrellaXD/Auto_Bangumi">AutoBangumi</a> 是一款“基于 RSS 的全自动追番整理下载工具”<strong>（以下简称 AB）</strong>，很适合我这种同时使用 <a target="_blank" rel="noopener" href="https://github.com/c0re100/qBittorrent-Enhanced-Edition">qBittorrent</a> <strong>（以下简称 QB）</strong> 和 Jellyfin 的用户。在使用 AB 追了一个季度的番剧后，我对于 AB、Jellyfin等软件以及 RSS、刮削等概念有了更深的理解。尽管 AB 提供了自动化，但引入它也增加了追番流程的复杂度 —— 尤其表现在 AB 出问题时。</p>
-<p>回顾以往使用 QB RSS 功能的经历，加上新的理解，我选择不再使用 AB，而是使用 QB RSS 来代替。尽管在每个季度追新番时的步骤增加了一些，但整个系统的复杂度和资源占用量降低了。总的来说，我对这个改变是满意的。</p>
-<h1 id="自动化追番流程">自动化追番流程</h1>
+          <h1 id="Introduction">Introduction</h1>
+<p><a target="_blank" rel="noopener" href="https://github.com/EstrellaXD/Auto_Bangumi">AutoBangumi</a> is an “RSS-based fully automated anime tracking and download tool” <strong>(hereinafter referred to as AB)</strong>, which is very suitable for users like me who use both <a target="_blank" rel="noopener" href="https://github.com/c0re100/qBittorrent-Enhanced-Edition">qBittorrent</a> <strong>(hereinafter referred to as QB)</strong> and Jellyfin. After using AB to track anime for a season, I have gained a deeper understanding of AB, Jellyfin, and concepts such as RSS and scraping. Although AB provides automation, it also increases the complexity of the tracking process, especially when AB encounters issues.</p>
+<p>Based on my past experiences with the QB RSS feature and combined with my new understanding, I chose to stop using AB and instead use QB RSS. Although this adds a few more steps for tracking new anime each season, the overall system complexity and resource usage are reduced. Overall, I am satisfied with this change.</p>
+<h1 id="Automated-Anime-Tracking-Workflow">Automated Anime Tracking Workflow</h1>
 <pre><code class="highlight mermaid">flowchart LR
-subgraph g1[RSS订阅器]
-a1[AB] ~~~ a2[QB ]
+subgraph g1[RSS Subscriber]
+a1[AB] ~~~ a2[QB]
 end
-subgraph g2[RSS下载器]
+subgraph g2[RSS Downloader]
 b1[AB] ~~~ b2[QB]
 end
-subgraph g3[torrent下载器]
-c1[QB] ~~~ c3[Transmission ]
+subgraph g3[torrent Downloader]
+c1[QB] ~~~ c3[Transmission]
 end
-subgraph g4[下载后任务（可选）]
-d1[邮件通知下载完成] ~~~ d2[修改下载视频名] ~~~ d3[创建硬链接]
+subgraph g4[&quot;Post-Download Tasks (Optional)&quot;]
+d1[Email Notification] ~~~ d2[Rename Downloaded Videos] ~~~ d3[Make Hard Links]
 end
 
-subgraph g5[Jellyfin（插件）刮削]
+subgraph g5[&quot;Jellyfin (Plugins) Scraping&quot;]
 e1[Bangumi] ~~~  e2[AniDB] ~~~ e3[TMDB]
 end
 g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
@@ -467,11 +467,11 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -791,7 +791,7 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:46</span>
+    <span title="Reading time total">1:44</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
