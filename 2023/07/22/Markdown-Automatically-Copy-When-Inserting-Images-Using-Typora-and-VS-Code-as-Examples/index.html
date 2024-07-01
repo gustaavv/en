@@ -29,15 +29,15 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="Preface With the widespread adoption of Markdown, the efficiency of using traditional text editors for writing appears to be low, especially when dealing with some complex syntax, such as inserting ta">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722141038783.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722141359394.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722142231405.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722142307844.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722142326387.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722142953270.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722143640371.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722143756389.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722143813041.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722141038783.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722141359394.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722142231405.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722142307844.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722142326387.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722142953270.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722143640371.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722143756389.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722143813041.png">
 <meta property="article:published_time" content="2023-07-22T05:28:59.000Z">
 <meta property="article:modified_time" content="2023-07-22T05:28:59.000Z">
 <meta property="article:author" content="Gustav">
@@ -46,7 +46,7 @@
 <meta property="article:tag" content="Typora">
 <meta property="article:tag" content="Markdown">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20230722141038783.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230722141038783.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2023/07/22/Markdown-Automatically-Copy-When-Inserting-Images-Using-Typora-and-VS-Code-as-Examples/">
@@ -175,7 +175,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -186,7 +186,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -291,7 +291,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>710</span>
+      <span>716</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -325,34 +325,34 @@
 <h2 id="Configuration">Configuration</h2>
 <p>Typora provides various features for inserting images, with the one I use most being ‘Copy Image to Specified Path.’</p>
 <p>Here, ‘Insert Image’ refers to dragging an image into Typora or pasting it from the clipboard (<code>win + v</code>).</p>
-<img src="/MarkDownImages/image-20230722141038783.png" alt="image-20230722141038783" style="zoom:50%;" />
+<img src="/en/MarkDownImages/image-20230722141038783.png" alt="image-20230722141038783" style="zoom:50%;" />
 <p>I choose to save it to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). A better practice would be to choose ‘Copy Image to <code>./$&#123;filename&#125;.assets</code> folder’ for easy migration of Markdown files.</p>
-<img src="/MarkDownImages/image-20230722141359394.png" alt="image-20230722141359394" style="zoom:50%;" />
+<img src="/en/MarkDownImages/image-20230722141359394.png" alt="image-20230722141359394" style="zoom:50%;" />
 <p>‘Apply the same rule to images on the network’: When we copy a network image (a URL), Typora will automatically download the image to the specified path and change the URL to a local file reference, as storing images locally is more reliable than relying on images on the internet, which may disappear at any time.</p>
 <h2 id="Operation">Operation</h2>
 <p>After taking a screenshot, press <code>Ctrl + v</code> in Typora, and the image from the clipboard will be automatically copied to the <code>MarkDownImages</code> folder, with the file name based on the timestamp and less prone to duplication.</p>
 <hr>
-<img src="/MarkDownImages/image-20230722142231405.png" alt="image-20230722142231405" style="zoom:67%;" />
+<img src="/en/MarkDownImages/image-20230722142231405.png" alt="image-20230722142231405" style="zoom:67%;" />
 <hr>
-<img src="/MarkDownImages/image-20230722142307844.png" alt="image-20230722142307844" style="zoom:67%;" />
+<img src="/en/MarkDownImages/image-20230722142307844.png" alt="image-20230722142307844" style="zoom:67%;" />
 <hr>
-<img src="/MarkDownImages/image-20230722142326387.png" alt="image-20230722142326387" style="zoom:67%;" />
+<img src="/en/MarkDownImages/image-20230722142326387.png" alt="image-20230722142326387" style="zoom:67%;" />
 <hr>
 <p>As seen, this way of inserting images is very elegant and convenient.</p>
 <h1 id="VS-Code">VS Code</h1>
 <h2 id="Configuration-2">Configuration</h2>
 <p>VS Code seems to have recently added a feature similar to Typora, but it only provides the option of ‘Copy Image to Specified Path’.</p>
 <p>My configuration here is to copy any file (<code>**/*</code>) inserted to the <code>MarkDownImages</code> folder in the same directory as the current Markdown file (which will be automatically created if not present). The file is named <code>VSCodeCopied-$&#123;fileName&#125;</code>, where <code>$&#123;fileName&#125;</code> is the original file name.</p>
-<p><img src="/MarkDownImages/image-20230722142953270.png" alt="image-20230722142953270"></p>
+<p><img src="/en/MarkDownImages/image-20230722142953270.png" alt="image-20230722142953270"></p>
 <p>Alternatively, you can copy the following content directly into <code>settings.json</code>:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;markdown.copyFiles.destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;**/*&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./MarkDownImages/VSCodeCopied-$&#123;fileName&#125;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;markdown.copyFiles.destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;**/*&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./en/MarkDownImages/VSCodeCopied-$&#123;fileName&#125;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <h2 id="Operation-2">Operation</h2>
 <p>Similar to Typora, press <code>Ctrl + v</code> after taking a screenshot.</p>
 <p>Why is the saved image named <code>VSCodeCopied-$&#123;fileName&#125;</code>? This is because when inserting a screenshot into VS Code, it is named as <code>image.png</code>.</p>
-<p><img src="/MarkDownImages/image-20230722143640371.png" alt="image-20230722143640371"></p>
+<p><img src="/en/MarkDownImages/image-20230722143640371.png" alt="image-20230722143640371"></p>
 <p>If there are duplicates, a number is added to the file name to distinguish:</p>
-<p><img src="/MarkDownImages/image-20230722143756389.png" alt="image-20230722143756389"></p>
-<p><img src="/MarkDownImages/image-20230722143813041.png" alt="image-20230722143813041"></p>
+<p><img src="/en/MarkDownImages/image-20230722143756389.png" alt="image-20230722143756389"></p>
+<p><img src="/en/MarkDownImages/image-20230722143813041.png" alt="image-20230722143813041"></p>
 <p>This is obviously not intuitive and can lead to filename conflicts when collaborating on document writing within a team. Hopefully, future updates to VS Code will address this and provide more options when inserting images.</p>
 <h1 id="References">References</h1>
 <p><a target="_blank" rel="noopener" href="https://support.typora.io/Images/#when-insert-images">Images in Typora: when-insert-images</a></p>
@@ -440,14 +440,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -478,6 +478,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

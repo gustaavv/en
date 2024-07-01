@@ -29,14 +29,14 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="Preface Recently, I’ve been using Python to write web crawlers for downloading manga (see previous posts on LANraragi). A typical page of a manga like this:  All the data on this webpage can be retrie">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240329132644183.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240329132644183.png">
 <meta property="article:published_time" content="2024-03-29T05:12:23.000Z">
 <meta property="article:modified_time" content="2024-03-29T05:12:23.000Z">
 <meta property="article:author" content="Gustav">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="AIOHTTP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20240329132644183.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240329132644183.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2024/03/29/python-aiohttp-use/">
@@ -165,7 +165,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -176,7 +176,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -286,7 +286,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>703</span>
+      <span>706</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -305,7 +305,7 @@
     
     <div class="post-body" itemprop="articleBody"><h1 id="Preface">Preface</h1>
 <p>Recently, I’ve been using Python to write web crawlers for downloading manga (see <a href="/en/tags/LANraragi/">previous posts on LANraragi</a>). A typical page of a manga like this:</p>
-<img src="/MarkDownImages/image-20240329132644183.png" alt="image-20240329132644183" style="zoom: 33%;" />
+<img src="/en/MarkDownImages/image-20240329132644183.png" alt="image-20240329132644183" style="zoom: 33%;" />
 <p>All the data on this webpage can be retrieved using BeautifulSoup, and only one communication is needed per page. However, downloading images is different: each image requires a separate communication, and the response body is often quite large. Obviously, images don’t need to be downloaded sequentially, otherwise, it would waste a lot of time.</p>
 <p>AIOHTTP is an asynchronous HTTP client/server module, which is very suitable for this scenario. Through asynchronous programming, it can maximize the performance of the network (and the server). This article focuses on introducing the basic usage of AIOHTTP, without going into details about how it works.</p>
 <span id="more"></span>
@@ -336,10 +336,10 @@
 <p>This is a feature of asyncio, not AIOHTTP</p>
 </blockquote>
 <p>Suppose we want to download multiple images, we can do it like this:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    site = <span class="string">&#x27;https://gustaavv.github.io/MarkDownImages/&#x27;</span></span><br><span class="line">    images = [<span class="string">&#x27;image-20230722142231405.png&#x27;</span>, <span class="string">&#x27;image-20230722142307844.png&#x27;</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> im <span class="keyword">in</span> images:</span><br><span class="line">            <span class="keyword">await</span> download_image(session, site + im, im)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    site = <span class="string">&#x27;https://gustaavv.github.io/en/MarkDownImages/&#x27;</span></span><br><span class="line">    images = [<span class="string">&#x27;image-20230722142231405.png&#x27;</span>, <span class="string">&#x27;image-20230722142307844.png&#x27;</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> im <span class="keyword">in</span> images:</span><br><span class="line">            <span class="keyword">await</span> download_image(session, site + im, im)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
 <p>However, the downloads are still sequential, not concurrent.</p>
 <p>The correct way is to use <code>asyncio.gather</code>, which can execute a series of tasks concurrently.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    site = <span class="string">&#x27;https://gustaavv.github.io/MarkDownImages/&#x27;</span></span><br><span class="line">    images = [<span class="string">&#x27;image-20230722142231405.png&#x27;</span>, <span class="string">&#x27;image-20230722142307844.png&#x27;</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        tasks = [download_image(session, site + im, im) <span class="keyword">for</span> im <span class="keyword">in</span> images]</span><br><span class="line">        result_list = <span class="keyword">await</span> asyncio.gather(*tasks)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    site = <span class="string">&#x27;https://gustaavv.github.io/en/MarkDownImages/&#x27;</span></span><br><span class="line">    images = [<span class="string">&#x27;image-20230722142231405.png&#x27;</span>, <span class="string">&#x27;image-20230722142307844.png&#x27;</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        tasks = [download_image(session, site + im, im) <span class="keyword">for</span> im <span class="keyword">in</span> images]</span><br><span class="line">        result_list = <span class="keyword">await</span> asyncio.gather(*tasks)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
 <p>The parameter of <code>gather()</code> is a call to async functions, that is <code>gather(f1(), f2())</code>. Here <code>gather(*[f1(), f2()])</code> is equivalent to <code> gather(f1(), f2())</code></p>
 <p><code>await</code> ensures that all download tasks are completed before the the next statement is executed.</p>
 <h1 id="Summary">Summary</h1>
@@ -432,14 +432,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -470,6 +470,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

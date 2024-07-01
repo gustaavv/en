@@ -29,22 +29,22 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="序言 最近准备重装笔记本的系统，因此要备份文件，存到台式机里。我将要备份的文件夹压缩，通过 Windows 自带的文件夹共享（局域网共享），传输这些压缩包。 但是，传输过程却非常艰难。有的压缩包有 10 几个 GB，传了一分钟，网速就没了，之后就开始报超时之类的错误。更离谱的是，有个压缩包在两台电脑上摘要算法的结果不同。 显然，windows SMB 协议既不能保证速度，也不能保证数据正确性，于是">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230904212558782.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230904212718315.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230904212911221.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230904213446263.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230904213728952.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230904214607556.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230904214947662.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230904212558782.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230904212718315.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230904212911221.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230904213446263.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230904213728952.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230904214607556.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230904214947662.png">
 <meta property="article:published_time" content="2023-09-04T13:06:58.000Z">
 <meta property="article:modified_time" content="2023-09-04T13:06:58.000Z">
 <meta property="article:author" content="Gustav">
-<meta property="article:tag" content="settings">
 <meta property="article:tag" content="LocalSend">
+<meta property="article:tag" content="settings">
 <meta property="article:tag" content="Firewall">
 <meta property="article:tag" content="Windows">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20230904212558782.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230904212558782.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2023/09/04/LocalSend-A-powerful-tool-for-local-file-transfer/">
@@ -173,7 +173,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,7 +184,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -325,15 +325,15 @@
 <h2 id="我的方案">我的方案</h2>
 <ol>
 <li>
-<p>将家庭 WIFI 设置为专用网络（不建议在公共网络使用局域网传输文件，无论软件作者做了怎样的加密，我都认为是不安全的。因此，这里不讨论公用网络的情况）<img src="/MarkDownImages/image-20230904212558782.png" alt="image-20230904212558782"></p>
+<p>将家庭 WIFI 设置为专用网络（不建议在公共网络使用局域网传输文件，无论软件作者做了怎样的加密，我都认为是不安全的。因此，这里不讨论公用网络的情况）<img src="/en/MarkDownImages/image-20230904212558782.png" alt="image-20230904212558782"></p>
 </li>
 <li>
 <p>进入『配置防火墙和安全设置』</p>
-<p><img src="/MarkDownImages/image-20230904212718315.png" alt="image-20230904212718315"></p>
+<p><img src="/en/MarkDownImages/image-20230904212718315.png" alt="image-20230904212718315"></p>
 </li>
 <li>
 <p>『允许应用通过防火墙』——『更改配置』。找到 <code>localsend_app</code>（其他以<code>localsend</code>开头的也可以这样做），将它之前那的单选框选上。以防万一，确保之后的两个单选框也是选上的（应该是默认开启的）。然后点击『确定』</p>
-<p><img src="/MarkDownImages/image-20230904212911221.png" alt="image-20230904212911221"></p>
+<p><img src="/en/MarkDownImages/image-20230904212911221.png" alt="image-20230904212911221"></p>
 </li>
 <li>
 <p>重启 LocalSend，等待找到目标主机</p>
@@ -344,11 +344,11 @@
 <ol>
 <li>
 <p>打开『Windows Defender 防火墙』</p>
-<p><img src="/MarkDownImages/image-20230904213446263.png" alt="image-20230904213446263"></p>
+<p><img src="/en/MarkDownImages/image-20230904213446263.png" alt="image-20230904213446263"></p>
 </li>
 <li>
 <p>『高级设置』——『Windows 防火墙属性』。在『专用配置文件』一栏，将『入站连接』改为『允许』，然后『应用』</p>
-<p><img src="/MarkDownImages/image-20230904213728952.png" alt="image-20230904213728952"></p>
+<p><img src="/en/MarkDownImages/image-20230904213728952.png" alt="image-20230904213728952"></p>
 </li>
 <li>
 <p>重启 LocalSend，查看能否找到目标主机。如果不行，再将上述『公用配置文件』一栏的『入站连接』改为『允许』，然后『应用』，再次重启 LocalSend 并检验。</p>
@@ -359,9 +359,9 @@
 <h2 id="7-zip">7-zip</h2>
 <p>7-zip 虽然是一个开源的压缩软件，但也提供摘要函数。</p>
 <p>右键选中要摘要的文件，点击『CRC SHA』，选择摘要算法</p>
-<p><img src="/MarkDownImages/image-20230904214607556.png" alt="image-20230904214607556"></p>
+<p><img src="/en/MarkDownImages/image-20230904214607556.png" alt="image-20230904214607556"></p>
 <p>如果右键菜单没有该选项，在 7-zip 中配置即可：</p>
-<p><img src="/MarkDownImages/image-20230904214947662.png" alt="image-20230904214947662"></p>
+<p><img src="/en/MarkDownImages/image-20230904214947662.png" alt="image-20230904214947662"></p>
 <h2 id="openssl">openssl</h2>
 <p>Linux 大多数发行版都会自带的工具。也可以在 git bash 中使用这个命令。语法是：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl 摘要算法名 文件路径</span><br></pre></td></tr></table></figure>
@@ -400,8 +400,8 @@
 </div>
 
           <div class="post-tags">
-              <a href="/en/tags/settings/" rel="tag"><i class="fa fa-tag"></i> settings</a>
               <a href="/en/tags/LocalSend/" rel="tag"><i class="fa fa-tag"></i> LocalSend</a>
+              <a href="/en/tags/settings/" rel="tag"><i class="fa fa-tag"></i> settings</a>
               <a href="/en/tags/Firewall/" rel="tag"><i class="fa fa-tag"></i> Firewall</a>
               <a href="/en/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
           </div>
@@ -457,14 +457,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -495,6 +495,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

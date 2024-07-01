@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="问题 最近外网爆出了 Intel 13、14 代 i9 打游戏会报显存错误。这个也许只是 CPU 不稳定导致的短时运算错误，不足为惧[1]。但是，B站上有人讨论很多 14 代 i9 在待机模式下蓝屏，甚至 13700K 也出现了这种现象。如果消息准确，那么使用了半年的 14代 i9 就出现了“缩缸”现象（硬件损坏导致的永久性能损失）。理论上，CPU 的寿命至少是 10 年，而且大部分 CPU 都是">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240601111408430.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240601111910013.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240601112232739.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240601112446574.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240601124657423.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/20240601_130522.jpg">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(14).png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240601111408430.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240601111910013.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240601112232739.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240601112446574.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240601124657423.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/20240601_130522.jpg">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(14).png">
 <meta property="article:published_time" content="2024-05-31T23:34:26.000Z">
 <meta property="article:modified_time" content="2024-05-31T23:34:26.000Z">
 <meta property="article:author" content="Gustav">
@@ -44,7 +44,7 @@
 <meta property="article:tag" content="Intel">
 <meta property="article:tag" content="硬件">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20240601111408430.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240601111408430.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/">
@@ -173,7 +173,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,7 +184,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -311,18 +311,18 @@
 <p>最方便的降压降频方法是用 Intel Extreme Tuning Utility，简称 XTU<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>。（这个工具实际上更多地用来超频）。</p>
 <p>用这个工具调整设置后，如果系统蓝屏，则开机时会自动恢复默认配置，防止开不了机的情况。</p>
 <p>同时，XTU 是个软件，点击就可以修改，不需要每次在 BIOS 里调整。</p>
-<p><img src="/MarkDownImages/image-20240601111408430.png" alt="image-20240601111408430"></p>
+<p><img src="/en/MarkDownImages/image-20240601111408430.png" alt="image-20240601111408430"></p>
 <p>具体的降压方法<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>：</p>
 <p>电压偏移每次降低 0.01V 或 0.005V，然后点击 Apply。每降低一次，都跑一次 R23，直到系统出现蓝屏。</p>
 <p>在出现蓝屏的电压偏移再加上 0.01 V，然后跑 R23 30分钟，看看会不会蓝屏。</p>
 <p>不会蓝屏的话，就将当前配置设置为开机自动启用：</p>
-<p><img src="/MarkDownImages/image-20240601111910013.png" alt="image-20240601111910013"></p>
+<p><img src="/en/MarkDownImages/image-20240601111910013.png" alt="image-20240601111910013"></p>
 <h2 id="Watchdog">Watchdog</h2>
 <p>Watchdog 机制是实现超频后 crash safe 的关键。没有这个机制，电脑无法在开机时会自动恢复默认配置。</p>
 <p>不幸的是，XTU 提醒我这个功能没有开启：（Advanced | System information 中查看）</p>
-<p><img src="/MarkDownImages/image-20240601112232739.png" alt="image-20240601112232739"></p>
+<p><img src="/en/MarkDownImages/image-20240601112232739.png" alt="image-20240601112232739"></p>
 <p>但是，在设备管理器中，Watchdog 是存在的（先点击 查看 | 显示隐藏设备，Watchdog 在系统设备中）：</p>
-<p><img src="/MarkDownImages/image-20240601112446574.png" alt="image-20240601112446574"></p>
+<p><img src="/en/MarkDownImages/image-20240601112446574.png" alt="image-20240601112446574"></p>
 <p>经过一番研究，发现华硕 Z790 主板（无论什么具体型号<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>）用 Watchdog 保证 XMP 的稳定性。如果开启了 XMP，那么 XTU 就没法用 Watchdog 了<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>。</p>
 <blockquote>
 <p>早知道不买华硕主板了，现在我得手动调 BIOS 了。</p>
@@ -330,7 +330,7 @@
 <h1 id="调整-BIOS">调整 BIOS</h1>
 <p>调整 BIOS 的方法看这两个视频<sup class="footnote-ref"><a href="#fn6" id="fnref6:1">[6:1]</a></sup><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>。问题在于，旧 BIOS 本来只有一个地方可以设置 CPU 电压 offset。现在新的华硕主板把它变成了多个配置，又把问题给搞复杂了。</p>
 <p>先说结论：Global Core SVID Voltage 调整为 adaptive mode，然后设置 offset<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>：</p>
-<p><img src="/MarkDownImages/image-20240601124657423.png" alt="image-20240601124657423"></p>
+<p><img src="/en/MarkDownImages/image-20240601124657423.png" alt="image-20240601124657423"></p>
 <p>这等价于 XTU 里面的 Core Voltage Offset<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>。</p>
 <hr>
 <p>这几个电压的关系可以看这两篇帖子（别把自己给看晕了），不过和我们的操作关系不大：</p>
@@ -341,7 +341,7 @@
 <h1 id="降压过程">降压过程</h1>
 <h2 id="降压前">降压前</h2>
 <p>买回来就没升级过 BIOS：</p>
-<p><img src="/MarkDownImages/20240601_130522.jpg" alt="20240601_130522"></p>
+<p><img src="/en/MarkDownImages/20240601_130522.jpg" alt="20240601_130522"></p>
 <p>在 CPU 降压前，我的 BIOS 只打开了 XMP 和 iGPU Multi-Monitor（使用独显时开启核显）。</p>
 <p>降压前记得把开启自启动的软件都关掉，说不定系统崩溃时就把它们搞坏了。</p>
 <p>降压时的工具：R23 和 HWMonitor。</p>
@@ -475,7 +475,7 @@
 <blockquote>
 <p>无论是 cinebench 报错，还是系统黑屏、蓝屏，都表明当前的 offset 不合格。</p>
 </blockquote>
-<img src="/MarkDownImages/屏幕截图(14).png" alt="屏幕截图(14)" style="zoom: 67%;" />
+<img src="/en/MarkDownImages/屏幕截图(14).png" alt="屏幕截图(14)" style="zoom: 67%;" />
 <hr>
 <p>从表格中可以看出，随着电压减少，温度降低，r23 跑分反而更高了，因为不会再触发温度墙而导致降频。</p>
 <h2 id="r23-跑-30-分钟">r23 跑 30 分钟</h2>
@@ -662,14 +662,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -700,6 +700,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

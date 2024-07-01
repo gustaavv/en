@@ -29,11 +29,11 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="序言 Nvidia VSR (Video Super Resolution) 通过 AI 技术优化视频的画面质量，主要表现在锐化低分辨率的视频上。该技术最初只支持 Chrome 和 Edge 浏览器。 如何在本地视频播放器中体验这项技术？PotPlayer 最近发布了相关更新，支持了该技术。 PotPlayer 是目前数一数二的视频播放器，也是我的主力播放器。趁着这次更新，我来记录一下如何在 Po">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230709161546792.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230709161702760.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230709162050531.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230709162350077.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20230709162617479.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230709161546792.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230709161702760.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230709162050531.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230709162350077.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230709162617479.png">
 <meta property="article:published_time" content="2023-07-09T08:04:08.000Z">
 <meta property="article:modified_time" content="2023-07-09T08:04:08.000Z">
 <meta property="article:author" content="Gustav">
@@ -42,7 +42,7 @@
 <meta property="article:tag" content="Nvidia">
 <meta property="article:tag" content="VSR">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20230709161546792.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20230709161546792.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2023/07/09/PotPlayer-Enable-Nvidia-Super-Resolution/">
@@ -171,7 +171,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -275,7 +275,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>418</span>
+      <span>421</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -301,25 +301,25 @@
 <span id="more"></span>
 <h2 id="更新驱动版本">更新驱动版本</h2>
 <p>更新驱动版本，至少到 532 版</p>
-<img src="/MarkDownImages/image-20230709161546792.png" alt="image-20230709161546792" style="zoom: 67%;" />
+<img src="/en/MarkDownImages/image-20230709161546792.png" alt="image-20230709161546792" style="zoom: 67%;" />
 <h2 id="设置">设置</h2>
 <p>在 Nvidia Control Panel 中进入如下配置：</p>
 <p>开启『超分辨率』，选择质量。数字越大，增强效果越强，同时对 GPU 压力也越大</p>
-<p><img src="/MarkDownImages/image-20230709161702760.png" alt="image-20230709161702760"></p>
+<p><img src="/en/MarkDownImages/image-20230709161702760.png" alt="image-20230709161702760"></p>
 <h1 id="PotPlayer-开启-VSR">PotPlayer 开启 VSR</h1>
 <h2 id="更新版本">更新版本</h2>
 <p>在 PotPlayer 近期的更新说明中，提到了：</p>
 <blockquote>
 <p>添加 GPU 超分辨率功能到内置的 D3D11 视频渲染器</p>
 </blockquote>
-<img src="/MarkDownImages/image-20230709162050531.png" alt="image-20230709162050531" style="zoom: 67%;" />
+<img src="/en/MarkDownImages/image-20230709162050531.png" alt="image-20230709162050531" style="zoom: 67%;" />
 <p>至少将 PotPlayer 升级到这个版本</p>
 <h2 id="设置-2">设置</h2>
 <p>确保使用的是『Direct3D 11 视频渲染器』，并打开『超分辨率』（默认是关闭的）</p>
-<img src="/MarkDownImages/image-20230709162350077.png" alt="image-20230709162350077" style="zoom: 80%;" />
+<img src="/en/MarkDownImages/image-20230709162350077.png" alt="image-20230709162350077" style="zoom: 80%;" />
 <h2 id="测试">测试</h2>
 <p>随便打开一个视频，按 <code>Tab</code> 键。如果『视频渲染器 - 缩放』显示的是『GPU Super Resolution』，则说明配置成功了。播放视频时，也可以在任务管理器中看到 GPU 的负载升高。</p>
-<p><img src="/MarkDownImages/image-20230709162617479.png" alt="image-20230709162617479"></p>
+<p><img src="/en/MarkDownImages/image-20230709162617479.png" alt="image-20230709162617479"></p>
 <h1 id="参考文章">参考文章</h1>
 <p><a target="_blank" rel="noopener" href="https://blogs.nvidia.com/blog/2023/02/28/rtx-video-super-resolution/">Pixel Perfect: RTX Video Super Resolution Now Available for GeForce RTX 40 and 30 Series GPUs</a></p>
 <p><a target="_blank" rel="noopener" href="https://potplayer.daum.net/">PotPlayer 官网</a></p>
@@ -406,14 +406,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -444,6 +444,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

@@ -29,17 +29,17 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="Problem  Problem Source：59. Spiral Matrix II   Problem Description： Given a positive integer n, generate an n x n matrix filled with elements from 1 to n^2 in spiral order.   Example 1:  12Input: n &#x3D;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/spiraln.jpg">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/spiraln.jpg">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/spiraln.jpg">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20231003171918667.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/spiraln.jpg">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/spiraln.jpg">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/spiraln.jpg">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20231003171918667.png">
 <meta property="article:published_time" content="2023-10-03T08:33:31.000Z">
 <meta property="article:modified_time" content="2023-10-03T08:33:31.000Z">
 <meta property="article:author" content="Gustav">
 <meta property="article:tag" content="Simulation">
 <meta property="article:tag" content="Array">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/spiraln.jpg">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/spiraln.jpg">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2023/10/03/Algorithm-Problem-002-spiral-matrix-ii/">
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -313,7 +313,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>898</span>
+      <span>899</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -340,7 +340,7 @@
 </blockquote>
 <blockquote>
 <p><strong>Example 1:</strong>
-<img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
+<img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: n = 3</span><br><span class="line">Output: [[1,2,3],[8,9,4],[7,6,5]]</span><br></pre></td></tr></table></figure>
 </blockquote>
 <span id="more"></span>
@@ -356,7 +356,7 @@
 <p>This problem is a typical simulation problem where we need to traverse the entire matrix as described.</p>
 <h2 id="Approach-1">Approach 1</h2>
 <p>My approach is to divide the matrix into layers and traverse each layer one by one. For example, when $n = 3$, the matrix is:</p>
-<p><img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
+<p><img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
 <p>Here, we define the first layer as <code>layer = 0</code>, which contains numbers 1 to 8. The second layer is <code>layer = 1</code>, containing the number 9.</p>
 <p>While traversing each layer, write the loop codes for moving right (1, 2), moving down (3, 4), moving left (5, 6), and moving up (7, 8).</p>
 <p>The key to this approach is to find the mathematical pattern for the relationship between <code>layer</code> and the length of the current row/column being traversed.</p>
@@ -366,7 +366,7 @@
 <h2 id="Approach-2">Approach 2</h2>
 <p>Since we are dealing with a matrix (a <strong>regular</strong> shape), we tend to control the traversal from a <strong>macro</strong> perspective, as in Approach 1. Macro means understanding the global picture, as seen in my approach of finding mathematical patterns and the experts’ approach of controlling the four boundaries.</p>
 <p>Now, let’s approach the problem from a <strong>micro</strong> perspective: what if we stand on a <strong>huge</strong> chessboard with <strong>invisible boundaries</strong> and need to fill in these numbers, how would we do it? We can <strong>only see the numbers on the surrounding squares</strong>. At this point, the macro approach is no longer effective, so what should we do?</p>
-<p><img src="/MarkDownImages/spiraln.jpg" alt="img"></p>
+<p><img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
 <p>Suppose we stand on square 1 (facing right) and move forward, filling in the numbers along the path. When we reach square 3, we find that there is no way forward. Since we want to fill in the numbers clockwise, let’s turn right (facing down), and now the square we are facing is where we should fill in the number 4.</p>
 <p>Similarly, when we reach square 8 (facing up), the squares in front have already been filled with number 1. Let’s turn right again (facing right), and now the square we are facing is where we should fill in the number 9.</p>
 <p>Therefore, in the code, let’s <strong>focus only on the current coordinates of the agent</strong> and make it <strong>keep moving in one direction</strong> until it reaches a boundary or the square has already been filled with a number. When this happens, we <strong>turn right</strong>.</p>
@@ -374,7 +374,7 @@
 <h1 id="Reflection">Reflection</h1>
 <p>I came up with Approach 2 because I recently solved a problem that required filling numbers clockwise in an isosceles right-angled triangle (with the right angle parallel to the coordinate axes).</p>
 <p>For example, when <code>n = 4</code>, we need to fill in the numbers as follows:</p>
-<img src="/MarkDownImages/image-20231003171918667.png" alt="image-20231003171918667" style="zoom:67%;" />
+<img src="/en/MarkDownImages/image-20231003171918667.png" alt="image-20231003171918667" style="zoom:67%;" />
 <p>For the macro approach that finds patterns from a high-level perspective, I really didn’t bother and found it cumbersome.</p>
 <p>With Approach 2, the so-called clockwise filling is essentially cycling through these directions: up, down-right, left. So, at the code level:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] dx = &#123;-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span>[] dy = &#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
@@ -460,14 +460,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -498,6 +498,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="Introduction Azure Pipelines is a component of Azure DevOps (a SaaS platform) and serves as an automated CI&#x2F;CD pipeline. Similar technologies include GitHub Actions and Jenkins. As users, we only need">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png">
 <meta property="article:published_time" content="2023-10-06T12:11:59.000Z">
 <meta property="article:modified_time" content="2023-10-06T12:11:59.000Z">
 <meta property="article:author" content="Gustav">
@@ -37,7 +37,7 @@
 <meta property="article:tag" content="Azure Pipelines">
 <meta property="article:tag" content="Architecture">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2023/10/06/Azure-Pipelines-Architecture/">
@@ -166,7 +166,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -177,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -293,7 +293,7 @@
 <p>So, how are tasks executed? Is there a limit to parallel tasks? How can we design YAML more efficiently to make a pipeline run faster? This article will analyze the architecture of Azure Pipelines from the perspective of task scheduling, providing answers to these questions along the way.</p>
 <span id="more"></span>
 <h1 id="Azure-Pipelines-Terminology">Azure Pipelines Terminology</h1>
-<p><img src="/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png" alt="img"></p>
+<p><img src="/en/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png" alt="img"></p>
 <p><strong>For users of Azure Pipelines</strong>, a YAML file uniquely defines the logic of a pipeline run:</p>
 <ul>
 <li>A pipeline can contain multiple stages.</li>
@@ -419,14 +419,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -457,6 +457,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

@@ -29,12 +29,12 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="Introduction In a previous article, I mentioned that ‘Jellyfin’s scheduled task “Scan Media Library” does not consume resources and can run frequently without issues’. In fact, this statement is not e">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131240942.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131529710.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131657198.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131710749.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131902161.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611154250550.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240611131240942.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240611131529710.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240611131657198.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240611131710749.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240611131902161.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240611154250550.png">
 <meta property="article:published_time" content="2024-06-11T07:51:07.000Z">
 <meta property="article:modified_time" content="2024-06-11T07:51:07.000Z">
 <meta property="article:author" content="Gustav">
@@ -42,7 +42,7 @@
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Jellyfin">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20240611131240942.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240611131240942.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2024/06/11/Jellyfin-custom-scan-frequency/">
@@ -171,7 +171,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -213,13 +213,6 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/en/2024/02/11/Jellyfin-Docker/" rel="bookmark">
-        <time class="popular-posts-time">2024-02-11</time>
-        <br>
-      Install Jellyfin in Docker
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/en/2024/02/17/jellyfin-original-filename/" rel="bookmark">
         <time class="popular-posts-time">2024-02-17</time>
         <br>
@@ -227,10 +220,24 @@
       </a>
     </li>
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/02/11/Jellyfin-Docker/" rel="bookmark">
+        <time class="popular-posts-time">2024-02-11</time>
+        <br>
+      Install Jellyfin in Docker
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/en/2024/02/20/LANraragi-Using-Experience/" rel="bookmark">
         <time class="popular-posts-time">2024-02-20</time>
         <br>
       LANraragi Using Experience
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/06/29/From-AutoBangumi-Back-to-qBittorrent-RSS/" rel="bookmark">
+        <time class="popular-posts-time">2024-06-29</time>
+        <br>
+      自动化追番：从 AutoBangumi 回到 qBittorrent RSS
       </a>
     </li>
   </ul>
@@ -310,7 +317,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>440</span>
+      <span>442</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -335,17 +342,17 @@
 <h1 id="Steps">Steps</h1>
 <h2 id="Disable-Scheduled-Task">Disable Scheduled Task</h2>
 <p>Navigate to ‘Dashboard | Scheduled Tasks | Scan Media Library’ and delete the existing task:</p>
-<p><img src="/MarkDownImages/image-20240611131240942.png" alt="image-20240611131240942"></p>
+<p><img src="/en/MarkDownImages/image-20240611131240942.png" alt="image-20240611131240942"></p>
 <h2 id="Obtain-an-API-Key">Obtain an API Key</h2>
 <p>Navigate to ‘Dashboard | API Keys’ and create a new one:</p>
-<p><img src="/MarkDownImages/image-20240611131529710.png" alt="image-20240611131529710"></p>
+<p><img src="/en/MarkDownImages/image-20240611131529710.png" alt="image-20240611131529710"></p>
 <h2 id="Get-the-API-Endpoint">Get the API Endpoint</h2>
 <p>I recommend using F12 to capture the request:</p>
-<img src="/MarkDownImages/image-20240611131657198.png" alt="image-20240611131657198" style="zoom:50%;" />
+<img src="/en/MarkDownImages/image-20240611131657198.png" alt="image-20240611131657198" style="zoom:50%;" />
 <p>Press F12 before clicking ‘Refresh’ and find the corresponding request:</p>
-<img src="/MarkDownImages/image-20240611131710749.png" alt="image-20240611131710749" style="zoom: 33%;" />
+<img src="/en/MarkDownImages/image-20240611131710749.png" alt="image-20240611131710749" style="zoom: 33%;" />
 <p><code>/Items/LibraryID/Refresh?ScanParameters</code> – we can directly use this URL.</p>
-<p><img src="/MarkDownImages/image-20240611131902161.png" alt="image-20240611131902161"></p>
+<p><img src="/en/MarkDownImages/image-20240611131902161.png" alt="image-20240611131902161"></p>
 <h2 id="crontab">crontab</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Edit</span></span><br><span class="line">crontab -e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">View</span></span><br><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
 <p>curl format:</p>
@@ -362,7 +369,7 @@
 <p>View crontab logs:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. Use journalctl</span> </span><br><span class="line">journalctl -u crond</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. Directly view <span class="built_in">log</span> files, <span class="built_in">which</span> is more comprehensive</span></span><br><span class="line">cat /var/log/cron</span><br></pre></td></tr></table></figure>
 <h1 id="Results">Results</h1>
-<p><img src="/MarkDownImages/image-20240611154250550.png" alt="image-20240611154250550"></p>
+<p><img src="/en/MarkDownImages/image-20240611154250550.png" alt="image-20240611154250550"></p>
 <blockquote>
 <p>This software is NetData, and I will write a blog post about it later.</p>
 </blockquote>
@@ -428,8 +435,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/en/3000/01/01/%E7%BD%AE%E9%A1%B6%E9%80%9A%E7%9F%A5/" rel="next" title="Messages for reader">
-                  Messages for reader <i class="fa fa-chevron-right"></i>
+                <a href="/en/2024/06/29/From-AutoBangumi-Back-to-qBittorrent-RSS/" rel="next" title="自动化追番：从 AutoBangumi 回到 qBittorrent RSS">
+                  自动化追番：从 AutoBangumi 回到 qBittorrent RSS <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -462,14 +469,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -500,6 +507,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

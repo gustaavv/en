@@ -160,7 +160,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -202,6 +202,114 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
+      <meta itemprop="name" content="Gustav">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gustav's blog">
+      <meta itemprop="description" content="Hi, I am Gustav.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Gustav's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/en/2024/06/01/Intel-13700K-Undervolting/" class="post-title-link" itemprop="url">记录一次 Intel 13700K 降压的操作</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-06-01 07:34:26" itemprop="dateCreated datePublished" datetime="2024-06-01T07:34:26+08:00">2024-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/%E7%A1%AC%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">硬件</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>7 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="问题">问题</h1>
+<p>最近外网爆出了 Intel 13、14 代 i9 打游戏会报显存错误。这个也许只是 CPU 不稳定导致的<strong>短时</strong>运算错误，不足为惧<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。但是，B站上有人讨论很多 14 代 i9 在待机模式下蓝屏，甚至 13700K 也出现了这种现象。如果消息准确，那么使用了半年的 14代 i9 就出现了“缩缸”现象（硬件损坏导致的<strong>永久</strong>性能损失）。理论上，CPU 的寿命至少是 10 年，而且大部分 CPU 都是不用了、而不是用坏了。我的 CPU 就是 13700K，这让我非常警惕。</p>
+<p>对于这个问题的讨论有两点需要厘清：</p>
+<ol>
+<li>软件报错，比如游戏、压测工具和渲染工具。这一点<strong>占据了极大比例的流量</strong>。目前，无论是 Intel 官方还是第三方网站、博主，给出的解决方案都是限制功耗和降频，使得软件不会报错。Intel 把锅甩给主板厂商，要求它们按照 Intel 标准来设置 BIOS。目前来看，这个所谓的 Intel 标准电压更高、频率更低，跑分更差。要注意，频率降低等于消费者吃亏。因此，<strong>Intel 和主板厂商都有责任</strong>。</li>
+<li>CPU“缩缸”，这是产品缺陷。这一点<strong>只占据很小比例的流量</strong>。显然，Intel 永远不会承认这一点。也许从 23 年 6 月 Intel 质保政策开始收紧时<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>，Intel 已经知道了这一事实。</li>
+</ol>
+<p>我是在 23 年初配的电脑，轻度办公、写一写代码，基本没玩过 3A 大作。最近，我用 CPU-Z 和 R23 测试了性能，和网上的结果<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>差不多。因此，我的 13700K 应该没有“缩缸”。</p>
+<p>话说回来，我倒不是很关心降频，我更关心 CPU 寿命。目前自动核心电压为 1.38 V，R23 跑一次就 100 度。这样的配置，迟早要“缩缸”。因此，本文主要记录我是如何给 CPU 降压的，以及在研究过程中发现的各种问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/en/2024/06/01/Intel-13700K-Undervolting/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -509,7 +617,7 @@
 <li>It can display the resource usage of each container —— in this respect, it surpasses Portainer. Portainer can only display the resource usage of <strong>one</strong> container in <strong>chart</strong> form.</li>
 <li>It can run in server mode. We can monitor resource usage through a browser, which is very convenient.</li>
 </ul>
-<p><img src="/MarkDownImages/image-20240408112645115.png" alt="image-20240408112645115"></p>
+<p><img src="/en/MarkDownImages/image-20240408112645115.png" alt="image-20240408112645115"></p>
 <p>Glances is relatively lightweight, only displaying the current resource situation without recording historical data. And what I need is precisely this kind of lightweight yet comprehensive resource monitoring software.</p>
           <!--noindex-->
             <div class="post-button">
@@ -646,114 +754,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2024/03/29/python-aiohttp-use/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
-      <meta itemprop="name" content="Gustav">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gustav's blog">
-      <meta itemprop="description" content="Hi, I am Gustav.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Gustav's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/en/2024/03/29/python-aiohttp-use/" class="post-title-link" itemprop="url">Basic Usage of Python AIOHTTP</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-03-29 13:12:23" itemprop="dateCreated datePublished" datetime="2024-03-29T13:12:23+08:00">2024-03-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="Word count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Word count in article: </span>
-      <span>703</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>3 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Preface">Preface</h1>
-<p>Recently, I’ve been using Python to write web crawlers for downloading manga (see <a href="/en/tags/LANraragi/">previous posts on LANraragi</a>). A typical page of a manga like this:</p>
-<img src="/MarkDownImages/image-20240329132644183.png" alt="image-20240329132644183" style="zoom: 33%;" />
-<p>All the data on this webpage can be retrieved using BeautifulSoup, and only one communication is needed per page. However, downloading images is different: each image requires a separate communication, and the response body is often quite large. Obviously, images don’t need to be downloaded sequentially, otherwise, it would waste a lot of time.</p>
-<p>AIOHTTP is an asynchronous HTTP client/server module, which is very suitable for this scenario. Through asynchronous programming, it can maximize the performance of the network (and the server). This article focuses on introducing the basic usage of AIOHTTP, without going into details about how it works.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/en/2024/03/29/python-aiohttp-use/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/en/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/en/">1</a><span class="page-number current">2</span><a class="page-number" href="/en/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/en/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/en/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -778,14 +778,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -816,6 +816,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://assets.leetcode.com/uploads/2023/10/19/graph-4.png">
 <meta property="og:image" content="https://assets.leetcode.com/uploads/2023/10/11/graph-13-1.png">
 <meta property="og:image" content="https://assets.leetcode.com/uploads/2023/10/11/graph-14-2.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20231105135510005.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20231105135510005.png">
 <meta property="article:published_time" content="2023-11-05T03:43:09.000Z">
 <meta property="article:modified_time" content="2023-11-05T03:43:09.000Z">
 <meta property="article:author" content="Gustav">
@@ -170,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -181,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -441,7 +441,7 @@
 <p>$\forall i, values[i] \ge 1$, and ‘the sum of values on the path from the root to any leaf node is different than zero’. Hence, when performing operations, we must <strong>leave one node untouched on each path from the root to a leaf</strong> (Multiple paths may share one untouched node).</p>
 <p>Let the set of all nodes in the graph be $V$, and the set of nodes <strong>left untouched</strong> be $U$. The goal is to maximize the score, which is given by $\sum\limits_{v\in V} v - \sum\limits_{u\in U}u$. $\sum\limits_{v\in V} v$ is simply <code>sum(values)</code>, so to maximize the score, we want to minimize $\sum\limits_{u\in U}u$. Which nodes should we leave untouched?</p>
 <p>For any subtree of the tree, such as the one shown below:</p>
-<p><img src="/MarkDownImages/image-20231105135510005.png" alt="image-20231105135510005"></p>
+<p><img src="/en/MarkDownImages/image-20231105135510005.png" alt="image-20231105135510005"></p>
 <p>Assume we do not operate on the root node 0, then all the remaining nodes can be modified; assume we operate on the root node 0, then there exist nodes in the remaining nodes that cannot be modified. Whatever the remaining nodes are, i.e. leaf nodes or multiple subtrees, it doesn’t affect this conclusion.</p>
 <p>So when should we operate on the root node? Define <strong>the minimum sum</strong> of <strong>unoperated</strong> nodes in a <strong>healthy</strong> subtree rooted at $u$ as $res(u)$. Then, $\forall x, x$ is a child node of $u$, $res(u) = \min\set{values[u], \sum\limits_x res(x)}$</p>
 <p>The meaning of this recursive formula is:</p>
@@ -569,14 +569,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -607,6 +607,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

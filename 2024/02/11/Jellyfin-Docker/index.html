@@ -29,12 +29,12 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="Preface  Jellyfin is an open-source media server. Here is my way of using Jellyfin: download anime using qBittorrent, start Jellyfin, and then watch the anime on iPad through the client.  Previously,">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240213140202762.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240213140616778.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240213140600270.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240213141926681.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240502122456643.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240213085846776.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240213140202762.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240213140616778.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240213140600270.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240213141926681.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240502122456643.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240213085846776.png">
 <meta property="article:published_time" content="2024-02-11T10:06:19.000Z">
 <meta property="article:modified_time" content="2024-02-11T10:06:19.000Z">
 <meta property="article:author" content="Gustav">
@@ -42,7 +42,7 @@
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Jellyfin">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20240213140202762.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240213140202762.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2024/02/11/Jellyfin-Docker/">
@@ -171,7 +171,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -213,6 +213,20 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/06/29/From-AutoBangumi-Back-to-qBittorrent-RSS/" rel="bookmark">
+        <time class="popular-posts-time">2024-06-29</time>
+        <br>
+      自动化追番：从 AutoBangumi 回到 qBittorrent RSS
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/" rel="bookmark">
+        <time class="popular-posts-time">2024-06-11</time>
+        <br>
+      How to Access Docker Containers? IP Address or Container Name?
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/en/2024/06/11/Jellyfin-custom-scan-frequency/" rel="bookmark">
         <time class="popular-posts-time">2024-06-11</time>
         <br>
@@ -227,24 +241,10 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/en/2024/06/11/Docker-Accessing-Containers-IP-or-Container-Name/" rel="bookmark">
-        <time class="popular-posts-time">2024-06-11</time>
-        <br>
-      How to Access Docker Containers? IP Address or Container Name?
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/en/2024/02/20/LANraragi-Using-Experience/" rel="bookmark">
         <time class="popular-posts-time">2024-02-20</time>
         <br>
       LANraragi Using Experience
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/en/2024/01/31/Docker-Nginx-SSL-Local-Network/" rel="bookmark">
-        <time class="popular-posts-time">2024-01-31</time>
-        <br>
-      Deploying Nginx in Docker and Configuring SSL Certificate for Local Network
       </a>
     </li>
   </ul>
@@ -413,13 +413,13 @@
 <h2 id="Server-Users">Server | Users</h2>
 <p>Disable transcoding: Even if the client doesn’t support the codec, server-side software decoding is not allowed, as it can lead to high pressure on the system.</p>
 <p>Remove the following two options for <strong>each user</strong>:</p>
-<p><img src="/MarkDownImages/image-20240213140202762.png" alt="image-20240213140202762"></p>
+<p><img src="/en/MarkDownImages/image-20240213140202762.png" alt="image-20240213140202762"></p>
 <p>For the option ‘Allow video playback that requires conversion without re-encoding’, many articles recommend disabling it, but it seems to have no impact, so it can be left enabled.</p>
 <h2 id="Advanced-Networking">Advanced | Networking</h2>
 <p>Select the mounted <code>jellyfin.pfx</code> file as the SSL certificate (how to generate this file is explained later):</p>
-<p><img src="/MarkDownImages/image-20240213140616778.png" alt="image-20240213140616778"></p>
+<p><img src="/en/MarkDownImages/image-20240213140616778.png" alt="image-20240213140616778"></p>
 <p>Check ‘Enable HTTPS’ and restart the container.</p>
-<p><img src="/MarkDownImages/image-20240213140600270.png" alt="image-20240213140600270"></p>
+<p><img src="/en/MarkDownImages/image-20240213140600270.png" alt="image-20240213140600270"></p>
 <p>There’s no need to enable ‘Force HTTPS’ because the firewall will only allow devices on the local network to access the HTTPS port; the local machine can still access Jellyfin via HTTP.</p>
 <h1 id="SSL-Certificate">SSL Certificate</h1>
 <p>Firstly, you need the private key <code>jellyfin-priv-key.key</code> and the certificate <code>jellyfin.crt</code> (refer to the <a href="/en/2024/01/31/Docker-Nginx-SSL-Local-Network/#SSL-Certificate">previous article</a>).</p>
@@ -436,7 +436,7 @@
 <ol>
 <li>
 <p>Add a NAT mapping for the virtual machine, mapping Linux’s 58920 to the host’s 58920 port.</p>
-<p><img src="/MarkDownImages/image-20240213141926681.png" alt="image-20240213141926681"></p>
+<p><img src="/en/MarkDownImages/image-20240213141926681.png" alt="image-20240213141926681"></p>
 </li>
 <li>
 <p>Add a firewall inbound rule: <code>58920/tcp</code> for the private network.</p>
@@ -456,7 +456,7 @@
 <h2 id="Font-Issue-2">Font Issue 2</h2>
 <p>When playing MKV files containing ASS subtitles, the subtitles appear as squares. The issue lies in the absence of the font.</p>
 <p>Navigate to ‘Server | Playback’ and set the ‘Alternate Font File Path’, then enable ‘Use Alternate Font’.</p>
-<p><img src="/MarkDownImages/image-20240502122456643.png" alt="image-20240502122456643"></p>
+<p><img src="/en/MarkDownImages/image-20240502122456643.png" alt="image-20240502122456643"></p>
 <p>Place a woff font file in this directory.</p>
 <hr>
 <p>Take Microsoft YaHei font, which comes with the Windows operating system, as an example:</p>
@@ -483,7 +483,7 @@
 </blockquote>
 <h2 id="Cache-Memory">Cache Memory</h2>
 <p>In Portainer statistics, you can see that memory usage is divided into ‘Memory’ and ‘Cache’. What do these two terms mean? Which one represents the current memory usage?</p>
-<p><img src="/MarkDownImages/image-20240213085846776.png" alt="image-20240213085846776"></p>
+<p><img src="/en/MarkDownImages/image-20240213085846776.png" alt="image-20240213085846776"></p>
 <p>In simple words, ‘Memory’ represents the current memory usage, while ‘Cache’ represents memory that <strong>was previously used</strong>. Memory Cache is a term in Docker, and its value is equal to the value of <code>Inactive(file)</code> in <code>/proc/meminfo</code>.</p>
 <blockquote>
 <p><code>Inactive(file)</code> — The amount of file cache memory, in kibibytes, that is newly loaded from the disk, or is a candidate for reclaiming.</p>
@@ -581,14 +581,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -619,6 +619,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

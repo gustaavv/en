@@ -29,8 +29,8 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="Preface I have been using LANraragi for a while and encountered some issues. I managed to resolve them, and I thought it would be a good idea to document my experience in a post. You can refer to my p">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240220111456968.png">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20240220131323937.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240220111456968.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240220131323937.png">
 <meta property="article:published_time" content="2024-02-20T03:06:09.000Z">
 <meta property="article:modified_time" content="2024-02-20T03:06:09.000Z">
 <meta property="article:author" content="Gustav">
@@ -39,7 +39,7 @@
 <meta property="article:tag" content="Jellyfin">
 <meta property="article:tag" content="LANraragi">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20240220111456968.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20240220111456968.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2024/02/20/LANraragi-Using-Experience/">
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -217,17 +217,17 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/en/2024/02/11/Jellyfin-Docker/" rel="bookmark">
-        <time class="popular-posts-time">2024-02-11</time>
-        <br>
-      Install Jellyfin in Docker
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/en/2024/06/11/Jellyfin-custom-scan-frequency/" rel="bookmark">
         <time class="popular-posts-time">2024-06-11</time>
         <br>
       Customize Jellyfin Scan Frequencies
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2024/02/11/Jellyfin-Docker/" rel="bookmark">
+        <time class="popular-posts-time">2024-02-11</time>
+        <br>
+      Install Jellyfin in Docker
       </a>
     </li>
     <li class="popular-posts-item">
@@ -346,7 +346,7 @@
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">lanraragi:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">difegue/lanraragi:v.0.9.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">lanraragi</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/mnt/hgfs/doujinshiArchives:/home/koyomi/lanraragi/content:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">lanraragi-database:/home/koyomi/lanraragi/database</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">lanraragi-thumbnail:/home/koyomi/lanraragi/thumb</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">lanraragi-database:</span></span><br><span class="line">  <span class="attr">lanraragi-thumbnail:</span></span><br></pre></td></tr></table></figure>
 <p><code>lanraragi-thumbnail</code> is the volume for storing thumbnails.</p>
 <p>After starting the container, I noticed that thumbnails could not be generated. Upon entering the ‘Minion Console’, I found the following error:</p>
-<p><img src="/MarkDownImages/image-20240220111456968.png" alt="image-20240220111456968"></p>
+<p><img src="/en/MarkDownImages/image-20240220111456968.png" alt="image-20240220111456968"></p>
 <p>Why did <code>mkdir</code> not have permission? I entered the container:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/home/koyomi/lanraragi <span class="comment"># ls -lah</span></span><br><span class="line">total 192K   </span><br><span class="line">drwxr-sr-x    1 koyomi   koyomi      4.0K Feb 20 02:14 .</span><br><span class="line">drwxr-sr-x    1 koyomi   koyomi      4.0K Feb 20 02:14 ..</span><br><span class="line">-rw-r--r--    1 root     koyomi        52 Oct 29 21:19 config.log</span><br><span class="line">drwxrwxrwx    1 root     root       16.0K Feb 17 11:44 content</span><br><span class="line">drwxr-xr-x    3 koyomi   root        4.0K Feb 20 03:10 database</span><br><span class="line">drwxr-sr-x    3 koyomi   koyomi      4.0K Oct 31 00:58 lib</span><br><span class="line">drwxr-sr-x    2 koyomi   koyomi      4.0K Feb 20 02:14 <span class="built_in">log</span></span><br><span class="line">-rw-r--r--    1 koyomi   koyomi       186 Oct 31 00:58 lrr.conf</span><br><span class="line">-rw-r--r--    1 koyomi   koyomi         8 Feb 20 02:14 oshino</span><br><span class="line">-rw-r--r--    1 koyomi   koyomi     97.6K Oct 29 21:02 package-lock.json</span><br><span class="line">-rw-r--r--    1 koyomi   koyomi      2.1K Oct 27 23:07 package.json</span><br><span class="line">drwxr-sr-x    1 root     koyomi      4.0K Feb 20 02:14 public</span><br><span class="line">drwxr-sr-x    2 koyomi   koyomi      4.0K Oct 31 00:58 script</span><br><span class="line">drwxr-sr-x    3 koyomi   koyomi      4.0K Oct 31 00:58 templates</span><br><span class="line">drwxr-sr-x    4 koyomi   koyomi      4.0K Oct 31 00:58 tests</span><br><span class="line">drwxr-xr-x  257 root     root        4.0K Feb 20 02:19 thumb</span><br><span class="line">drwxr-sr-x    1 koyomi   koyomi      4.0K Oct 31 00:59 tools</span><br></pre></td></tr></table></figure>
 <p>Note the <code>thumb</code> directory created by the <code>root</code> user, but the user running LANraragi, <code>koyomi</code>, does not have write permission to that directory. Just granting permission:</p>
@@ -383,7 +383,7 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
 </ul>
 <h1 id="Gains">Gains</h1>
 <p>This script is quite useful:</p>
-<p><img src="/MarkDownImages/image-20240220131323937.png" alt="image-20240220131323937"></p>
+<p><img src="/en/MarkDownImages/image-20240220131323937.png" alt="image-20240220131323937"></p>
 <p>My manga directory structure is:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">├── Author1</span><br><span class="line">│   ├── Manga Archive 1</span><br><span class="line">│   └── Manga Archive 2</span><br><span class="line">└── Author2</span><br><span class="line">    ├── Manga Archive 1</span><br><span class="line">    └── Manga Archive 2</span><br></pre></td></tr></table></figure>
 <p>This script categorizes the corresponding manga into a specific author’s category. Although I did not (and will not) tag manga, using author as a category achieves the same effect, allowing me to select manga based on the author.</p>
@@ -480,14 +480,14 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -518,6 +518,8 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 

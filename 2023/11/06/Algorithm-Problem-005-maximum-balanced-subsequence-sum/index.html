@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="Gustav&#39;s blog">
 <meta property="og:description" content="Problem  Problem Source: 2926. Maximum Balanced Subsequence Sum This article is an analysis of the solution to the last problem in LeetCode Weekly Contest 370, which I failed to solve. The solution re">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gustaavv.github.io/MarkDownImages/image-20231106113338051.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20231106113338051.png">
 <meta property="article:published_time" content="2023-11-06T02:30:48.000Z">
 <meta property="article:modified_time" content="2023-11-06T02:30:48.000Z">
 <meta property="article:author" content="Gustav">
@@ -37,7 +37,7 @@
 <meta property="article:tag" content="BIT">
 <meta property="article:tag" content="Discretization">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gustaavv.github.io/MarkDownImages/image-20231106113338051.png">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/MarkDownImages/image-20231106113338051.png">
 
 
 <link rel="canonical" href="https://gustaavv.github.io/en/2023/11/06/Algorithm-Problem-005-maximum-balanced-subsequence-sum/">
@@ -166,7 +166,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -177,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/en/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -382,7 +382,7 @@
 <p>Code:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.IntStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">BIT</span> &#123;</span><br><span class="line">        <span class="type">long</span>[] arr;</span><br><span class="line">        <span class="type">int</span> offset;</span><br><span class="line"></span><br><span class="line">        BIT(<span class="type">int</span> min, <span class="type">int</span> max) &#123;</span><br><span class="line">            <span class="comment">// Move the interval [min, max] to start from 0</span></span><br><span class="line">            offset = -min;</span><br><span class="line">            <span class="comment">// Leave index 0 of BIT empty, so the interval starts from 1</span></span><br><span class="line">            offset++;</span><br><span class="line">            arr = <span class="keyword">new</span> <span class="title class_">long</span>[max - min + <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="title function_">lsb</span><span class="params">(<span class="type">int</span> i)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> i &amp; -i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">void</span> <span class="title function_">setMax</span><span class="params">(<span class="type">int</span> i, <span class="type">long</span> val)</span> &#123;</span><br><span class="line">            i += offset;</span><br><span class="line">            <span class="comment">// Index i affects all subsequent intervals, so we add lsb</span></span><br><span class="line">            <span class="keyword">for</span> (; i &lt; arr.length; i += lsb(i)) &#123;</span><br><span class="line">                arr[i] = Math.max(arr[i], val);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">long</span> <span class="title function_">getMax</span><span class="params">(<span class="type">int</span> i)</span> &#123;</span><br><span class="line">            i += offset;</span><br><span class="line">            <span class="type">long</span> <span class="variable">ans</span> <span class="operator">=</span> Long.MIN_VALUE;</span><br><span class="line">            <span class="comment">// Prefix interval, so we subtract lsb</span></span><br><span class="line">            <span class="keyword">for</span> (; i &gt; <span class="number">0</span>; i -= lsb(i)) &#123;</span><br><span class="line">                ans = Math.max(ans, arr[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> ans;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">maxBalancedSubsequenceSum</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="comment">// b[i] = nums[i] - i</span></span><br><span class="line">        <span class="type">int</span>[] b = IntStream.range(<span class="number">0</span>, n).map(i -&gt; nums[i] - i).toArray();</span><br><span class="line">        <span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> Arrays.stream(b).max().getAsInt();</span><br><span class="line">        <span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> Arrays.stream(b).min().getAsInt();</span><br><span class="line">        <span class="comment">// Customize the size of BIT#arr based on the range of elements in b</span></span><br><span class="line">        <span class="type">BIT</span> <span class="variable">tree</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BIT</span>(min, max);</span><br><span class="line"></span><br><span class="line">        <span class="type">long</span> <span class="variable">ans</span> <span class="operator">=</span> Long.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="comment">// Range query for the maximum value</span></span><br><span class="line">            <span class="type">long</span> <span class="variable">dp_i</span> <span class="operator">=</span> Math.max(tree.getMax(b[j]), <span class="number">0</span>);</span><br><span class="line">            <span class="comment">// Point update</span></span><br><span class="line">            <span class="type">long</span> <span class="variable">dp_j</span> <span class="operator">=</span> dp_i + nums[j];</span><br><span class="line">            tree.setMax(b[j], dp_j);</span><br><span class="line"></span><br><span class="line">            ans = Math.max(ans, dp_j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Submit this code:</p>
-<p><img src="/MarkDownImages/image-20231106113338051.png" alt="image-20231106113338051"></p>
+<p><img src="/en/MarkDownImages/image-20231106113338051.png" alt="image-20231106113338051"></p>
 <p>We got an OOM.</p>
 <p>Note the data range of the problem: $n \le 10^5$ ，$nums[i] \in[-10^9,10^9]$</p>
 <p>Therefore, the range of values for <code>b[i]</code> is approximately equal to the range of 32-bit integers, i.e., $2^{32}$, which will result in an Out Of Memory (OOM) error when creating <code>BIT#arr</code>. How can we optimize the space?</p>
@@ -503,14 +503,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">28k</span>
+    <span title="Word count total">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:41</span>
+    <span title="Reading time total">1:46</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -541,6 +541,8 @@
 <script src="/en/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
 
 
 
