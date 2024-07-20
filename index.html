@@ -160,7 +160,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/en/archives/">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -301,6 +301,117 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2024/07/19/Store-Directory-Structure-In-DB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
+      <meta itemprop="name" content="Gustav">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gustav's blog">
+      <meta itemprop="description" content="Hi, I am Gustav.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Gustav's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/en/2024/07/19/Store-Directory-Structure-In-DB/" class="post-title-link" itemprop="url">How to Store Directory Structures in a Database?</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-07-19 12:19:14" itemprop="dateCreated datePublished" datetime="2024-07-19T12:19:14+08:00">2024-07-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/tech/DBMS/" itemprop="url" rel="index"><span itemprop="name">DBMS</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>4 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Introduction">Introduction</h1>
+<p><strong>If we want to store directory structures in a database, which type of database should be used?</strong> — Either NoSQL or RDBMS. If we choose NoSQL, we should select one that supports tree structures; if we choose RDBMS, the focus is on table design and query operations.</p>
+<p>The key question is: <strong>What operations do we need to perform on the directory structure stored in the database?</strong> Obviously, these operations essentially mimic file operations in a file system.</p>
+<ul>
+<li>Operation 1: CRUD operations on single files/directories, such as copying, deleting, or moving a file/directory;</li>
+<li>Operation 2: Recursively traversing a directory;</li>
+</ul>
+<p>Considering these two points is crucial for designing an efficient solution. This article presents solutions for both NoSQL and RDBMS, with a focus on the latter. Additionally, it explores using JSON as a solution.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/en/2024/07/19/Store-Directory-Structure-In-DB/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2024/06/29/From-AutoBangumi-Back-to-qBittorrent-RSS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -338,11 +449,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -467,11 +578,11 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/NAS/" itemprop="url" rel="index"><span itemprop="name">NAS</span></a>
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -647,119 +758,6 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2024/06/03/Docker-Healthcheck/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
-      <meta itemprop="name" content="Gustav">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gustav's blog">
-      <meta itemprop="description" content="Hi, I am Gustav.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Gustav's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/en/2024/06/03/Docker-Healthcheck/" class="post-title-link" itemprop="url">Docker: healthcheck and depends_on</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-06-03 13:04:40" itemprop="dateCreated datePublished" datetime="2024-06-03T13:04:40+08:00">2024-06-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/en/categories/tech/cheat-sheet/" itemprop="url" rel="index"><span itemprop="name">cheat sheet</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="Word count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Word count in article: </span>
-      <span>758</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>3 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Introduction">Introduction</h1>
-<p>This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s <code>depends_on</code>. This post can be viewd as a cheat sheet.</p>
-<h1 id="healthcheck-Mechanism">healthcheck Mechanism</h1>
-<blockquote>
-<p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/en/2024/06/03/Docker-Healthcheck/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/en/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/en/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/en/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -784,14 +782,14 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">29k</span>
+    <span title="Word count total">30k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">1:44</span>
+    <span title="Reading time total">1:49</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
@@ -838,7 +836,7 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/en/js/third-party/math/mathjax.js"></script>
 
 

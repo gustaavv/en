@@ -77,67 +77,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Algorithm Problem 002: Spiral Matrix II</title>
-    <url>/en/2023/10/03/Algorithm-Problem-002-spiral-matrix-ii/</url>
-    <content><![CDATA[<h1 id="Problem">Problem</h1>
-<blockquote>
-<p>Problem Source：<a href="https://leetcode.cn/problems/spiral-matrix-ii/">59. Spiral Matrix II</a></p>
-</blockquote>
-<blockquote>
-<p><strong>Problem Description</strong>：</p>
-<p>Given a positive integer <code>n</code>, generate an <code>n x n</code> <code>matrix</code> filled with elements from <code>1</code> to <code>n^2</code> in spiral order.</p>
-</blockquote>
-<blockquote>
-<p><strong>Example 1:</strong>
-<img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 3</span><br><span class="line">Output: [[1,2,3],[8,9,4],[7,6,5]]</span><br></pre></td></tr></table></figure>
-</blockquote>
-<span id="more"></span>
-<blockquote>
-<p><strong>Example 2:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 1</span><br><span class="line">Output: [[1]]</span><br></pre></td></tr></table></figure>
-<p><strong>Constraints:</strong></p>
-<ul>
-<li><code>1 &lt;= n &lt;= 20</code></li>
-</ul>
-</blockquote>
-<h1 id="Approach">Approach</h1>
-<p>This problem is a typical simulation problem where we need to traverse the entire matrix as described.</p>
-<h2 id="Approach-1">Approach 1</h2>
-<p>My approach is to divide the matrix into layers and traverse each layer one by one. For example, when $n = 3$, the matrix is:</p>
-<p><img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
-<p>Here, we define the first layer as <code>layer = 0</code>, which contains numbers 1 to 8. The second layer is <code>layer = 1</code>, containing the number 9.</p>
-<p>While traversing each layer, write the loop codes for moving right (1, 2), moving down (3, 4), moving left (5, 6), and moving up (7, 8).</p>
-<p>The key to this approach is to find the mathematical pattern for the relationship between <code>layer</code> and the length of the current row/column being traversed.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="type">int</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">layer</span> <span class="operator">=</span> <span class="number">0</span>; layer &lt;= n / <span class="number">2</span>; layer++) &#123;</span><br><span class="line">            <span class="comment">// Move right</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> layer; j &lt; n - layer - <span class="number">1</span>; ++j, ++counter) &#123;</span><br><span class="line">                ans[layer][j] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move down</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> layer; i &lt; n - layer - <span class="number">1</span>; ++i, ++counter) &#123;</span><br><span class="line">                ans[i][n - layer - <span class="number">1</span>] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move left</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> n - layer - <span class="number">1</span>; j &gt; layer; --j, ++counter) &#123;</span><br><span class="line">                ans[n - layer - <span class="number">1</span>][j] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move up</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n - layer - <span class="number">1</span>; i &gt; layer; --i, ++counter) &#123;</span><br><span class="line">                ans[i][layer] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// For square matrices with odd length, manually handle the center element</span></span><br><span class="line">        <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">            ans[n / <span class="number">2</span>][n / <span class="number">2</span>] = counter;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Clearly, this approach is error-prone as finding the pattern is tedious.</strong></p>
-<p>Some experts on LeetCode provide an alternative solution that avoids finding the pattern, such as <a href="https://leetcode.cn/problems/spiral-matrix-ii/solutions/12594/spiral-matrix-ii-mo-ni-fa-she-ding-bian-jie-qing-x/">Krahets’s solution</a>：manually control the four boundaries (up, down, left, right), and when reaching a boundary, turn to the next direction.</p>
-<h2 id="Approach-2">Approach 2</h2>
-<p>Since we are dealing with a matrix (a <strong>regular</strong> shape), we tend to control the traversal from a <strong>macro</strong> perspective, as in Approach 1. Macro means understanding the global picture, as seen in my approach of finding mathematical patterns and the experts’ approach of controlling the four boundaries.</p>
-<p>Now, let’s approach the problem from a <strong>micro</strong> perspective: what if we stand on a <strong>huge</strong> chessboard with <strong>invisible boundaries</strong> and need to fill in these numbers, how would we do it? We can <strong>only see the numbers on the surrounding squares</strong>. At this point, the macro approach is no longer effective, so what should we do?</p>
-<p><img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
-<p>Suppose we stand on square 1 (facing right) and move forward, filling in the numbers along the path. When we reach square 3, we find that there is no way forward. Since we want to fill in the numbers clockwise, let’s turn right (facing down), and now the square we are facing is where we should fill in the number 4.</p>
-<p>Similarly, when we reach square 8 (facing up), the squares in front have already been filled with number 1. Let’s turn right again (facing right), and now the square we are facing is where we should fill in the number 9.</p>
-<p>Therefore, in the code, let’s <strong>focus only on the current coordinates of the agent</strong> and make it <strong>keep moving in one direction</strong> until it reaches a boundary or the square has already been filled with a number. When this happens, we <strong>turn right</strong>.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="comment">// (dx[k], dy[k]) represents the direction to move, in the order of right, down, left, up, right ...</span></span><br><span class="line">        <span class="type">int</span>[] dx = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="type">int</span>[] dy = &#123;<span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// (x, y) is the agent&#x27;s coordinates;</span></span><br><span class="line">        <span class="comment">// dir represents the current direction to move, it is the index of the dx, dy arrays</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>, y = <span class="number">0</span>, dir = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// Loop variables, and the condition for the loop to exit</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="number">1</span>, limit = n * n;</span><br><span class="line">        <span class="keyword">while</span> (counter &lt;= limit) &#123;</span><br><span class="line">            <span class="comment">// Current coordinates are within the boundaries, and the current square is not filled with a number</span></span><br><span class="line">            <span class="keyword">while</span> (<span class="number">0</span> &lt;= x &amp;&amp; x &lt; n &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n &amp;&amp; ans[x][y] == <span class="number">0</span>) &#123;</span><br><span class="line">                ans[x][y] = counter;</span><br><span class="line">                counter++;</span><br><span class="line">                <span class="comment">// keep moving</span></span><br><span class="line">                x += dx[dir];</span><br><span class="line">                y += dy[dir];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Step back one square</span></span><br><span class="line">            x -= dx[dir];</span><br><span class="line">            y -= dy[dir];</span><br><span class="line">            <span class="comment">// Turn right</span></span><br><span class="line">            dir = (dir + <span class="number">1</span>) % dx.length;</span><br><span class="line">            <span class="comment">// After moving forward one step, the position (x, y) is the first square to be processed in the next while loop</span></span><br><span class="line">            x += dx[dir];</span><br><span class="line">            y += dy[dir];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Reflection">Reflection</h1>
-<p>I came up with Approach 2 because I recently solved a problem that required filling numbers clockwise in an isosceles right-angled triangle (with the right angle parallel to the coordinate axes).</p>
-<p>For example, when <code>n = 4</code>, we need to fill in the numbers as follows:</p>
-<img src="/en/MarkDownImages/image-20231003171918667.png" alt="image-20231003171918667" style="zoom:67%;" />
-<p>For the macro approach that finds patterns from a high-level perspective, I really didn’t bother and found it cumbersome.</p>
-<p>With Approach 2, the so-called clockwise filling is essentially cycling through these directions: up, down-right, left. So, at the code level:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[] dx = &#123;-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span>[] dy = &#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
-<p>A slight modification to the code for Approach 2 is all that is needed.</p>
-]]></content>
-      <categories>
-        <category>Algorithm Problems</category>
-      </categories>
-      <tags>
-        <tag>Simulation</tag>
-        <tag>Array</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Algorithm Problem 003: Diagonal Traverse II</title>
     <url>/en/2023/10/29/Algorithm-Problem-003-diagonal-traverse-ii/</url>
     <content><![CDATA[<h1 id="Problem">Problem</h1>
@@ -199,6 +138,67 @@
 <h1 id="Code">Code</h1>
 <h2 id="Java">Java</h2>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] findDiagonalOrder(List&lt;List&lt;Integer&gt;&gt; nums) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> nums.size();</span><br><span class="line">        <span class="comment">// n is the maximum number of columns</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.stream().mapToInt(List::size).max().getAsInt();</span><br><span class="line">        <span class="comment">// ans stores m + n - 1 lists, representing elements traversed on different diagonals</span></span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        IntStream.range(<span class="number">0</span>, m + n - <span class="number">1</span>).forEach(i -&gt; ans.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;()));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Traverse nums in reverse</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> m - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            List&lt;Integer&gt; row = nums.get(i);</span><br><span class="line">            <span class="comment">// For each element nums[i][j], put it into the (i + j + 1)-th list</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; row.size(); j++) &#123;</span><br><span class="line">                ans.get(i + j).add(row.get(j));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Traverse nums in forward order for each row</span></span><br><span class="line">        <span class="keyword">return</span> ans.stream().flatMap(l -&gt; l.stream()).mapToInt(i -&gt; i).toArray();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Algorithm Problems</category>
+      </categories>
+      <tags>
+        <tag>Simulation</tag>
+        <tag>Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Algorithm Problem 002: Spiral Matrix II</title>
+    <url>/en/2023/10/03/Algorithm-Problem-002-spiral-matrix-ii/</url>
+    <content><![CDATA[<h1 id="Problem">Problem</h1>
+<blockquote>
+<p>Problem Source：<a href="https://leetcode.cn/problems/spiral-matrix-ii/">59. Spiral Matrix II</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Problem Description</strong>：</p>
+<p>Given a positive integer <code>n</code>, generate an <code>n x n</code> <code>matrix</code> filled with elements from <code>1</code> to <code>n^2</code> in spiral order.</p>
+</blockquote>
+<blockquote>
+<p><strong>Example 1:</strong>
+<img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 3</span><br><span class="line">Output: [[1,2,3],[8,9,4],[7,6,5]]</span><br></pre></td></tr></table></figure>
+</blockquote>
+<span id="more"></span>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 1</span><br><span class="line">Output: [[1]]</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 20</code></li>
+</ul>
+</blockquote>
+<h1 id="Approach">Approach</h1>
+<p>This problem is a typical simulation problem where we need to traverse the entire matrix as described.</p>
+<h2 id="Approach-1">Approach 1</h2>
+<p>My approach is to divide the matrix into layers and traverse each layer one by one. For example, when $n = 3$, the matrix is:</p>
+<p><img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
+<p>Here, we define the first layer as <code>layer = 0</code>, which contains numbers 1 to 8. The second layer is <code>layer = 1</code>, containing the number 9.</p>
+<p>While traversing each layer, write the loop codes for moving right (1, 2), moving down (3, 4), moving left (5, 6), and moving up (7, 8).</p>
+<p>The key to this approach is to find the mathematical pattern for the relationship between <code>layer</code> and the length of the current row/column being traversed.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="type">int</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">layer</span> <span class="operator">=</span> <span class="number">0</span>; layer &lt;= n / <span class="number">2</span>; layer++) &#123;</span><br><span class="line">            <span class="comment">// Move right</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> layer; j &lt; n - layer - <span class="number">1</span>; ++j, ++counter) &#123;</span><br><span class="line">                ans[layer][j] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move down</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> layer; i &lt; n - layer - <span class="number">1</span>; ++i, ++counter) &#123;</span><br><span class="line">                ans[i][n - layer - <span class="number">1</span>] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move left</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> n - layer - <span class="number">1</span>; j &gt; layer; --j, ++counter) &#123;</span><br><span class="line">                ans[n - layer - <span class="number">1</span>][j] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Move up</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n - layer - <span class="number">1</span>; i &gt; layer; --i, ++counter) &#123;</span><br><span class="line">                ans[i][layer] = counter;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// For square matrices with odd length, manually handle the center element</span></span><br><span class="line">        <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">            ans[n / <span class="number">2</span>][n / <span class="number">2</span>] = counter;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Clearly, this approach is error-prone as finding the pattern is tedious.</strong></p>
+<p>Some experts on LeetCode provide an alternative solution that avoids finding the pattern, such as <a href="https://leetcode.cn/problems/spiral-matrix-ii/solutions/12594/spiral-matrix-ii-mo-ni-fa-she-ding-bian-jie-qing-x/">Krahets’s solution</a>：manually control the four boundaries (up, down, left, right), and when reaching a boundary, turn to the next direction.</p>
+<h2 id="Approach-2">Approach 2</h2>
+<p>Since we are dealing with a matrix (a <strong>regular</strong> shape), we tend to control the traversal from a <strong>macro</strong> perspective, as in Approach 1. Macro means understanding the global picture, as seen in my approach of finding mathematical patterns and the experts’ approach of controlling the four boundaries.</p>
+<p>Now, let’s approach the problem from a <strong>micro</strong> perspective: what if we stand on a <strong>huge</strong> chessboard with <strong>invisible boundaries</strong> and need to fill in these numbers, how would we do it? We can <strong>only see the numbers on the surrounding squares</strong>. At this point, the macro approach is no longer effective, so what should we do?</p>
+<p><img src="/en/MarkDownImages/spiraln.jpg" alt="img"></p>
+<p>Suppose we stand on square 1 (facing right) and move forward, filling in the numbers along the path. When we reach square 3, we find that there is no way forward. Since we want to fill in the numbers clockwise, let’s turn right (facing down), and now the square we are facing is where we should fill in the number 4.</p>
+<p>Similarly, when we reach square 8 (facing up), the squares in front have already been filled with number 1. Let’s turn right again (facing right), and now the square we are facing is where we should fill in the number 9.</p>
+<p>Therefore, in the code, let’s <strong>focus only on the current coordinates of the agent</strong> and make it <strong>keep moving in one direction</strong> until it reaches a boundary or the square has already been filled with a number. When this happens, we <strong>turn right</strong>.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="comment">// (dx[k], dy[k]) represents the direction to move, in the order of right, down, left, up, right ...</span></span><br><span class="line">        <span class="type">int</span>[] dx = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="type">int</span>[] dy = &#123;<span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// (x, y) is the agent&#x27;s coordinates;</span></span><br><span class="line">        <span class="comment">// dir represents the current direction to move, it is the index of the dx, dy arrays</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>, y = <span class="number">0</span>, dir = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// Loop variables, and the condition for the loop to exit</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">counter</span> <span class="operator">=</span> <span class="number">1</span>, limit = n * n;</span><br><span class="line">        <span class="keyword">while</span> (counter &lt;= limit) &#123;</span><br><span class="line">            <span class="comment">// Current coordinates are within the boundaries, and the current square is not filled with a number</span></span><br><span class="line">            <span class="keyword">while</span> (<span class="number">0</span> &lt;= x &amp;&amp; x &lt; n &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n &amp;&amp; ans[x][y] == <span class="number">0</span>) &#123;</span><br><span class="line">                ans[x][y] = counter;</span><br><span class="line">                counter++;</span><br><span class="line">                <span class="comment">// keep moving</span></span><br><span class="line">                x += dx[dir];</span><br><span class="line">                y += dy[dir];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Step back one square</span></span><br><span class="line">            x -= dx[dir];</span><br><span class="line">            y -= dy[dir];</span><br><span class="line">            <span class="comment">// Turn right</span></span><br><span class="line">            dir = (dir + <span class="number">1</span>) % dx.length;</span><br><span class="line">            <span class="comment">// After moving forward one step, the position (x, y) is the first square to be processed in the next while loop</span></span><br><span class="line">            x += dx[dir];</span><br><span class="line">            y += dy[dir];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Reflection">Reflection</h1>
+<p>I came up with Approach 2 because I recently solved a problem that required filling numbers clockwise in an isosceles right-angled triangle (with the right angle parallel to the coordinate axes).</p>
+<p>For example, when <code>n = 4</code>, we need to fill in the numbers as follows:</p>
+<img src="/en/MarkDownImages/image-20231003171918667.png" alt="image-20231003171918667" style="zoom:67%;" />
+<p>For the macro approach that finds patterns from a high-level perspective, I really didn’t bother and found it cumbersome.</p>
+<p>With Approach 2, the so-called clockwise filling is essentially cycling through these directions: up, down-right, left. So, at the code level:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[] dx = &#123;-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span>[] dy = &#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>A slight modification to the code for Approach 2 is all that is needed.</p>
 ]]></content>
       <categories>
         <category>Algorithm Problems</category>
@@ -390,70 +390,6 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
-    <title>the Architecture of Azure Pipelines</title>
-    <url>/en/2023/10/06/Azure-Pipelines-Architecture/</url>
-    <content><![CDATA[<h1 id="Introduction">Introduction</h1>
-<p>Azure Pipelines is a component of Azure DevOps (a SaaS platform) and serves as an automated CI/CD pipeline. Similar technologies include <a href="https://github.com/features/actions">GitHub Actions</a> and <a href="https://www.jenkins.io/">Jenkins</a>.</p>
-<p>As users, we only need to define various tasks in YAML, trigger the pipeline, and Azure Pipelines automatically executes these tasks for us.</p>
-<p>So, how are tasks executed? Is there a limit to parallel tasks? How can we design YAML more efficiently to make a pipeline run faster? This article will analyze the architecture of Azure Pipelines from the perspective of task scheduling, providing answers to these questions along the way.</p>
-<span id="more"></span>
-<h1 id="Azure-Pipelines-Terminology">Azure Pipelines Terminology</h1>
-<p><img src="/en/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png" alt="img"></p>
-<p><strong>For users of Azure Pipelines</strong>, a YAML file uniquely defines the logic of a pipeline run:</p>
-<ul>
-<li>A pipeline can contain multiple stages.</li>
-<li>A stage can contain multiple jobs.</li>
-<li>A job can contain multiple steps.</li>
-<li>A step can contain multiple tasks.</li>
-</ul>
-<p><strong>For Azure Pipelines itself</strong>, when a pipeline is triggered, it needs to invoke computing resources to execute the pipeline’s logic. Specifically, a machine (agent) is responsible for executing a job.</p>
-<p>A job runs on only one agent, and it is not further divided. However, all jobs of a pipeline may be assigned to different agents for execution.</p>
-<p>How is this distribution of jobs accomplished?</p>
-<h1 id="Azure-Pipelines-Task-Scheduling">Azure Pipelines Task Scheduling</h1>
-<p>Azure Pipelines task scheduling follows a typical distributed task scheduling model (similar technologies include <a href="http://www.quartz-scheduler.org/">QUARTZ</a> and <a href="https://github.com/xuxueli/xxl-job">xxl-job</a>):</p>
-<ul>
-<li>Azure Pipelines has a <strong>‘Task Queue’</strong> containing all pending <u>jobs</u> (referring to both the job/task in the task scheduling model and the job term in the pipeline).</li>
-<li>The agent is a worker that periodically checks whether there are jobs to run in the <strong>‘Task Queue’</strong>. If there are, some agent will compete to gain the right to execute that job while obtaining access to the relevant resources. At this point, it can start executing the job.</li>
-</ul>
-<p>Therefore, a pipeline is executed as follows:</p>
-<ol>
-<li>Trigger the pipeline. Azure Pipelines parses YAML, splits it into multiple jobs, and stores them in the <strong>‘Task Queue’</strong>.</li>
-<li>If there is an idle agent at this time (indicating that the <strong>‘Task Queue’</strong> was empty), it listens for the event that a new job is pushed to the queue and begins competing to execute that job with other agents (if any).
-<ul>
-<li>If successful, it starts execution.</li>
-<li>If unsuccessful, it continues to listen.</li>
-</ul>
-</li>
-<li>If there is no idle agent at this time (indicating that the <strong>‘Task Queue’</strong> previously had jobs or no agent completed its previously assigned job), these newly generated jobs will wait for an agent to execute them in an orderly manner (jobs are queued based on the time the pipeline was triggered, ensuring fairness).</li>
-</ol>
-<h1 id="Parallel-Jobs">Parallel Jobs</h1>
-<p>The task scheduling framework implies <strong>parallelism</strong>. This means that when defining YAML, <strong>steps or tasks without dependencies should be elevated to jobs, allowing them to run in parallel and reduce execution time</strong>.</p>
-<blockquote>
-<p>However, during internships, few people do this, and most people use the default step level, even when many agents are often idle. 🤔</p>
-</blockquote>
-<p>Now, since the immediate execution of a new job depends on the presence of idle agents, does increasing the number of agents improve overall throughput (the number of jobs completed in a unit of time)? Unfortunately, not really.</p>
-<p>After all, Microsoft needs to profit from Azure, so they introduced the concept of ‘Parallel Jobs’, indicating a limit to the number of jobs that can run in parallel. This limit requires purchasing.</p>
-<p>In other words, to run jobs in parallel, we not only need to purchase Azure VM agents but also Parallel Jobs. Even if we have many machines locally, we still need to buy Parallel Jobs.</p>
-<h1 id="Reference">Reference</h1>
-<ul>
-<li><a href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/3-describe-azure-pipelines">Describe Azure Pipelines</a></li>
-<li><a href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/4-understand-key-terms">Understand Azure Pipelines key terms</a></li>
-<li><a href="https://learn.microsoft.com/en-us/training/modules/manage-azure-pipeline-agents-pools/7-communicate-with-azure-pipelines">Communicate with Azure Pipelines</a></li>
-<li><a href="https://azure.microsoft.com/en-us/products/devops/pipelines#overview">Azure Pipelines Product Overview</a></li>
-<li><a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents">Azure Pipelines agents</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Azure</category>
-      </categories>
-      <tags>
-        <tag>Azure</tag>
-        <tag>Azure Pipelines</tag>
-        <tag>Architecture</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Algorithm Problem 006: Construct Binary Tree from Preorder and Postorder Traversal</title>
     <url>/en/2024/02/22/Algorithm-Problem-006-construct-binary-tree-from-preorder-and-postorder-traversal/</url>
     <content><![CDATA[<h1 id="Problem">Problem</h1>
@@ -561,8 +497,8 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
@@ -572,140 +508,67 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
-    <title>Docker: healthcheck and depends_on</title>
-    <url>/en/2024/06/03/Docker-Healthcheck/</url>
+    <title>the Architecture of Azure Pipelines</title>
+    <url>/en/2023/10/06/Azure-Pipelines-Architecture/</url>
     <content><![CDATA[<h1 id="Introduction">Introduction</h1>
-<p>This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s <code>depends_on</code>. This post can be viewd as a cheat sheet.</p>
-<h1 id="healthcheck-Mechanism">healthcheck Mechanism</h1>
-<blockquote>
-<p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
-</blockquote>
+<p>Azure Pipelines is a component of Azure DevOps (a SaaS platform) and serves as an automated CI/CD pipeline. Similar technologies include <a href="https://github.com/features/actions">GitHub Actions</a> and <a href="https://www.jenkins.io/">Jenkins</a>.</p>
+<p>As users, we only need to define various tasks in YAML, trigger the pipeline, and Azure Pipelines automatically executes these tasks for us.</p>
+<p>So, how are tasks executed? Is there a limit to parallel tasks? How can we design YAML more efficiently to make a pipeline run faster? This article will analyze the architecture of Azure Pipelines from the perspective of task scheduling, providing answers to these questions along the way.</p>
 <span id="more"></span>
-<p>healthcheck has the following parameters:</p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--interval=DURATION</code></td>
-<td><code>30s</code></td>
-<td>Interval between healthchecks.</td>
-</tr>
-<tr>
-<td><code>--timeout=DURATION</code></td>
-<td><code>30s</code></td>
-<td>How long to wait for the healthcheck to complete. If it exceeds this time, it’s considered a failure.</td>
-</tr>
-<tr>
-<td><code>--retries=N</code></td>
-<td><code>3</code></td>
-<td>After <code>retries</code> consecutive failures, the container status changes to <code>unhealthy</code>.</td>
-</tr>
-<tr>
-<td><code>--start-period=DURATION</code></td>
-<td><code>0s</code></td>
-<td>Failures during this period are not counted towards the <code>retries</code> limit. However, once a healthcheck succeeds, the container is considered started and the start period ends automatically.</td>
-</tr>
-<tr>
-<td><code>--start-interval=DURATION</code></td>
-<td><code>5s</code></td>
-<td>Interval between healthchecks during the start period.</td>
-</tr>
-</tbody>
-</table>
-<p>After the container starts, it is in the <code>starting</code> state, i.e., the start period. During the start period, the container can only become <code>healthy</code>, not <code>unhealthy</code>.</p>
-<h1 id="healthcheck-Syntax">healthcheck Syntax</h1>
-<h2 id="Syntax">Syntax</h2>
-<blockquote>
-<p>This post focuses on the syntax in Compose, not in Dockerfile or CLI.</p>
-</blockquote>
-<p>A healthcheck in Compose will override the one in Dockerfile.</p>
-<p>An Example:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">interval:</span> <span class="string">1m30s</span></span><br><span class="line">  <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">start_period:</span> <span class="string">40s</span></span><br><span class="line">  <span class="attr">start_interval:</span> <span class="string">5s</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>test</code> defines the command Compose runs to check container health. It can be <strong>either a string or a list</strong>.</p>
-<p>If it’s a list, the first item must be either <code>NONE</code>, <code>CMD</code> or <code>CMD-SHELL</code>.</p>
-<p>If it’s a string, it’s equivalent to specifying <code>CMD-SHELL</code> followed by that string.</p>
-</blockquote>
-<p>The following two forms are equivalent:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;curl -f http://localhost || exit 1&quot;</span>]</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>Clearly, the second form is more convenient.</p>
-<h2 id="Debugging-test-Command">Debugging <code>test</code> Command</h2>
-<p>Common <code>test</code> command templates can be found in <a href="/en/2024/04/12/MySQL-Docker/#healthcheck">the previous post</a>. How to debug our <code>test</code> command? Use <code>docker inspect</code>. Healthcheck information is in <code>State.Health</code>, and we can get it with the following command:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker inspect --format=<span class="string">&#x27;&#123;&#123;json .State.Health&#125;&#125;&#x27;</span> container</span><br></pre></td></tr></table></figure>
-<p>An example:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;healthy&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;FailingStreak&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Log&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.110841425+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.178282083+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.208737778+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.261481813+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>Attributes of the <code>Log</code> element:</p>
+<h1 id="Azure-Pipelines-Terminology">Azure Pipelines Terminology</h1>
+<p><img src="/en/MarkDownImages/key-pipeline-concepts-overview-ca80c85c.png" alt="img"></p>
+<p><strong>For users of Azure Pipelines</strong>, a YAML file uniquely defines the logic of a pipeline run:</p>
 <ul>
-<li><code>Output</code>: The output of the command, used for debugging.</li>
-<li><code>Exitcode</code>: <code>0</code> indicates the container is healthy, <code>1</code> indicates it is unhealthy.</li>
+<li>A pipeline can contain multiple stages.</li>
+<li>A stage can contain multiple jobs.</li>
+<li>A job can contain multiple steps.</li>
+<li>A step can contain multiple tasks.</li>
 </ul>
-<h2 id="Disabling-healthcheck">Disabling healthcheck</h2>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">disable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h1 id="depends-on-Mechanism">depends_on Mechanism</h1>
-<blockquote>
-<p>You can <strong>control the order of service startup and shutdown</strong> with the <code>depends_on</code> attribute. Compose always starts and stops containers in dependency order.</p>
-<p>It is useful if services are closely coupled, and the startup sequence impacts the application’s functionality.</p>
-</blockquote>
-<p>Note that <code>depends_on</code> only indicates startup order and does not guarantee the container starting earlier is ready.</p>
-<blockquote>
-<p>On startup, Compose <strong>does not wait until a container is “ready”, only until it’s running</strong>.</p>
-</blockquote>
-<p>By setting the <code>condition</code> attribute of <code>depends_on</code>, you can specify when container B, which is dependent on container A, will start. This attribute has the following values:</p>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>service_started</code></td>
-<td>Default value, B starts after A starts.</td>
-</tr>
-<tr>
-<td><code>service_healthy</code></td>
-<td>B starts after A is <code>healthy</code>.</td>
-</tr>
-<tr>
-<td><code>service_completed_successfully</code></td>
-<td>B starts after A successfully completes its <code>command</code>. Here, A typically executes a command/script and stops after completion. A successful exit is indicated by exit code 0. Check this <a href="https://stackoverflow.com/a/69612290/23172420">specific example</a>.</td>
-</tr>
-</tbody>
-</table>
-<p>Therefore, to achieve truly ordered startup of multiple containers as services in Compose, use the healthcheck mechanism and set <code>condition</code> to <code>service_healthy</code>.</p>
-<hr>
-<p>Note that using <code>depends_on</code> is only effective when using <code>docker compose up|start</code>. If the container’s <code>restart</code> policy is set to <code>unless-stopped</code> or <code>always</code>, these containers <strong>will not</strong> restart in <code>depends_on</code> order after the server restarts.</p>
-<h1 id="depends-on-Syntax">depends_on Syntax</h1>
-<h2 id="Simple-Configuration">Simple Configuration</h2>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
-<p>Here, the <code>condition</code> defaults to <code>service_started</code>.</p>
-<h2 id="Detailed-Configuration">Detailed Configuration</h2>
-<p>This kind of configuration allows specifying the <code>condition</code>.</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">      <span class="attr">redis:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_started</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
-<h1 id="References">References</h1>
+<p><strong>For Azure Pipelines itself</strong>, when a pipeline is triggered, it needs to invoke computing resources to execute the pipeline’s logic. Specifically, a machine (agent) is responsible for executing a job.</p>
+<p>A job runs on only one agent, and it is not further divided. However, all jobs of a pipeline may be assigned to different agents for execution.</p>
+<p>How is this distribution of jobs accomplished?</p>
+<h1 id="Azure-Pipelines-Task-Scheduling">Azure Pipelines Task Scheduling</h1>
+<p>Azure Pipelines task scheduling follows a typical distributed task scheduling model (similar technologies include <a href="http://www.quartz-scheduler.org/">QUARTZ</a> and <a href="https://github.com/xuxueli/xxl-job">xxl-job</a>):</p>
 <ul>
-<li><a href="https://docs.docker.com/reference/dockerfile/#healthcheck">Dockerfile HEALTHCHECK</a></li>
-<li><a href="https://docs.docker.com/compose/compose-file/05-services/#healthcheck">Docker compose healthcheck</a></li>
-<li><a href="https://docs.docker.com/compose/startup-order/">Control startup and shutdown order in Compose</a></li>
-<li><a href="https://stackoverflow.com/a/69612290/23172420">How to start service only when other service had completed?</a></li>
-<li><a href="https://docs.docker.com/compose/compose-file/05-services/#depends_on">Docker compose depends_on</a></li>
+<li>Azure Pipelines has a <strong>‘Task Queue’</strong> containing all pending <u>jobs</u> (referring to both the job/task in the task scheduling model and the job term in the pipeline).</li>
+<li>The agent is a worker that periodically checks whether there are jobs to run in the <strong>‘Task Queue’</strong>. If there are, some agent will compete to gain the right to execute that job while obtaining access to the relevant resources. At this point, it can start executing the job.</li>
+</ul>
+<p>Therefore, a pipeline is executed as follows:</p>
+<ol>
+<li>Trigger the pipeline. Azure Pipelines parses YAML, splits it into multiple jobs, and stores them in the <strong>‘Task Queue’</strong>.</li>
+<li>If there is an idle agent at this time (indicating that the <strong>‘Task Queue’</strong> was empty), it listens for the event that a new job is pushed to the queue and begins competing to execute that job with other agents (if any).
+<ul>
+<li>If successful, it starts execution.</li>
+<li>If unsuccessful, it continues to listen.</li>
+</ul>
+</li>
+<li>If there is no idle agent at this time (indicating that the <strong>‘Task Queue’</strong> previously had jobs or no agent completed its previously assigned job), these newly generated jobs will wait for an agent to execute them in an orderly manner (jobs are queued based on the time the pipeline was triggered, ensuring fairness).</li>
+</ol>
+<h1 id="Parallel-Jobs">Parallel Jobs</h1>
+<p>The task scheduling framework implies <strong>parallelism</strong>. This means that when defining YAML, <strong>steps or tasks without dependencies should be elevated to jobs, allowing them to run in parallel and reduce execution time</strong>.</p>
+<blockquote>
+<p>However, during internships, few people do this, and most people use the default step level, even when many agents are often idle. 🤔</p>
+</blockquote>
+<p>Now, since the immediate execution of a new job depends on the presence of idle agents, does increasing the number of agents improve overall throughput (the number of jobs completed in a unit of time)? Unfortunately, not really.</p>
+<p>After all, Microsoft needs to profit from Azure, so they introduced the concept of ‘Parallel Jobs’, indicating a limit to the number of jobs that can run in parallel. This limit requires purchasing.</p>
+<p>In other words, to run jobs in parallel, we not only need to purchase Azure VM agents but also Parallel Jobs. Even if we have many machines locally, we still need to buy Parallel Jobs.</p>
+<h1 id="Reference">Reference</h1>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/3-describe-azure-pipelines">Describe Azure Pipelines</a></li>
+<li><a href="https://learn.microsoft.com/en-us/training/modules/explore-azure-pipelines/4-understand-key-terms">Understand Azure Pipelines key terms</a></li>
+<li><a href="https://learn.microsoft.com/en-us/training/modules/manage-azure-pipeline-agents-pools/7-communicate-with-azure-pipelines">Communicate with Azure Pipelines</a></li>
+<li><a href="https://azure.microsoft.com/en-us/products/devops/pipelines#overview">Azure Pipelines Product Overview</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents">Azure Pipelines agents</a></li>
 </ul>
 ]]></content>
       <categories>
         <category>tech</category>
-        <category>Docker</category>
-        <category>cheat sheet</category>
+        <category>Azure</category>
       </categories>
       <tags>
-        <tag>Docker</tag>
+        <tag>Azure</tag>
+        <tag>Azure Pipelines</tag>
+        <tag>Architecture</tag>
       </tags>
   </entry>
   <entry>
@@ -910,40 +773,140 @@ where <code>pathLen[i]</code> represents <strong>the length of the longest node 
       </tags>
   </entry>
   <entry>
-    <title>Install Glances in Docker</title>
-    <url>/en/2024/04/08/Glances-Docker/</url>
-    <content><![CDATA[<h1 id="Introduction-to-Glances">Introduction to Glances</h1>
-<p>There are many configurable widgets in Dashy, among which the most practical one is resource monitoring. Displaying CPU usage on the panel is not useful for me —— I am more concerned about which program is causing high CPU usage. However, the Glances software on which this feature depends is very practical.</p>
-<p>Glances is similar to the <code>top</code> command, which can display system resource usage. However, it is better in the following aspects:</p>
-<ul>
-<li>More comprehensive and user-friendly data display;</li>
-<li>It can display the resource usage of each container —— in this respect, it surpasses Portainer. Portainer can only display the resource usage of <strong>one</strong> container in <strong>chart</strong> form.</li>
-<li>It can run in server mode. We can monitor resource usage through a browser, which is very convenient.</li>
-</ul>
-<p><img src="/en/MarkDownImages/image-20240408112645115.png" alt="image-20240408112645115"></p>
-<p>Glances is relatively lightweight, only displaying the current resource situation without recording historical data. And what I need is precisely this kind of lightweight yet comprehensive resource monitoring software.</p>
+    <title>Docker: healthcheck and depends_on</title>
+    <url>/en/2024/06/03/Docker-Healthcheck/</url>
+    <content><![CDATA[<h1 id="Introduction">Introduction</h1>
+<p>This post mainly covers the mechanisms and syntax of Docker healthcheck and Docker Compose’s <code>depends_on</code>. This post can be viewd as a cheat sheet.</p>
+<h1 id="healthcheck-Mechanism">healthcheck Mechanism</h1>
+<blockquote>
+<p>When a container has a healthcheck specified, it has a health status <strong>in addition to its normal status.</strong> This status is <strong>initially <code>starting</code></strong>. Whenever a <strong>health check passes</strong>, it becomes <strong><code>healthy</code></strong> (whatever state it was previously in). After a certain number of <strong>consecutive failures</strong>, it becomes <strong><code>unhealthy</code></strong>.</p>
+</blockquote>
 <span id="more"></span>
-<h2 id="Docker-Installation">Docker Installation</h2>
-<p>Why use Docker for installation? The official preferred method is to install via pip:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install --user glances</span><br></pre></td></tr></table></figure>
-<p>This will disrupt the local Python environment, so let’s use Docker instead.</p>
-<p>docker compose:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">glances:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">docker.io/nicolargo/glances:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">glances</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock:ro</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">bridge</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">61208</span><span class="number">-61209</span><span class="string">:61208-61209</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GLANCES_OPT=-w</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">host</span></span><br></pre></td></tr></table></figure>
-<p>Then visit port 61208 in your browser.</p>
+<p>healthcheck has the following parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--interval=DURATION</code></td>
+<td><code>30s</code></td>
+<td>Interval between healthchecks.</td>
+</tr>
+<tr>
+<td><code>--timeout=DURATION</code></td>
+<td><code>30s</code></td>
+<td>How long to wait for the healthcheck to complete. If it exceeds this time, it’s considered a failure.</td>
+</tr>
+<tr>
+<td><code>--retries=N</code></td>
+<td><code>3</code></td>
+<td>After <code>retries</code> consecutive failures, the container status changes to <code>unhealthy</code>.</td>
+</tr>
+<tr>
+<td><code>--start-period=DURATION</code></td>
+<td><code>0s</code></td>
+<td>Failures during this period are not counted towards the <code>retries</code> limit. However, once a healthcheck succeeds, the container is considered started and the start period ends automatically.</td>
+</tr>
+<tr>
+<td><code>--start-interval=DURATION</code></td>
+<td><code>5s</code></td>
+<td>Interval between healthchecks during the start period.</td>
+</tr>
+</tbody>
+</table>
+<p>After the container starts, it is in the <code>starting</code> state, i.e., the start period. During the start period, the container can only become <code>healthy</code>, not <code>unhealthy</code>.</p>
+<h1 id="healthcheck-Syntax">healthcheck Syntax</h1>
+<h2 id="Syntax">Syntax</h2>
+<blockquote>
+<p>This post focuses on the syntax in Compose, not in Dockerfile or CLI.</p>
+</blockquote>
+<p>A healthcheck in Compose will override the one in Dockerfile.</p>
+<p>An Example:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">interval:</span> <span class="string">1m30s</span></span><br><span class="line">  <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">start_period:</span> <span class="string">40s</span></span><br><span class="line">  <span class="attr">start_interval:</span> <span class="string">5s</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>test</code> defines the command Compose runs to check container health. It can be <strong>either a string or a list</strong>.</p>
+<p>If it’s a list, the first item must be either <code>NONE</code>, <code>CMD</code> or <code>CMD-SHELL</code>.</p>
+<p>If it’s a string, it’s equivalent to specifying <code>CMD-SHELL</code> followed by that string.</p>
+</blockquote>
+<p>The following two forms are equivalent:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;curl -f http://localhost || exit 1&quot;</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">test:</span> <span class="string">curl</span> <span class="string">-f</span> <span class="string">https://localhost</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>Clearly, the second form is more convenient.</p>
+<h2 id="Debugging-test-Command">Debugging <code>test</code> Command</h2>
+<p>Common <code>test</code> command templates can be found in <a href="/en/2024/04/12/MySQL-Docker/#healthcheck">the previous post</a>. How to debug our <code>test</code> command? Use <code>docker inspect</code>. Healthcheck information is in <code>State.Health</code>, and we can get it with the following command:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker inspect --format=<span class="string">&#x27;&#123;&#123;json .State.Health&#125;&#125;&#x27;</span> container</span><br></pre></td></tr></table></figure>
+<p>An example:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;healthy&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;FailingStreak&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Log&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.110841425+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:22.178282083+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.208737778+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;End&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-02T13:45:27.261481813+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Output&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mysqladmin: [Warning] Using a password on the command line interface can be insecure.\nmysqld is alive\n&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>Attributes of the <code>Log</code> element:</p>
+<ul>
+<li><code>Output</code>: The output of the command, used for debugging.</li>
+<li><code>Exitcode</code>: <code>0</code> indicates the container is healthy, <code>1</code> indicates it is unhealthy.</li>
+</ul>
+<h2 id="Disabling-healthcheck">Disabling healthcheck</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">healthcheck:</span></span><br><span class="line">  <span class="attr">disable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h1 id="depends-on-Mechanism">depends_on Mechanism</h1>
+<blockquote>
+<p>You can <strong>control the order of service startup and shutdown</strong> with the <code>depends_on</code> attribute. Compose always starts and stops containers in dependency order.</p>
+<p>It is useful if services are closely coupled, and the startup sequence impacts the application’s functionality.</p>
+</blockquote>
+<p>Note that <code>depends_on</code> only indicates startup order and does not guarantee the container starting earlier is ready.</p>
+<blockquote>
+<p>On startup, Compose <strong>does not wait until a container is “ready”, only until it’s running</strong>.</p>
+</blockquote>
+<p>By setting the <code>condition</code> attribute of <code>depends_on</code>, you can specify when container B, which is dependent on container A, will start. This attribute has the following values:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>service_started</code></td>
+<td>Default value, B starts after A starts.</td>
+</tr>
+<tr>
+<td><code>service_healthy</code></td>
+<td>B starts after A is <code>healthy</code>.</td>
+</tr>
+<tr>
+<td><code>service_completed_successfully</code></td>
+<td>B starts after A successfully completes its <code>command</code>. Here, A typically executes a command/script and stops after completion. A successful exit is indicated by exit code 0. Check this <a href="https://stackoverflow.com/a/69612290/23172420">specific example</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, to achieve truly ordered startup of multiple containers as services in Compose, use the healthcheck mechanism and set <code>condition</code> to <code>service_healthy</code>.</p>
+<hr>
+<p>Note that using <code>depends_on</code> is only effective when using <code>docker compose up|start</code>. If the container’s <code>restart</code> policy is set to <code>unless-stopped</code> or <code>always</code>, these containers <strong>will not</strong> restart in <code>depends_on</code> order after the server restarts.</p>
+<h1 id="depends-on-Syntax">depends_on Syntax</h1>
+<h2 id="Simple-Configuration">Simple Configuration</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
+<p>Here, the <code>condition</code> defaults to <code>service_started</code>.</p>
+<h2 id="Detailed-Configuration">Detailed Configuration</h2>
+<p>This kind of configuration allows specifying the <code>condition</code>.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">      <span class="attr">redis:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_started</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
 <h1 id="References">References</h1>
 <ul>
-<li><strong><a href="https://github.com/nicolargo/glances">Glances</a></strong></li>
+<li><a href="https://docs.docker.com/reference/dockerfile/#healthcheck">Dockerfile HEALTHCHECK</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/05-services/#healthcheck">Docker compose healthcheck</a></li>
+<li><a href="https://docs.docker.com/compose/startup-order/">Control startup and shutdown order in Compose</a></li>
+<li><a href="https://stackoverflow.com/a/69612290/23172420">How to start service only when other service had completed?</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/05-services/#depends_on">Docker compose depends_on</a></li>
 </ul>
 ]]></content>
       <categories>
         <category>tech</category>
-        <category>NAS</category>
         <category>Docker</category>
+        <category>cheat sheet</category>
       </categories>
       <tags>
-        <tag>NAS</tag>
         <tag>Docker</tag>
-        <tag>Glances</tag>
       </tags>
   </entry>
   <entry>
@@ -1024,8 +987,8 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
 <p>A download rule is bound to an anime, so it can include multiple subtitle groups. But how will Jellyfin recognize multiple videos of the same episode? I have not tried this yet.</p>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
@@ -1035,6 +998,43 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
         <tag>RSS</tag>
         <tag>AutoBangumi</tag>
         <tag>qBittorrent</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Install Glances in Docker</title>
+    <url>/en/2024/04/08/Glances-Docker/</url>
+    <content><![CDATA[<h1 id="Introduction-to-Glances">Introduction to Glances</h1>
+<p>There are many configurable widgets in Dashy, among which the most practical one is resource monitoring. Displaying CPU usage on the panel is not useful for me —— I am more concerned about which program is causing high CPU usage. However, the Glances software on which this feature depends is very practical.</p>
+<p>Glances is similar to the <code>top</code> command, which can display system resource usage. However, it is better in the following aspects:</p>
+<ul>
+<li>More comprehensive and user-friendly data display;</li>
+<li>It can display the resource usage of each container —— in this respect, it surpasses Portainer. Portainer can only display the resource usage of <strong>one</strong> container in <strong>chart</strong> form.</li>
+<li>It can run in server mode. We can monitor resource usage through a browser, which is very convenient.</li>
+</ul>
+<p><img src="/en/MarkDownImages/image-20240408112645115.png" alt="image-20240408112645115"></p>
+<p>Glances is relatively lightweight, only displaying the current resource situation without recording historical data. And what I need is precisely this kind of lightweight yet comprehensive resource monitoring software.</p>
+<span id="more"></span>
+<h2 id="Docker-Installation">Docker Installation</h2>
+<p>Why use Docker for installation? The official preferred method is to install via pip:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install --user glances</span><br></pre></td></tr></table></figure>
+<p>This will disrupt the local Python environment, so let’s use Docker instead.</p>
+<p>docker compose:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">glances:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">docker.io/nicolargo/glances:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">glances</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock:ro</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">bridge</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">61208</span><span class="number">-61209</span><span class="string">:61208-61209</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GLANCES_OPT=-w</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">pid:</span> <span class="string">host</span></span><br></pre></td></tr></table></figure>
+<p>Then visit port 61208 in your browser.</p>
+<h1 id="References">References</h1>
+<ul>
+<li><strong><a href="https://github.com/nicolargo/glances">Glances</a></strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>NAS</category>
+        <category>tech</category>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>NAS</tag>
+        <tag>Docker</tag>
+        <tag>Glances</tag>
       </tags>
   </entry>
   <entry>
@@ -1532,8 +1532,8 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
@@ -1600,8 +1600,8 @@ g1--&gt;g2--&gt;g3--&gt;g4--&gt;g5</code></pre>
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
@@ -1674,8 +1674,8 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
@@ -1683,83 +1683,6 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>Docker</tag>
         <tag>Jellyfin</tag>
         <tag>LANraragi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LocalSend：局域网文件传输利器</title>
-    <url>/en/2023/09/04/LocalSend-A-powerful-tool-for-local-file-transfer/</url>
-    <content><![CDATA[<h1 id="序言">序言</h1>
-<p>最近准备重装笔记本的系统，因此要备份文件，存到台式机里。我将要备份的文件夹压缩，通过 Windows 自带的文件夹共享（局域网共享），传输这些压缩包。</p>
-<p>但是，传输过程却非常艰难。有的压缩包有 10 几个 GB，传了一分钟，网速就没了，之后就开始报超时之类的错误。更离谱的是，有个压缩包在两台电脑上<a href="#%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%A0%A1%E9%AA%8C">摘要算法</a>的结果不同。</p>
-<p>显然，windows SMB 协议既不能保证速度，也不能保证数据正确性，于是我开始寻找更加好用的局域网传输软件。它，就是本文的主角 —— LocalSend</p>
-<span id="more"></span>
-<h1 id="LocalSend-介绍">LocalSend 介绍</h1>
-<p>LocalSend 是一个<strong>跨平台</strong>的局域网传输软件，支持 Windows, Linux, macOS, Android 和 IOS. 这是它的<a href="https://localsend.org/#/">官网</a>；这是它的 <a href="https://github.com/localsend/localsend">GitHub 仓库</a></p>
-<p>作者设计了一个基于 HTTP 的传输协议，在<a href="https://github.com/localsend/protocol">这里</a></p>
-<p>LocalSend 基本上是开箱即用，没必要专门写一节 quickstart</p>
-<p>但是，由于 Windows 防火墙的默认配置，第一次使用该软件时，同局域网内的设备可能无法发现这台 Windows 设备。下面，我将给出解决方案。</p>
-<h1 id="防火墙配置">防火墙配置</h1>
-<h2 id="我的方案">我的方案</h2>
-<ol>
-<li>
-<p>将家庭 WIFI 设置为专用网络（不建议在公共网络使用局域网传输文件，无论软件作者做了怎样的加密，我都认为是不安全的。因此，这里不讨论公用网络的情况）<img src="/en/MarkDownImages/image-20230904212558782.png" alt="image-20230904212558782"></p>
-</li>
-<li>
-<p>进入『配置防火墙和安全设置』</p>
-<p><img src="/en/MarkDownImages/image-20230904212718315.png" alt="image-20230904212718315"></p>
-</li>
-<li>
-<p>『允许应用通过防火墙』——『更改配置』。找到 <code>localsend_app</code>（其他以<code>localsend</code>开头的也可以这样做），将它之前那的单选框选上。以防万一，确保之后的两个单选框也是选上的（应该是默认开启的）。然后点击『确定』</p>
-<p><img src="/en/MarkDownImages/image-20230904212911221.png" alt="image-20230904212911221"></p>
-</li>
-<li>
-<p>重启 LocalSend，等待找到目标主机</p>
-</li>
-</ol>
-<h2 id="网上的方案（未验证）">网上的方案（未验证）</h2>
-<p>这里也给出网上其他人的解决方法，虽然我觉得全局操作防火墙<strong>很不安全</strong>。</p>
-<ol>
-<li>
-<p>打开『Windows Defender 防火墙』</p>
-<p><img src="/en/MarkDownImages/image-20230904213446263.png" alt="image-20230904213446263"></p>
-</li>
-<li>
-<p>『高级设置』——『Windows 防火墙属性』。在『专用配置文件』一栏，将『入站连接』改为『允许』，然后『应用』</p>
-<p><img src="/en/MarkDownImages/image-20230904213728952.png" alt="image-20230904213728952"></p>
-</li>
-<li>
-<p>重启 LocalSend，查看能否找到目标主机。如果不行，再将上述『公用配置文件』一栏的『入站连接』改为『允许』，然后『应用』，再次重启 LocalSend 并检验。</p>
-</li>
-</ol>
-<h1 id="文件传输校验">文件传输校验</h1>
-<p>在网络传输文件后，通常要使用摘要算法（MD5、SHA1、SHA256等）对比两份文件是否一致，防止由于网络导致的数据丢失。很多现成的工具提供这样的服务，这里我介绍 3 个。</p>
-<h2 id="7-zip">7-zip</h2>
-<p>7-zip 虽然是一个开源的压缩软件，但也提供摘要函数。</p>
-<p>右键选中要摘要的文件，点击『CRC SHA』，选择摘要算法</p>
-<p><img src="/en/MarkDownImages/image-20230904214607556.png" alt="image-20230904214607556"></p>
-<p>如果右键菜单没有该选项，在 7-zip 中配置即可：</p>
-<p><img src="/en/MarkDownImages/image-20230904214947662.png" alt="image-20230904214947662"></p>
-<h2 id="openssl">openssl</h2>
-<p>Linux 大多数发行版都会自带的工具。也可以在 git bash 中使用这个命令。语法是：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl 摘要算法名 文件路径</span><br></pre></td></tr></table></figure>
-<p>例子：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Gustav@PC MINGW64 ~/Desktop</span><br><span class="line">$ openssl sha256 generate-random-file.cmd</span><br><span class="line">SHA256(generate-random-file.cmd)= 03f9454e4ee7923d08aefa4957282b62a655e7231ea6f4bdd6cdcc4e9a4c1bd9</span><br></pre></td></tr></table></figure>
-<h2 id="Certutil">Certutil</h2>
-<p>Windows 上的一个用来提供证书服务的工具，也提供了一些摘要算法。语法是：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">certutil <span class="literal">-hashfile</span> 文件路径 摘要算法名</span><br></pre></td></tr></table></figure>
-<p>例子：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Gustav\Desktop&gt; certutil <span class="literal">-hashfile</span> .\generate<span class="literal">-random-file</span>.cmd sha256</span><br><span class="line">SHA256 的 .\generate<span class="literal">-random-file</span>.cmd 哈希:</span><br><span class="line"><span class="number">03</span>f9454e4ee7923d08aefa4957282b62a655e7231ea6f4bdd6cdcc4e9a4c1bd9</span><br><span class="line">CertUtil: <span class="literal">-hashfile</span> 命令成功完成。</span><br></pre></td></tr></table></figure>
-<h1 id="总结">总结</h1>
-<p>在本文中，我介绍了一款开源好用的局域网传输工具 —— LocalSend。之后，我又给出了 Windows 系统中如何配置防火墙，使得其他设备能发现当前的设备。最后，我介绍了一些常见的对文件进行摘要的工具：从网络下载的文件，理论上都要进行一遍校验，防止数据损坏或丢失。</p>
-]]></content>
-      <categories>
-        <category>softwares</category>
-      </categories>
-      <tags>
-        <tag>LocalSend</tag>
-        <tag>settings</tag>
-        <tag>Firewall</tag>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1884,14 +1807,91 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Docker</category>
       </categories>
       <tags>
         <tag>NAS</tag>
         <tag>Docker</tag>
         <tag>LANraragi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LocalSend：局域网文件传输利器</title>
+    <url>/en/2023/09/04/LocalSend-A-powerful-tool-for-local-file-transfer/</url>
+    <content><![CDATA[<h1 id="序言">序言</h1>
+<p>最近准备重装笔记本的系统，因此要备份文件，存到台式机里。我将要备份的文件夹压缩，通过 Windows 自带的文件夹共享（局域网共享），传输这些压缩包。</p>
+<p>但是，传输过程却非常艰难。有的压缩包有 10 几个 GB，传了一分钟，网速就没了，之后就开始报超时之类的错误。更离谱的是，有个压缩包在两台电脑上<a href="#%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%A0%A1%E9%AA%8C">摘要算法</a>的结果不同。</p>
+<p>显然，windows SMB 协议既不能保证速度，也不能保证数据正确性，于是我开始寻找更加好用的局域网传输软件。它，就是本文的主角 —— LocalSend</p>
+<span id="more"></span>
+<h1 id="LocalSend-介绍">LocalSend 介绍</h1>
+<p>LocalSend 是一个<strong>跨平台</strong>的局域网传输软件，支持 Windows, Linux, macOS, Android 和 IOS. 这是它的<a href="https://localsend.org/#/">官网</a>；这是它的 <a href="https://github.com/localsend/localsend">GitHub 仓库</a></p>
+<p>作者设计了一个基于 HTTP 的传输协议，在<a href="https://github.com/localsend/protocol">这里</a></p>
+<p>LocalSend 基本上是开箱即用，没必要专门写一节 quickstart</p>
+<p>但是，由于 Windows 防火墙的默认配置，第一次使用该软件时，同局域网内的设备可能无法发现这台 Windows 设备。下面，我将给出解决方案。</p>
+<h1 id="防火墙配置">防火墙配置</h1>
+<h2 id="我的方案">我的方案</h2>
+<ol>
+<li>
+<p>将家庭 WIFI 设置为专用网络（不建议在公共网络使用局域网传输文件，无论软件作者做了怎样的加密，我都认为是不安全的。因此，这里不讨论公用网络的情况）<img src="/en/MarkDownImages/image-20230904212558782.png" alt="image-20230904212558782"></p>
+</li>
+<li>
+<p>进入『配置防火墙和安全设置』</p>
+<p><img src="/en/MarkDownImages/image-20230904212718315.png" alt="image-20230904212718315"></p>
+</li>
+<li>
+<p>『允许应用通过防火墙』——『更改配置』。找到 <code>localsend_app</code>（其他以<code>localsend</code>开头的也可以这样做），将它之前那的单选框选上。以防万一，确保之后的两个单选框也是选上的（应该是默认开启的）。然后点击『确定』</p>
+<p><img src="/en/MarkDownImages/image-20230904212911221.png" alt="image-20230904212911221"></p>
+</li>
+<li>
+<p>重启 LocalSend，等待找到目标主机</p>
+</li>
+</ol>
+<h2 id="网上的方案（未验证）">网上的方案（未验证）</h2>
+<p>这里也给出网上其他人的解决方法，虽然我觉得全局操作防火墙<strong>很不安全</strong>。</p>
+<ol>
+<li>
+<p>打开『Windows Defender 防火墙』</p>
+<p><img src="/en/MarkDownImages/image-20230904213446263.png" alt="image-20230904213446263"></p>
+</li>
+<li>
+<p>『高级设置』——『Windows 防火墙属性』。在『专用配置文件』一栏，将『入站连接』改为『允许』，然后『应用』</p>
+<p><img src="/en/MarkDownImages/image-20230904213728952.png" alt="image-20230904213728952"></p>
+</li>
+<li>
+<p>重启 LocalSend，查看能否找到目标主机。如果不行，再将上述『公用配置文件』一栏的『入站连接』改为『允许』，然后『应用』，再次重启 LocalSend 并检验。</p>
+</li>
+</ol>
+<h1 id="文件传输校验">文件传输校验</h1>
+<p>在网络传输文件后，通常要使用摘要算法（MD5、SHA1、SHA256等）对比两份文件是否一致，防止由于网络导致的数据丢失。很多现成的工具提供这样的服务，这里我介绍 3 个。</p>
+<h2 id="7-zip">7-zip</h2>
+<p>7-zip 虽然是一个开源的压缩软件，但也提供摘要函数。</p>
+<p>右键选中要摘要的文件，点击『CRC SHA』，选择摘要算法</p>
+<p><img src="/en/MarkDownImages/image-20230904214607556.png" alt="image-20230904214607556"></p>
+<p>如果右键菜单没有该选项，在 7-zip 中配置即可：</p>
+<p><img src="/en/MarkDownImages/image-20230904214947662.png" alt="image-20230904214947662"></p>
+<h2 id="openssl">openssl</h2>
+<p>Linux 大多数发行版都会自带的工具。也可以在 git bash 中使用这个命令。语法是：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">openssl 摘要算法名 文件路径</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Gustav@PC MINGW64 ~/Desktop</span><br><span class="line">$ openssl sha256 generate-random-file.cmd</span><br><span class="line">SHA256(generate-random-file.cmd)= 03f9454e4ee7923d08aefa4957282b62a655e7231ea6f4bdd6cdcc4e9a4c1bd9</span><br></pre></td></tr></table></figure>
+<h2 id="Certutil">Certutil</h2>
+<p>Windows 上的一个用来提供证书服务的工具，也提供了一些摘要算法。语法是：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">certutil <span class="literal">-hashfile</span> 文件路径 摘要算法名</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Gustav\Desktop&gt; certutil <span class="literal">-hashfile</span> .\generate<span class="literal">-random-file</span>.cmd sha256</span><br><span class="line">SHA256 的 .\generate<span class="literal">-random-file</span>.cmd 哈希:</span><br><span class="line"><span class="number">03</span>f9454e4ee7923d08aefa4957282b62a655e7231ea6f4bdd6cdcc4e9a4c1bd9</span><br><span class="line">CertUtil: <span class="literal">-hashfile</span> 命令成功完成。</span><br></pre></td></tr></table></figure>
+<h1 id="总结">总结</h1>
+<p>在本文中，我介绍了一款开源好用的局域网传输工具 —— LocalSend。之后，我又给出了 Windows 系统中如何配置防火墙，使得其他设备能发现当前的设备。最后，我介绍了一些常见的对文件进行摘要的工具：从网络下载的文件，理论上都要进行一遍校验，防止数据损坏或丢失。</p>
+]]></content>
+      <categories>
+        <category>softwares</category>
+      </categories>
+      <tags>
+        <tag>LocalSend</tag>
+        <tag>settings</tag>
+        <tag>Firewall</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -2002,6 +2002,58 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
+    <title>Mapping MySQL JSON Fields with MyBatis-Plus</title>
+    <url>/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/</url>
+    <content><![CDATA[<h1 id="Preface">Preface</h1>
+<p>MySQL supports fields of type JSON. In comparison to string-type fields, JSON fields offer the following advantages:</p>
+<ul>
+<li>Automatic validation of JSON syntax</li>
+<li>Underlying support for quick access to elements within the JSON. There’s no need to read the entire string and then parse it into a JSON object.</li>
+</ul>
+<p>Logically, JSON is no different from a POJO. Spring MVC has already implemented automatic conversion between the two at the Controller tier, evident in request parameters and return values. So, how can the Repository tier achieve automatic conversion?</p>
+<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping (ORM) between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
+<h1 id="Demo">Demo</h1>
+<h2 id="Table">Table</h2>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE `person` (</span><br><span class="line">  `id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(255) NOT NULL,</span><br><span class="line">  `log` json NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
+<h2 id="Dependencies">Dependencies</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="entity">entity</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@TableName(value = &quot;person&quot;, autoResultMap = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TableField(typeHandler = JacksonTypeHandler.class)</span></span><br><span class="line">    <span class="keyword">private</span> PersonLog log;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PersonLog</span> &#123;</span><br><span class="line">        List&lt;String&gt; hobbies;</span><br><span class="line">        Integer age;</span><br><span class="line">        String address;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>PersonLog</code> here is the focal point of our discussion, aiming to map it to JSON.</p>
+<p>The <code>Person</code> class needs two annotations, usually used together:</p>
+<p><code>TableName#autoResultMap</code>: Responsible for converting JSON to POJO during <strong>query</strong>.</p>
+<p><code>TableField#typeHandler</code>: Responsible for converting POJO to JSON during <strong>insert</strong>. Since spring-web-starter has already imported the Jackson dependency, we can directly use <code>JacksonTypeHandler</code>.</p>
+<h2 id="mapper-xml">mapper.xml</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.demo.mapper.PersonMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.example.demo.entity.Person&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;BIGINT&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;log&quot;</span> <span class="attr">property</span>=<span class="string">&quot;log&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;LONGVARCHAR&quot;</span> <span class="attr">typeHandler</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;Base_Column_List&quot;</span>&gt;</span></span><br><span class="line">        id, name, log</span><br><span class="line">    <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In the mapper file, specify the full class name of the <code>typeHandler</code> for the <code>log</code> field.</p>
+<h2 id="Testing">Testing</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">PersonMapper</span> <span class="keyword">extends</span> <span class="title class_">BaseMapper</span>&lt;Person&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Service tier is omitted.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PersonController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PersonMapper personMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/json&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">testJSON2BeanMap</span><span class="params">(<span class="meta">@RequestBody</span> Person person)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.insert(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/json/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Person <span class="title function_">getPersonById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.selectById(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Test both methods; if no errors occur, it indicates success. We can also check the database after insertion.</p>
+<p>The <strong>non-intrusive ORM</strong> mentioned in the <a href="#Preface">Preface</a> implies that we don’t need to manually execute the conversion between JSON and <code>PersonLog</code> in the code.</p>
+<h1 id="Conclusion">Conclusion</h1>
+<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
+<p>My exploration of this issue originated from the requirements of a business logic during my internship. When I searched for information online, I found that the descriptions in the posts were not quite complete or intuitive. Therefore, I documented the solution and wrote this article.</p>
+<h1 id="Reference">Reference</h1>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">The JSON Data Type</a></p>
+<p><a href="https://blog.csdn.net/qq_33360626/article/details/119836835">mybatis-plus处理mysql中json格式方法</a></p>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring Boot</tag>
+        <tag>MySQL</tag>
+        <tag>MyBatis-Plus</tag>
+        <tag>JDBC</tag>
+        <tag>Repository</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Install MySQL in Docker</title>
     <url>/en/2024/04/12/MySQL-Docker/</url>
     <content><![CDATA[<p>For developers, installing MySQL isn’t difficult, but it often involves several steps. I’ve documented a Docker Compose template that can directly launch a pre-configured MySQL container for development.</p>
@@ -2059,58 +2111,6 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
-    <title>Mapping MySQL JSON Fields with MyBatis-Plus</title>
-    <url>/en/2023/07/08/MyBatis-Plus-Mapping-MySQL-JSON-Type/</url>
-    <content><![CDATA[<h1 id="Preface">Preface</h1>
-<p>MySQL supports fields of type JSON. In comparison to string-type fields, JSON fields offer the following advantages:</p>
-<ul>
-<li>Automatic validation of JSON syntax</li>
-<li>Underlying support for quick access to elements within the JSON. There’s no need to read the entire string and then parse it into a JSON object.</li>
-</ul>
-<p>Logically, JSON is no different from a POJO. Spring MVC has already implemented automatic conversion between the two at the Controller tier, evident in request parameters and return values. So, how can the Repository tier achieve automatic conversion?</p>
-<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping (ORM) between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
-<h1 id="Demo">Demo</h1>
-<h2 id="Table">Table</h2>
-<span id="more"></span>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE `person` (</span><br><span class="line">  `id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(255) NOT NULL,</span><br><span class="line">  `log` json NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
-<h2 id="Dependencies">Dependencies</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="entity">entity</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@TableName(value = &quot;person&quot;, autoResultMap = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TableField(typeHandler = JacksonTypeHandler.class)</span></span><br><span class="line">    <span class="keyword">private</span> PersonLog log;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PersonLog</span> &#123;</span><br><span class="line">        List&lt;String&gt; hobbies;</span><br><span class="line">        Integer age;</span><br><span class="line">        String address;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The <code>PersonLog</code> here is the focal point of our discussion, aiming to map it to JSON.</p>
-<p>The <code>Person</code> class needs two annotations, usually used together:</p>
-<p><code>TableName#autoResultMap</code>: Responsible for converting JSON to POJO during <strong>query</strong>.</p>
-<p><code>TableField#typeHandler</code>: Responsible for converting POJO to JSON during <strong>insert</strong>. Since spring-web-starter has already imported the Jackson dependency, we can directly use <code>JacksonTypeHandler</code>.</p>
-<h2 id="mapper-xml">mapper.xml</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.demo.mapper.PersonMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.example.demo.entity.Person&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;BIGINT&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;log&quot;</span> <span class="attr">property</span>=<span class="string">&quot;log&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;LONGVARCHAR&quot;</span> <span class="attr">typeHandler</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;Base_Column_List&quot;</span>&gt;</span></span><br><span class="line">        id, name, log</span><br><span class="line">    <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>In the mapper file, specify the full class name of the <code>typeHandler</code> for the <code>log</code> field.</p>
-<h2 id="Testing">Testing</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">PersonMapper</span> <span class="keyword">extends</span> <span class="title class_">BaseMapper</span>&lt;Person&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Service tier is omitted.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PersonController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PersonMapper personMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/json&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">testJSON2BeanMap</span><span class="params">(<span class="meta">@RequestBody</span> Person person)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.insert(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/json/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Person <span class="title function_">getPersonById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> personMapper.selectById(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Test both methods; if no errors occur, it indicates success. We can also check the database after insertion.</p>
-<p>The <strong>non-intrusive ORM</strong> mentioned in the <a href="#Preface">Preface</a> implies that we don’t need to manually execute the conversion between JSON and <code>PersonLog</code> in the code.</p>
-<h1 id="Conclusion">Conclusion</h1>
-<p>This article demonstrates achieving seamless, <strong>non-intrusive</strong> mapping between JSON and POJO using MyBatis-Plus in the Repository tier.</p>
-<p>My exploration of this issue originated from the requirements of a business logic during my internship. When I searched for information online, I found that the descriptions in the posts were not quite complete or intuitive. Therefore, I documented the solution and wrote this article.</p>
-<h1 id="Reference">Reference</h1>
-<p><a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">The JSON Data Type</a></p>
-<p><a href="https://blog.csdn.net/qq_33360626/article/details/119836835">mybatis-plus处理mysql中json格式方法</a></p>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>Java</tag>
-        <tag>Spring Boot</tag>
-        <tag>MyBatis-Plus</tag>
-        <tag>JDBC</tag>
-        <tag>Repository</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PotPlayer 启用 Nvidia 超分辨率</title>
     <url>/en/2023/07/09/PotPlayer-Enable-Nvidia-Super-Resolution/</url>
     <content><![CDATA[<h1 id="序言">序言</h1>
@@ -2153,36 +2153,6 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>PotPlayer</tag>
         <tag>Nvidia</tag>
         <tag>VSR</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Using Python venv</title>
-    <url>/en/2023/12/20/Python-venv-use/</url>
-    <content><![CDATA[<h1 id="Preface">Preface</h1>
-<p>Python is renowned for its rich set of modules. However, unlike in Java development where Maven uses group Id, artifact Id, and version to uniquely identify a dependency, in practice, most Python projects differentiate modules <strong>solely</strong> by their names. Run <code>pip install &lt;module&gt;</code>, and you’ve got the module. But what about the module version? Most project requirements do not specify versions, leading to constant errors for those who run the project later.</p>
-<p>Hence, the concept of a weakened version number undoubtedly does more harm than good. How to solve this issue? By using venv (virtual environment).</p>
-<p>If you directly use <code>pip install</code>, all Python projects share these modules, leading to potential compatibility issues. Venv copies the original Python environment. The virtual environment runs only on the copied Python, and the installed modules exist only in that virtual environment. Multiple virtual environments are isolated from each other.</p>
-<h1 id="Usage">Usage</h1>
-<p>1️⃣Create venv:</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">python <span class="literal">-m</span> venv C:\Users\Gustav\Desktop\test\venv</span><br></pre></td></tr></table></figure>
-<p>The directory <code>C:\Users\Gustav\Desktop\test\venv</code> is the virtual environment.</p>
-<span id="more"></span>
-<p>2️⃣Activate:</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">venv\Scripts\activate</span><br></pre></td></tr></table></figure>
-<p>If <code>(venv)</code> appears in front of the prompt, it means activation is successful, and you can now freely work inside.</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;pip list</span><br></pre></td></tr></table></figure>
-<p>3️⃣Deactivate:</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;deactivate</span><br><span class="line">C:\Users\Gustav\Desktop\test&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="Reference">Reference</h1>
-<p><a href="https://docs.python.org/3/library/venv.html">venv — Creation of virtual environments</a></p>
-]]></content>
-      <categories>
-        <category>tech</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>venv</tag>
       </tags>
   </entry>
   <entry>
@@ -2244,6 +2214,116 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>Spring Boot</tag>
         <tag>Spring MVC</tag>
         <tag>Controller</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to Store Directory Structures in a Database?</title>
+    <url>/en/2024/07/19/Store-Directory-Structure-In-DB/</url>
+    <content><![CDATA[<h1 id="Introduction">Introduction</h1>
+<p><strong>If we want to store directory structures in a database, which type of database should be used?</strong> — Either NoSQL or RDBMS. If we choose NoSQL, we should select one that supports tree structures; if we choose RDBMS, the focus is on table design and query operations.</p>
+<p>The key question is: <strong>What operations do we need to perform on the directory structure stored in the database?</strong> Obviously, these operations essentially mimic file operations in a file system.</p>
+<ul>
+<li>Operation 1: CRUD operations on single files/directories, such as copying, deleting, or moving a file/directory;</li>
+<li>Operation 2: Recursively traversing a directory;</li>
+</ul>
+<p>Considering these two points is crucial for designing an efficient solution. This article presents solutions for both NoSQL and RDBMS, with a focus on the latter. Additionally, it explores using JSON as a solution.</p>
+<span id="more"></span>
+<h1 id="NoSQL">NoSQL</h1>
+<p>Options include:</p>
+<ul>
+<li>Using a file system like HDFS as the database;</li>
+<li>Using graph databases like Neo4j;</li>
+</ul>
+<blockquote>
+<p>There’s no need to introduce new components just to store the directory structure.</p>
+</blockquote>
+<h1 id="RDBMS">RDBMS</h1>
+<p>The following <code>Item</code> tables represent directory items, i.e., nodes in the directory tree.</p>
+<h2 id="Tree-Representation">Tree Representation</h2>
+<ol>
+<li>Storing the parent node pointer:</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Item (</span><br><span class="line">  id <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY</span> KEY, </span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;File name&#x27;</span>, </span><br><span class="line">  type TINYINT <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;0 for file, 1 for directory&#x27;</span>, </span><br><span class="line">  parent_id <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">-1</span> COMMENT <span class="string">&#x27;Parent node id&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Storing a list of child node pointers (handling the <code>children</code> field is also tricky):</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Item (</span><br><span class="line">  id <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY</span> KEY, </span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;File name&#x27;</span>,</span><br><span class="line">  type TINYINT <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;0 for file, 1 for directory&#x27;</span>, </span><br><span class="line">  children <span class="type">VARCHAR</span>(<span class="number">1023</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> &quot;&quot; COMMENT <span class="string">&#x27;Comma-separated list of child node ids&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Both methods essentially represent adjacency lists of a directed graph. For both operations 1 and 2, multiple table scans are required, making it <strong>highly inefficient</strong>.</p>
+<h2 id="Using-File-Paths-as-Indexes">Using File Paths as Indexes</h2>
+<p>Since a file path can uniquely locate a file, it can also serve as a unique index.</p>
+<blockquote>
+<p>This method is called Materialized Paths.</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Item (</span><br><span class="line">  id <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY</span> KEY, </span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;File name&#x27;</span>, </span><br><span class="line">  type TINYINT <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;0 for file, 1 for directory&#x27;</span>, </span><br><span class="line">  path <span class="type">VARCHAR</span>(<span class="number">1023</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;File path&#x27;</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">CREATE</span> INDEX path_idx <span class="keyword">ON</span> Item(path);</span><br></pre></td></tr></table></figure>
+<p>In practice, there’s no need to make <code>path</code> a unique index because: (1) Unique indexes are inefficient; (2) <code>path</code> is too long to be a primary key. Therefore, <code>path</code> can be a regular index.</p>
+<hr>
+<p>For operation 1:</p>
+<ol>
+<li>Adding, deleting, or querying a file triggers the index, with a time complexity of $O(\log n)$:</li>
+</ol>
+  <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Item <span class="keyword">WHERE</span> path <span class="operator">=</span> <span class="string">&#x27;path&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Adding or querying a directory has the same time complexity as file operations, $O(\log n)$.</li>
+<li>Renaming a directory has a time complexity of $O(n)$ because it requires updating the paths of all subdirectory items.</li>
+<li>Deleting a directory also has a time complexity of $O(n)$ because all subdirectory items must be deleted.</li>
+</ol>
+<p>For operation 2: Only one index table traversal is needed, and due to the leftmost prefix principle, a full table scan is not required, making it very efficient.</p>
+<hr>
+<p>In summary, using file paths as indexes is <strong>highly efficient</strong>.</p>
+<h2 id="Nested-Sets">Nested Sets</h2>
+<p>This data structure is suitable for static data — designed for efficient querying, not for modification.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Item (</span><br><span class="line">  id <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY</span> KEY, </span><br><span class="line">  name <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;File name&#x27;</span>, </span><br><span class="line">  type TINYINT <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;0 for file, 1 for directory&#x27;</span>,</span><br><span class="line">  lft <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>, </span><br><span class="line">  rgt <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Nested Sets have the following characteristics:</p>
+<ul>
+<li>
+<p>Each node has <code>lft</code> and <code>rgt</code> attributes, recording the left and right endpoints of the interval. For example, the interval for the node with id 1 is <code>(1, 22)</code>.</p>
+</li>
+<li>
+<p>The intervals of all child nodes of a node are sub-intervals of its interval. Thus, an interval corresponds to a subtree. For example, the intervals of all child nodes of the node with id 1 must be sub-intervals of <code>(1, 22)</code>.</p>
+</li>
+<li>
+<p>The intervals of nodes at the same level do not overlap. For example, the intervals at the second level are <code>(2, 9)</code>, <code>(10, 15)</code>, <code>(16, 21)</code>.</p>
+</li>
+</ul>
+<img src="/en/MDImgs/Store-Directory-Structure-In-DB/486af035-9d1a-43a6-861f-bce47cc010cb.jpeg" alt="img" style="zoom: 67%;" />
+<p>The advantage of this design is that operation 2 is efficient. Consider recursively traversing the subtree of the node with id 1:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Item <span class="keyword">WHERE</span> lft <span class="operator">&gt;</span> <span class="number">1</span> <span class="keyword">AND</span> rgt <span class="operator">&lt;</span> <span class="number">22</span>;</span><br></pre></td></tr></table></figure>
+<p>For static structures, the <code>lft</code> and <code>rgt</code> of all nodes are pre-calculated and directly inserted into the database in batches. However, performing operation 1, i.e., dynamically modifying the <code>lft</code> and <code>rgt</code> of related nodes, is very costly.</p>
+<h1 id="JSON">JSON</h1>
+<p>A directory is a structured object and is recursively defined. JSON is similar in this regard. Therefore, a directory can be represented in JSON.</p>
+<p>JSON is essentially a string, so it can be stored in any database or simply in a file.</p>
+<p>In this case, the operations on the directory structure are consistent with those of file system. So, the time complexity of the operations is low. Since operations are performed in memory, performance is good.</p>
+<p>The drawbacks of this approach are that when the directory tree is large, (1) the conversion time between strings and objects increases; (2) memory usage increases; (3) network overhead between the client and server, and between the server and database, becomes excessive.</p>
+<p>The third issue is the main drawback of the JSON solution in a C/S architecture, making it inferior to the RDBMS solution:</p>
+<ul>
+<li>If the directory tree is small, both RDBMS and JSON can be used.</li>
+<li>If the directory tree is large, with most selects and few updates, RDBMS is better.</li>
+<li>If the directory tree is large and updates are frequent, although JSON is faster for in-memory operations, frequent network communication and large network packets lead to high bandwidth usage, potentially making the overall performance worse than RDBMS.</li>
+</ul>
+<p>However, for a local database of a program, JSON is undoubtedly the best choice.</p>
+<h1 id="Conclusion">Conclusion</h1>
+<p>The issue of how to store tree-structured data (such as a file directory) in an RDBMS was actually discussed and concluded thoroughly between 2005 and 2010. From today’s perspective, the rise of NoSQL seems to obscure the essence of this problem, leading me to detour in exploring this issue.</p>
+<p>At the same time, a database is also a component. Just as we wouldn’t introduce a new NoSQL database solely to store a directory structure, if we only need to store a directory structure, we don’t even need to introduce a database and can directly use a JSON file.</p>
+<h1 id="References">References</h1>
+<ul>
+<li><a href="https://stackoverflow.com/questions/144344/how-to-store-directory-hierarchy-tree-structure-in-the-database">How to store directory / hierarchy / tree structure in the database?</a></li>
+<li><a href="https://troels.arvin.dk/db/rdbms/links/#hierarchical">Hierarchical data in RDBMSs</a></li>
+<li><a href="http://www.dbazine.com/oracle/or-articles/tropashko4/">Trees in SQL: Nested Sets and Materialized Path</a></li>
+<li><a href="https://web.archive.org/web/20070210003309/http://www.intelligententerprise.com/001020/celko.jhtml?_requestid=697912">Trees in SQL (Internet Archive)</a></li>
+<li><a href="https://web.archive.org/web/20050507133249/http://www.developerfusion.com:80/show/4633/2/">Tree structures in ASP.NET and SQL Server - Storing Trees in SQL Server  (Internet Archive)</a></li>
+<li><a href="https://stackoverflow.com/questions/4048151/what-are-the-options-for-storing-hierarchical-data-in-a-relational-database">What are the options for storing hierarchical data in a relational database?</a></li>
+<li><a href="https://vadimtropashko.wordpress.com/2008/08/09/one-more-nested-intervals-vs-adjacency-list-comparison/">One more Nested Intervals vs. Adjacency List comparison</a></li>
+<li><a href="https://www.mongodb.com/docs/manual/applications/data-models-tree-structures/">MongoDB Manual: Model Tree Structures</a></li>
+<li><a href="https://www.cnblogs.com/lvyahui/p/6439287.html">多级目录树（森林）的三种数据库存储结构介绍</a></li>
+<li><a href="https://blog.uniauth.com/nested-set-model">Using Nested Set Model to Build Hierarchical Data</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>DBMS</category>
+      </categories>
+      <tags>
+        <tag>DBMS</tag>
       </tags>
   </entry>
   <entry>
@@ -2348,8 +2428,8 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
         <category>NAS</category>
+        <category>tech</category>
         <category>Python</category>
       </categories>
       <tags>
@@ -2359,105 +2439,33 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
-    <title>Common Commands for pip &amp; conda</title>
-    <url>/en/2024/01/14/pip-conda-Common-Commands/</url>
-    <content><![CDATA[<h1 id="pip">pip</h1>
-<ol>
-<li>
-<p>Install <code>script-house</code>, version <code>0.0.2</code>.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2</span><br></pre></td></tr></table></figure>
-<p>If you want to install the latest version by default, you can omit <code>==0.0.2</code>.</p>
-<p>To install multiple dependencies in one line:</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2 pydantic==2.5.3 pymongo==4.6.1</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+    <title>Using Python venv</title>
+    <url>/en/2023/12/20/Python-venv-use/</url>
+    <content><![CDATA[<h1 id="Preface">Preface</h1>
+<p>Python is renowned for its rich set of modules. However, unlike in Java development where Maven uses group Id, artifact Id, and version to uniquely identify a dependency, in practice, most Python projects differentiate modules <strong>solely</strong> by their names. Run <code>pip install &lt;module&gt;</code>, and you’ve got the module. But what about the module version? Most project requirements do not specify versions, leading to constant errors for those who run the project later.</p>
+<p>Hence, the concept of a weakened version number undoubtedly does more harm than good. How to solve this issue? By using venv (virtual environment).</p>
+<p>If you directly use <code>pip install</code>, all Python projects share these modules, leading to potential compatibility issues. Venv copies the original Python environment. The virtual environment runs only on the copied Python, and the installed modules exist only in that virtual environment. Multiple virtual environments are isolated from each other.</p>
+<h1 id="Usage">Usage</h1>
+<p>1️⃣Create venv:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">python <span class="literal">-m</span> venv C:\Users\Gustav\Desktop\test\venv</span><br></pre></td></tr></table></figure>
+<p>The directory <code>C:\Users\Gustav\Desktop\test\venv</code> is the virtual environment.</p>
 <span id="more"></span>
-<ol start="2">
-<li>
-<p>List all dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip list</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>List current dependencies in <code>requirements.txt</code> format.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze</span><br></pre></td></tr></table></figure>
-<p>The result of <code>pip freeze</code> is a subset of <code>pip list</code>. <code>pip list</code> usually includes fundamental dependencies like <code>pip</code>, <code>setuptools</code>, and <code>wheel</code>.</p>
-<p>The purpose of <code>pip freeze</code> is to export project dependencies for others to use, while <code>pip list</code> is just for display.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Install all dependencies from <code>requirements.txt</code>.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Uninstall a specific dependency.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall script-house</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Uninstall multiple dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall -r req.txt -y</span><br></pre></td></tr></table></figure>
-<p><code>-y</code> automatically confirms the deletion.</p>
-<p>How to uninstall all dependencies in the current environment?</p>
- <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; req</span><br><span class="line">pip uninstall <span class="literal">-r</span> req <span class="literal">-y</span></span><br><span class="line"><span class="built_in">del</span> req</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="conda">conda</h1>
-<ol>
-<li>
-<p>After conda is installed on Linux, you should run <code>conda init</code> first before using conda commands; On Windows, there is no such need.</p>
-</li>
-<li>
-<p>List all environments.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Create a new environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda create -n &lt;environment-name&gt; python=3.8</span><br></pre></td></tr></table></figure>
-<p>The basic command is <code>conda create -n &lt;environment-name&gt;</code>, but specifying the Python version is a common practice. Compared to venv, conda environments also install some basic OS-dependent dependencies.</p>
-</li>
-<li>
-<p>Activate an environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda activate &lt;environment-name&gt;</span><br></pre></td></tr></table></figure>
-<p>On Windows, you probably need to omit <code>conda</code>.</p>
-</li>
-<li>
-<p>Deactivate the environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Remove an environment.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda remove -n &lt;environment-name&gt; --all</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>View basic information.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda info</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Install dependencies.</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 -c pytorch -c conda-forge</span><br></pre></td></tr></table></figure>
-<p>Similar to pip, it follows the format <code>dependency==version</code>; the <code>-c</code> parameter specifies the download source (channel) as default channels often fail.</p>
-</li>
-<li>
-<p>Create an environment from a configuration file (usually named <code>environment.yml</code>).</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> create -f environment.yml</span><br></pre></td></tr></table></figure>
-<p>Content of <code>environment.yml</code>:</p>
- <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">&lt;environment-name&gt;</span></span><br><span class="line"><span class="attr">channels:</span> <span class="comment"># -c parameter, specifying download source</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">pytorch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">conda-forge</span></span><br><span class="line"><span class="attr">dependencies:</span> <span class="comment"># dependencies installed by conda</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">python=3.8</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">numpy</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">pandas</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">matplotlib</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">pip:</span> <span class="comment"># dependencies installed by pip</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">imageio</span></span><br></pre></td></tr></table></figure>
-<p>It’s not recommended to create a new environment by this method, because channels often fail.</p>
-</li>
-<li>
-<p>Disable auto-activation of the base environment. If enabled, every new shell will automatically activate the base environment.</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<p>2️⃣Activate:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">venv\Scripts\activate</span><br></pre></td></tr></table></figure>
+<p>If <code>(venv)</code> appears in front of the prompt, it means activation is successful, and you can now freely work inside.</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;pip list</span><br></pre></td></tr></table></figure>
+<p>3️⃣Deactivate:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(venv) C:\Users\Gustav\Desktop\test&gt;deactivate</span><br><span class="line">C:\Users\Gustav\Desktop\test&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Reference">Reference</h1>
+<p><a href="https://docs.python.org/3/library/venv.html">venv — Creation of virtual environments</a></p>
 ]]></content>
       <categories>
         <category>tech</category>
-        <category>cheat sheet</category>
         <category>Python</category>
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>pip</tag>
-        <tag>conda</tag>
+        <tag>venv</tag>
       </tags>
   </entry>
   <entry>
@@ -2785,6 +2793,120 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
       </tags>
   </entry>
   <entry>
+    <title>Common Commands for pip &amp; conda</title>
+    <url>/en/2024/01/14/pip-conda-Common-Commands/</url>
+    <content><![CDATA[<h1 id="pip">pip</h1>
+<ol>
+<li>
+<p>Install <code>script-house</code>, version <code>0.0.2</code>.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2</span><br></pre></td></tr></table></figure>
+<p>If you want to install the latest version by default, you can omit <code>==0.0.2</code>.</p>
+<p>To install multiple dependencies in one line:</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install script-house==0.0.2 pydantic==2.5.3 pymongo==4.6.1</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<span id="more"></span>
+<ol start="2">
+<li>
+<p>List all dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip list</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>List current dependencies in <code>requirements.txt</code> format.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze</span><br></pre></td></tr></table></figure>
+<p>The result of <code>pip freeze</code> is a subset of <code>pip list</code>. <code>pip list</code> usually includes fundamental dependencies like <code>pip</code>, <code>setuptools</code>, and <code>wheel</code>.</p>
+<p>The purpose of <code>pip freeze</code> is to export project dependencies for others to use, while <code>pip list</code> is just for display.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Install all dependencies from <code>requirements.txt</code>.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Uninstall a specific dependency.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall script-house</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Uninstall multiple dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip uninstall -r req.txt -y</span><br></pre></td></tr></table></figure>
+<p><code>-y</code> automatically confirms the deletion.</p>
+<p>How to uninstall all dependencies in the current environment?</p>
+ <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; req</span><br><span class="line">pip uninstall <span class="literal">-r</span> req <span class="literal">-y</span></span><br><span class="line"><span class="built_in">del</span> req</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="conda">conda</h1>
+<ol>
+<li>
+<p>After conda is installed on Linux, you should run <code>conda init</code> first before using conda commands; On Windows, there is no such need.</p>
+</li>
+<li>
+<p>List all environments.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Create a new environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda create -n &lt;environment-name&gt; python=3.8</span><br></pre></td></tr></table></figure>
+<p>The basic command is <code>conda create -n &lt;environment-name&gt;</code>, but specifying the Python version is a common practice. Compared to venv, conda environments also install some basic OS-dependent dependencies.</p>
+</li>
+<li>
+<p>Activate an environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda activate &lt;environment-name&gt;</span><br></pre></td></tr></table></figure>
+<p>On Windows, you probably need to omit <code>conda</code>.</p>
+</li>
+<li>
+<p>Deactivate the environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Remove an environment.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda remove -n &lt;environment-name&gt; --all</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>View basic information.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda info</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Install dependencies.</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 -c pytorch -c conda-forge</span><br></pre></td></tr></table></figure>
+<p>Similar to pip, it follows the format <code>dependency==version</code>; the <code>-c</code> parameter specifies the download source (channel) as default channels often fail.</p>
+</li>
+<li>
+<p>Create an environment from a configuration file (usually named <code>environment.yml</code>).</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> create -f environment.yml</span><br></pre></td></tr></table></figure>
+<p>Content of <code>environment.yml</code>:</p>
+ <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">&lt;environment-name&gt;</span></span><br><span class="line"><span class="attr">channels:</span> <span class="comment"># -c parameter, specifying download source</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">pytorch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">conda-forge</span></span><br><span class="line"><span class="attr">dependencies:</span> <span class="comment"># dependencies installed by conda</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">python=3.8</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">numpy</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">pandas</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">matplotlib</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">pip:</span> <span class="comment"># dependencies installed by pip</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">imageio</span></span><br></pre></td></tr></table></figure>
+<p>It’s not recommended to create a new environment by this method, because channels often fail.</p>
+</li>
+<li>
+<p>Disable auto-activation of the base environment. If enabled, every new shell will automatically activate the base environment.</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>tech</category>
+        <category>Python</category>
+        <category>cheat sheet</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>pip</tag>
+        <tag>conda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Messages for reader</title>
+    <url>/en/3000/01/01/%E7%BD%AE%E9%A1%B6%E9%80%9A%E7%9F%A5/</url>
+    <content><![CDATA[<ul>
+<li>Visit the Chinese site <a href="/" onclick="jump()">here</a>, or click ‘Switch to Chinese’ at the left sidebar.</li>
+</ul>
+<script>
+    function jump() {
+        window.location.href = "https://gustaavv.github.io?timestamp=" + (new Date()).getTime();
+    }
+</script>]]></content>
+  </entry>
+  <entry>
     <title>Basic Usage of Python AIOHTTP</title>
     <url>/en/2024/03/29/python-aiohttp-use/</url>
     <content><![CDATA[<h1 id="Preface">Preface</h1>
@@ -2844,17 +2966,5 @@ If Shinobu is dead or unresponsive, you can reboot her by clicking this button.<
         <tag>Python</tag>
         <tag>AIOHTTP</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Messages for reader</title>
-    <url>/en/3000/01/01/%E7%BD%AE%E9%A1%B6%E9%80%9A%E7%9F%A5/</url>
-    <content><![CDATA[<ul>
-<li>Visit the Chinese site <a href="/" onclick="jump()">here</a>, or click ‘Switch to Chinese’ at the left sidebar.</li>
-</ul>
-<script>
-    function jump() {
-        window.location.href = "https://gustaavv.github.io?timestamp=" + (new Date()).getTime();
-    }
-</script>]]></content>
   </entry>
 </search>
