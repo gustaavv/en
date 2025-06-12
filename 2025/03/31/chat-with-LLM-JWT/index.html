@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/en/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/en/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/en/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/en/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="FWtJ63eXspf6fS1eJ3SbRLiQVfYelc2G0J0NYIOmgUo">
+  <meta name="msvalidate.01" content="CAECB021ABB77291B191A2118F7C5255">
+
+<link rel="stylesheet" href="/en/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"gustaavv.github.io","root":"/en/","images":"/en/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#008000","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/en/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/en/js/config.js"></script>
+
+    <meta name="description" content="Introduction  “Chat with LLM” refers to learning knowledge by interacting with LLM chat tools (such as DeepSeek, ChatGPT). Learning through Q&amp;A is more efficient. The content of these blog posts o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chat with LLM: JWT">
+<meta property="og:url" content="https://gustaavv.github.io/en/2025/03/31/chat-with-LLM-JWT/index.html">
+<meta property="og:site_name" content="Gustav&#39;s blog">
+<meta property="og:description" content="Introduction  “Chat with LLM” refers to learning knowledge by interacting with LLM chat tools (such as DeepSeek, ChatGPT). Learning through Q&amp;A is more efficient. The content of these blog posts o">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-30T23:35:31.000Z">
+<meta property="article:modified_time" content="2025-03-30T23:35:31.000Z">
+<meta property="article:author" content="Gustav">
+<meta property="article:tag" content="Chat with LLM">
+<meta property="article:tag" content="JWT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://gustaavv.github.io/en/2025/03/31/chat-with-LLM-JWT/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2025/03/31/chat-with-LLM-JWT/","path":"2025/03/31/chat-with-LLM-JWT/","title":"Chat with LLM: JWT"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Chat with LLM: JWT | Gustav's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBFGGZ14VS"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-SBFGGZ14VS","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/en/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/en/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?7b0efd48ab95cb46e5799442746baf90"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/en/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/en/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Gustav's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/en/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/en/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-switch-to-chinese"><a href="https://gustaavv.github.io/" rel="section"><i class="fa fa-language fa-fw"></i>Switch to Chinese</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q1-JWT-Principles"><span class="nav-number">2.</span> <span class="nav-text">Q1. JWT Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q2-Which-Parts-Are-Plaintext"><span class="nav-number">3.</span> <span class="nav-text">Q2. Which Parts Are Plaintext?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q3-Hashing-vs-Encryption"><span class="nav-number">4.</span> <span class="nav-text">Q3. Hashing vs. Encryption</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q4-Forward-Secrecy"><span class="nav-number">5.</span> <span class="nav-text">Q4. Forward Secrecy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q5-Another-Perspective-on-JWT"><span class="nav-number">6.</span> <span class="nav-text">Q5. Another Perspective on JWT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q6-The-Purpose-of-JWT-Header"><span class="nav-number">7.</span> <span class="nav-text">Q6. The Purpose of JWT Header</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q7-Can-the-JWT-Header-be-Removed"><span class="nav-number">8.</span> <span class="nav-text">Q7. Can the JWT Header be Removed?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other"><span class="nav-number">9.</span> <span class="nav-text">Other</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">10.</span> <span class="nav-text">References</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Gustav"
+      src="https://avatars.githubusercontent.com/u/69737612?v=4">
+  <p class="site-author-name" itemprop="name">Gustav</p>
+  <div class="site-description" itemprop="description">Hi, I am Gustav.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/en/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/en/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/en/tags/">
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gustaavv" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gustaavv" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gustaavv.git@yahoo.com" title="E-Mail → mailto:gustaavv.git@yahoo.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<script src="/en/js/switch_language.js"></script>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2025/03/31/chat-with-LLM-JWT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
+      <meta itemprop="name" content="Gustav">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gustav's blog">
+      <meta itemprop="description" content="Hi, I am Gustav.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Chat with LLM: JWT | Gustav's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Chat with LLM: JWT
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-03-31 07:35:31" itemprop="dateCreated datePublished" datetime="2025-03-31T07:35:31+08:00">2025-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>14 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Introduction">Introduction</h1>
+<blockquote>
+<p>“Chat with LLM” refers to learning knowledge by interacting with LLM chat tools (such as DeepSeek, ChatGPT). Learning through Q&amp;A is more efficient. The content of these blog posts on “Chat with LLM” is mainly derived from my conversations with LLM chat tools.</p>
+</blockquote>
+<p>This post explains the principles, workflow, advantages, and disadvantages of JWT.</p>
+<span id="more"></span>
+<h1 id="Q1-JWT-Principles">Q1. JWT Principles</h1>
+<p>Q:</p>
+<p>Introduce the principles of JWT.</p>
+<p>A:</p>
+<p>JSON Web Token (JWT) is an open standard (RFC 7519) used for securely transmitting information between networked applications. Its core principle is to ensure the integrity and trustworthiness of the information via digital signatures or encryption, and it is commonly used for authentication and authorization. Below is a detailed explanation of JWT’s principles and workflow:</p>
+<hr>
+<p><strong>1. JWT Structure</strong><br>
+JWT consists of three parts, separated by dots (<code>.</code>), in the form: <code>Header.Payload.Signature</code>. Example: <code>xxxxx.yyyyy.zzzzz</code></p>
+<p><strong>1.1 Header</strong></p>
+<ul>
+<li><strong>Purpose</strong>: Declares the token type (JWT) and the signature algorithm (e.g., HMAC SHA256 or RSA).</li>
+<li><strong>Format</strong>: A JSON object that is Base64Url encoded.</li>
+<li><strong>Example</strong>:<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HS256&quot;</span><span class="punctuation">,</span>  <span class="comment">// signature algorithm</span></span><br><span class="line">  <span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JWT&quot;</span>     <span class="comment">// token type</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>1.2 Payload</strong></p>
+<ul>
+<li><strong>Purpose</strong>: Carries the actual data to be transmitted (known as “claims”).</li>
+<li><strong>Format</strong>: A JSON object that is Base64Url encoded.</li>
+<li><strong>Types of claims</strong>:
+<ul>
+<li><strong>Registered Claims</strong>: Standard fields, such as <code>iss</code> (issuer), <code>exp</code> (expiration time), <code>sub</code> (subject), etc.</li>
+<li><strong>Public Claims</strong>: Customizable claims, but must avoid collisions.</li>
+<li><strong>Private Claims</strong>: Fields agreed upon between the parties.</li>
+</ul>
+</li>
+<li><strong>Example</strong>:<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;sub&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user123&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alice&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;exp&quot;</span><span class="punctuation">:</span> <span class="number">1620000000</span>  <span class="comment">// expiration timestamp</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>1.3 Signature</strong></p>
+<ul>
+<li><strong>Purpose</strong>: Verifies that the message has not been tampered with and ensures the authenticity of the sender.</li>
+<li><strong>Generation</strong>: Concatenate the Base64Url encoded Header and Payload with <code>.</code>, and then generate the signature using the algorithm specified in the Header and a secret key.</li>
+<li><strong>Example</strong> (using the HS256 algorithm):<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">HMACSHA256</span>(</span><br><span class="line">  <span class="title function_">base64UrlEncode</span>(header) + <span class="string">&quot;.&quot;</span> + <span class="title function_">base64UrlEncode</span>(payload),</span><br><span class="line">  secretKey</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<p><strong>2. JWT Workflow</strong></p>
+<ol>
+<li>
+<p><strong>User Login</strong>: The client submits credentials (e.g., username and password) to the server.</p>
+</li>
+<li>
+<p><strong>JWT Generation</strong>: After verifying the credentials, the server generates a JWT:</p>
+<ul>
+<li>Constructs the Header and Payload.</li>
+<li>Generates the signature using a secret key, combining all three parts to form a complete JWT.</li>
+</ul>
+</li>
+<li>
+<p><strong>Returning the JWT to the Client</strong>: The client stores the JWT locally (e.g., in LocalStorage or Cookie).</p>
+</li>
+<li>
+<p><strong>Client Requests with JWT</strong>: Subsequent requests carry the JWT in the <code>Authorization</code> header in the <code>Bearer</code> format:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;JWT&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>Server JWT Verification</strong></p>
+<ul>
+<li>Decodes the Header and Payload, and checks if the signature is valid (to prevent tampering).</li>
+<li>Verifies the claims (e.g., whether <code>exp</code> has expired or if <code>iss</code> is valid).</li>
+<li>If verification passes, returns the requested resource.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>3. JWT Security</strong></p>
+<ul>
+<li><strong>Information Exposure</strong>: The Header and Payload are only Base64 encoded and are <strong>not encrypted</strong>, so sensitive information (e.g., passwords) should not be included.</li>
+<li><strong>Transmission Security</strong>: Must be transmitted via HTTPS to prevent man-in-the-middle attacks.</li>
+<li><strong>Key Management</strong>:
+<ul>
+<li>For symmetric algorithms (e.g., HS256): The key must be strictly protected.</li>
+<li>For asymmetric algorithms (e.g., RS256): The private key signs, and the public key verifies, which is more secure.</li>
+</ul>
+</li>
+<li><strong>Tamper Resistance</strong>: The signature ensures data integrity, but care must be taken to prevent key leakage.</li>
+</ul>
+<hr>
+<p><strong>4. Advantages and Disadvantages of JWT</strong></p>
+<p><strong>Advantages</strong></p>
+<ul>
+<li><strong>Stateless</strong>: The server does not need to store session information, making it suitable for distributed systems.</li>
+<li><strong>Cross-Domain Support</strong>: Easily used in cross-domain scenarios (e.g., microservices, single sign-on).</li>
+<li><strong>Flexibility</strong>: The Payload can be customized to include additional data.</li>
+</ul>
+<p><strong>Disadvantages</strong></p>
+<ul>
+<li><strong>Revocation Challenge</strong>: Once issued, a JWT cannot be forcibly invalidated before its expiration (requires token blacklisting or short expiration times).</li>
+<li><strong>Storage Risk</strong>: Client-side storage may be susceptible to XSS attacks (using HttpOnly Cookie is recommended).</li>
+</ul>
+<hr>
+<p><strong>5. Typical Use Cases</strong></p>
+<ol>
+<li>User authentication (e.g., OAuth 2.0 Bearer Token).</li>
+<li>API authentication between services (microservices architecture).</li>
+<li>Single sign-on (SSO).</li>
+</ol>
+<hr>
+<p>Through the principles above, JWT achieves secure information transmission in a compact and self-contained manner, becoming a widely used authentication solution in modern web development.</p>
+<h1 id="Q2-Which-Parts-Are-Plaintext">Q2. Which Parts Are Plaintext?</h1>
+<p>Q:</p>
+<p>Which parts among the three are effectively plaintext to the user?</p>
+<p>A:</p>
+<p>In the three parts of a JWT (Header, Payload, Signature), the <strong>Header and Payload are plaintext</strong> for the user, while the Signature is an encrypted signature that cannot be directly interpreted. Here is a detailed explanation:</p>
+<hr>
+<p><strong>1. Header and Payload are Plaintext</strong></p>
+<ul>
+<li>
+<p><strong>Reason</strong>: The Header and Payload are only <strong>Base64Url encoded</strong> (a URL-safe encoding method) and are <strong>not encrypted</strong>.</p>
+</li>
+<li>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li><strong>Reversible</strong>: Anyone can decode them using a Base64Url decoding tool (such as <a target="_blank" rel="noopener" href="https://jwt.io">jwt.io</a>) to obtain the original JSON data.</li>
+<li><strong>Transparency</strong>: The decoded content can be directly viewed, for example:<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Decoded Header:</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HS256&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JWT&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Decoded Payload:</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;sub&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user123&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alice&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;exp&quot;</span><span class="punctuation">:</span> <span class="number">1620000000</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>Sensitive Information Leakage</strong>: If sensitive data (such as user ID, email, permissions) are stored in the Payload, an attacker can easily read them.</li>
+<li><strong>Tampering Risk</strong>: Although they can be decoded and modified, it is not possible to forge a valid signature without the key.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>2. Signature is Ciphertext</strong></p>
+<ul>
+<li><strong>Reason</strong>: The Signature is the <strong>encrypted signature</strong> of the Header and Payload, generated using a secret key and a specified algorithm (e.g., HS256, RS256).</li>
+<li><strong>Characteristics</strong>:
+<ul>
+<li><strong>Non-reversible</strong>: It cannot be decoded directly to retrieve the original information; it is essentially a hash or an encrypted binary data.</li>
+<li><strong>Tamper-Proof</strong>: The server verifies the Signature to ensure that the Header and Payload have not been altered.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>3. Example from a User’s Perspective</strong></p>
+<p>Assume a JWT as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyMTIzIiwibmFtZSI6IkFsaWNlIiwiZXhwIjoxNjIwMDAwMDAwfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>Header</strong>：<code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</code> . Decoded:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HS256&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JWT&quot;</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>Payload</strong>：<code>eyJzdWIiOiJ1c2VyMTIzIiwibmFtZSI6IkFsaWNlIiwiZXhwIjoxNjIwMDAwMDAwfQ</code> . Decoded:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;sub&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user123&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alice&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;exp&quot;</span><span class="punctuation">:</span> <span class="number">1620000000</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>Signature</strong>：<code>SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code> .This cannot be directly decoded and requires a key to verify.</p>
+</li>
+</ul>
+<hr>
+<p><strong>4. Security Recommendations</strong></p>
+<ol>
+<li><strong>Avoid Sensitive Data</strong>: Do not store passwords, keys, or other sensitive information in the Header or Payload.</li>
+<li><strong>Use HTTPS</strong>: Prevent JWT theft during transmission.</li>
+<li><strong>Short Expiration</strong>: Set a reasonable expiration time using the <code>exp</code> field to reduce the risk if compromised.</li>
+<li><strong>Encrypt Sensitive Fields</strong>: If sensitive data must be stored, consider additional encryption for the Payload (e.g., using JWE).</li>
+</ol>
+<hr>
+<p><strong>Summary</strong></p>
+<ul>
+<li><strong>Plaintext Parts</strong>: Header and Payload (Base64Url encoded and reversible).</li>
+<li><strong>Ciphertext Part</strong>: Signature (encrypted signature, irreversible).</li>
+<li><strong>Core Security Mechanism</strong>: Relies on the Signature to prevent tampering, not on hiding the data itself.</li>
+</ul>
+<h1 id="Q3-Hashing-vs-Encryption">Q3. Hashing vs. Encryption</h1>
+<p>Q:</p>
+<p>So does the Signature first hash the Header + Payload and then encrypt the hash? When the server receives the Signature, does it first decrypt it and then verify whether the hash is correct?</p>
+<p>A:</p>
+<p>Your question touches on the core mechanism behind JWT signature generation and verification, but it is important to distinguish between <strong>hashing</strong> and <strong>encryption</strong>. Different signature algorithms (such as <code>HS256</code> and <code>RS256</code>) implement this process in distinct ways. The specific procedures are as follows:</p>
+<hr>
+<p><strong>1. JWT Signature Generation Process</strong></p>
+<p><strong>(1) HMAC Algorithm (e.g., HS256)</strong></p>
+<ul>
+<li><strong>Core Mechanism</strong>: Based on a keyed hash (no encryption involved).</li>
+<li><strong>Steps</strong>:
+<ol>
+<li>Encode the Header and Payload in Base64Url and concatenate them with a dot (resulting in <code>header_b64.payload_b64</code>).</li>
+<li><strong>Compute the hash</strong>: Use HMAC combined with a hash function (such as SHA256) and a secret key to generate a Message Authentication Code (MAC).</li>
+<li><strong>Generate the Signature</strong>: Base64Url encode the hash result to obtain the Signature.</li>
+</ol>
+</li>
+<li><strong>Formula</strong>:<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Signature = Base64UrlEncode(HMAC_SHA256(header_b64.payload_b64, secret_key))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>(2) RSA Algorithm (e.g., RS256)</strong></p>
+<ul>
+<li><strong>Core Mechanism</strong>: Based on asymmetric encryption signatures (involving encryption).</li>
+<li><strong>Steps</strong>:
+<ol>
+<li>Encode and concatenate the Header and Payload in Base64Url (forming <code>header_b64.payload_b64</code>).</li>
+<li><strong>Compute the hash</strong>: Use a hash function (e.g., SHA256) to generate a hash of the concatenated string.</li>
+<li><strong>Encrypt the hash</strong>: Encrypt the hash using the private key (i.e., create a digital signature).</li>
+<li><strong>Generate the Signature</strong>: Base64Url encode the encrypted result to obtain the Signature.</li>
+</ol>
+</li>
+<li><strong>Formula</strong>:<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Signature = Base64UrlEncode(RSA_Encrypt(SHA256(header_b64.payload_b64), private_key))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<p><strong>2. Server Verification Process</strong></p>
+<p>When the server receives a JWT, it verifies the signature as follows:</p>
+<p><strong>(1) HMAC Algorithm (HS256)</strong></p>
+<ul>
+<li><strong>No Decryption Needed</strong>: Since HMAC is a keyed hash, not encryption.</li>
+<li><strong>Verification Steps</strong>:
+<ol>
+<li>Recompute the HMAC hash of <code>header_b64.payload_b64</code> using the same secret key.</li>
+<li>Compare the computed result with the decoded Signature from the JWT.</li>
+<li>If they match, the data has not been tampered with.</li>
+</ol>
+</li>
+</ul>
+<p><strong>(2) RSA Algorithm (RS256)</strong></p>
+<ul>
+<li><strong>“Decryption” Required</strong>: Here, the “decryption” is actually the signature verification process.</li>
+<li><strong>Verification Steps</strong>:
+<ol>
+<li>Use the public key to decrypt the decoded Signature, obtaining the original hash.</li>
+<li>Recompute the hash of <code>header_b64.payload_b64</code> (e.g., using SHA256).</li>
+<li>Compare the decrypted hash with the recomputed hash.</li>
+<li>If they match, the data has not been tampered with.</li>
+</ol>
+</li>
+</ul>
+<hr>
+<p><strong>3. Key Differences Summary</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Algorithm Type</strong></th>
+<th>Keyed Hash (HMAC)</th>
+<th>Asymmetric Encryption (RSA)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Signature Generation</strong></td>
+<td>Based on a keyed hash, no encryption</td>
+<td>Private key encrypts the hash value</td>
+</tr>
+<tr>
+<td><strong>Signature Verification</strong></td>
+<td>Recompute and compare hash</td>
+<td>Public key decrypts signature, then compare hash</td>
+</tr>
+<tr>
+<td><strong>Key Management</strong></td>
+<td>Symmetric key (kept on the server)</td>
+<td>Asymmetric keys (private key for signing, public key for verification)</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Relies on the secrecy of the key</td>
+<td>Relies on the security of the private key</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>4. Answering Your Questions</strong></p>
+<ul>
+<li>
+<p><strong>Question 1</strong>: “Does the Signature first hash the Header + Payload and then encrypt the hash?”</p>
+<ul>
+<li><strong>Answer</strong>:
+<ul>
+<li>For <strong>HMAC (e.g., HS256)</strong>: It only hashes (using a secret key), without encryption.</li>
+<li>For <strong>RSA (e.g., RS256)</strong>: It first hashes, then encrypts the hash value using the private key.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Question 2</strong>: “When the server receives the Signature, does it first decrypt it and then verify whether the hash is correct?”</p>
+<ul>
+<li><strong>Answer</strong>:
+<ul>
+<li>For <strong>HMAC</strong>: There is no decryption; it simply recomputes the hash and compares.</li>
+<li>For <strong>RSA</strong>: It needs to “decrypt” (verify the signature using the public key) to retrieve the hash, then compare it with the recomputed hash.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>5. Clearing Up Misconceptions</strong></p>
+<ul>
+<li><strong>Hashing ≠ Encryption</strong>:
+<ul>
+<li>Hashing is a one-way, irreversible process (e.g., SHA256) used to ensure data integrity.</li>
+<li>Encryption is a reversible process (e.g., RSA) used to protect data confidentiality.</li>
+</ul>
+</li>
+<li><strong>The Essence of JWT Signatures</strong>:
+<ul>
+<li>HMAC is a <strong>keyed hash</strong> (providing integrity and authentication).</li>
+<li>RSA encrypts the hash value (providing integrity and non-repudiation).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>6. Practical Code Examples (Pseudocode)</strong></p>
+<p><strong>HS256 Signature Verification</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">verify_hmac</span>(<span class="params">jwt, secret_key</span>):</span><br><span class="line">    header_b64, payload_b64, signature_b64 = jwt.split(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">    data = header_b64 + <span class="string">&quot;.&quot;</span> + payload_b64</span><br><span class="line">    expected_signature = HMAC_SHA256(data, secret_key)</span><br><span class="line">    <span class="keyword">return</span> expected_signature == base64url_decode(signature_b64)</span><br></pre></td></tr></table></figure>
+<p><strong>RS256 Signature Verification</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">verify_rsa</span>(<span class="params">jwt, public_key</span>):</span><br><span class="line">    header_b64, payload_b64, signature_b64 = jwt.split(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">    data = header_b64 + <span class="string">&quot;.&quot;</span> + payload_b64</span><br><span class="line">    decoded_signature = base64url_decode(signature_b64)</span><br><span class="line">    decrypted_hash = RSA_Decrypt(decoded_signature, public_key)  <span class="comment"># 用公钥“解密”</span></span><br><span class="line">    actual_hash = SHA256(data)</span><br><span class="line">    <span class="keyword">return</span> decrypted_hash == actual_hash</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>Summary</strong></p>
+<ul>
+<li>The signature mechanism of JWT varies depending on the algorithm:
+<ul>
+<li><strong>HMAC</strong>: Relies on key-based hashing, verifies by directly comparing hash values.</li>
+<li><strong>RSA</strong>: Encrypts the hash value with a private key, verifies by decrypting with the public key and comparing.</li>
+</ul>
+</li>
+<li><strong>Core Objective</strong>: Ensures that the Header and Payload have not been tampered with, rather than encrypting the data itself.</li>
+<li><strong>Security Recommendation</strong>: Choose the algorithm based on the scenario (HS256 is simple and efficient, RS256 is more suitable for distributed systems).</li>
+</ul>
+<h1 id="Q4-Forward-Secrecy">Q4. Forward Secrecy</h1>
+<p>Q:</p>
+<p>According to what you said, regardless of HMAC or RSA, JWT does not support forward secrecy.</p>
+<p>A:</p>
+<p>Yes, your understanding is correct. <strong>JWT (whether using HMAC or RSA signature algorithms) does not support Forward Secrecy (FS)</strong>. Here is a detailed explanation:</p>
+<hr>
+<p><strong>1. Core Concept of Forward Secrecy</strong></p>
+<p>Forward secrecy is a security feature that ensures that even if a long-term key (such as the server’s private key or the shared key for HMAC) is compromised in the future, an attacker cannot decrypt past communications or forge historical sessions.</p>
+<p><strong>Key to achieving forward secrecy</strong>: Each session uses a temporarily generated key (as in TLS with ECDHE key exchange), and the key is destroyed after the session ends, rather than relying on a long-term key.</p>
+<hr>
+<p><strong>2. Why JWT’s Signature Mechanism Does Not Support Forward Secrecy</strong></p>
+<p><strong>(1) HMAC (Symmetric Signature Algorithms like HS256)</strong></p>
+<ul>
+<li><strong>Relies on a Long-Term Key</strong>: HMAC uses the same shared secret key (<code>secret_key</code>) for both signing and verification, and this key is usually long-lived.</li>
+<li><strong>Risk</strong>: Once the <code>secret_key</code> is compromised, an attacker can forge any historical or future JWT.</li>
+<li><strong>No Temporary Key Mechanism</strong>: The HMAC key does not change per session, so forward secrecy cannot be achieved.</li>
+</ul>
+<p><strong>(2) RSA (Asymmetric Signature Algorithms like RS256)</strong></p>
+<ul>
+<li><strong>Relies on a Long-Term Private Key</strong>: The signing is done using a fixed private key, while the public key is used for verification.</li>
+<li><strong>Risk</strong>: If the private key is compromised, an attacker can forge historical or future JWTs.</li>
+<li><strong>Fixed Key Nature</strong>: The RSA private key is generally static, and the signature process does not involve temporary keys.</li>
+</ul>
+<hr>
+<p><strong>3. Why JWT Does Not Natively Support Forward Secrecy</strong></p>
+<ul>
+<li><strong>Different Design Goals</strong>: JWT is designed to be a stateless, self-contained token mechanism, rather than managing dynamic sessions.</li>
+<li><strong>Static Token Characteristics</strong>: Once a JWT is issued, its validity is solely based on its signature and claims (such as <code>exp</code>), and the key cannot be dynamically updated.</li>
+<li><strong>Limited Use Case</strong>: JWT is typically used for authentication and authorization rather than end-to-end encrypted communications, so it does not incorporate complex key negotiation mechanisms.</li>
+</ul>
+<hr>
+<p><strong>4. Mitigation Strategies for the Lack of Forward Secrecy in JWT</strong></p>
+<p>Although JWT itself does not support forward secrecy, the following strategies can help mitigate the risk:</p>
+<p><strong>(1) Short-Lived Tokens</strong></p>
+<ul>
+<li>Set a short <code>exp</code> (expiration) time, such as 15 minutes to 1 hour, to reduce the attack window if the key is compromised.</li>
+<li>Combine with a refresh token mechanism to dynamically update access tokens.</li>
+</ul>
+<p><strong>(2) Key Rotation</strong></p>
+<ul>
+<li>Regularly change the shared secret for HMAC or the private key for RSA.</li>
+<li>Invalidate issued JWTs after key rotation (e.g., using a blacklist or short expiration).</li>
+</ul>
+<p><strong>(3) Leverage TLS Forward Secrecy</strong></p>
+<ul>
+<li>Use TLS 1.3 and enable cipher suites that support forward secrecy (e.g., <code>ECDHE-ECDSA-AES128-GCM-SHA256</code>).</li>
+<li>Ensure that JWTs are transmitted over secure channels (HTTPS) to prevent eavesdropping and man-in-the-middle attacks.</li>
+</ul>
+<p><strong>(4) Use Stateless Short-Lived Tokens</strong></p>
+<ul>
+<li>For example, OAuth 2.0 access tokens (often JWTs) are designed to be short-lived and can be combined with server-side state management (e.g., database record of token status).</li>
+</ul>
+<p><strong>(5) Encrypt Sensitive Data</strong></p>
+<ul>
+<li>Encrypt sensitive fields in the JWT Payload (e.g., using JWE).</li>
+<li>Use a hybrid approach: the JWT signature ensures integrity while encryption ensures confidentiality.</li>
+</ul>
+<hr>
+<p><strong>5. Alternative Token Mechanisms That Support Forward Secrecy</strong></p>
+<p>If forward secrecy is a strict requirement for your application, consider other approaches:</p>
+<ul>
+<li><strong>Dynamic Session Keys</strong>: Generate temporary keys on the server for each session, then sign and transmit them to the client (though this contradicts the stateless nature of JWT).</li>
+<li><strong>Stateful Session Tokens</strong>: Use session cookies with server-side stored temporary keys (sacrificing statelessness for forward secrecy).</li>
+<li><strong>End-to-End Encryption Protocols</strong>: Implement application-layer protocols (such as the Signal Protocol) that provide forward secrecy, though with increased complexity.</li>
+</ul>
+<hr>
+<p><strong>6. Summary</strong></p>
+<ul>
+<li><strong>JWT Does Not Support Forward Secrecy</strong>: It relies on long-term keys (either the HMAC shared secret or the RSA private key).</li>
+<li><strong>Mitigation Measures</strong>: Use short-lived tokens, key rotation, TLS with forward secrecy, and additional encryption where necessary.</li>
+<li><strong>Design Trade-off</strong>: JWT’s simplicity and statelessness are balanced against security needs based on your specific use case.</li>
+</ul>
+<hr>
+<p>If your application demands strong forward secrecy, it is recommended to implement it at the transport layer (via TLS) or within the application protocol (such as using short-lived OAuth 2.0 tokens), rather than relying solely on JWT’s mechanism.</p>
+<h1 id="Q5-Another-Perspective-on-JWT">Q5. Another Perspective on JWT</h1>
+<p>Q:</p>
+<p>In a login scenario, can I understand JWT technology as follows: the server does not use sessions at all, and only stores some user-related information in a cookie, and at the same time, the cookie cannot be tampered with by the user.</p>
+<p>A:</p>
+<p>In a login scenario, your understanding is basically correct.</p>
+<h1 id="Q6-The-Purpose-of-JWT-Header">Q6. The Purpose of JWT Header</h1>
+<p>Q:</p>
+<p>Why do we need to declare the token type (JWT) and the signature algorithm (e.g., HMAC SHA256 or RSA) in the Header?</p>
+<p>Verifying whether the payload has been tampered with is entirely the server’s job, right? If so, why transmit this information between the client and the server?</p>
+<p>Is this to allow the server to be compatible with multiple verification methods?</p>
+<p>A:</p>
+<p><strong>1. Reasons for Declaring the Token Type and Algorithm in the Header</strong></p>
+<p>The Header of a JWT must include the <code>alg</code> (signature algorithm) and <code>typ</code> (token type) fields, as explicitly required by the <strong>JWT standard (RFC 7519)</strong>. Their necessity is reflected in the following points:</p>
+<hr>
+<p><strong>(1) The Server May Need to Dynamically Choose the Verification Method</strong></p>
+<ul>
+<li><strong>Scenario</strong>: The server might support multiple signature algorithms (e.g., both <code>HS256</code> and <code>RS256</code>).</li>
+<li><strong>Problem</strong>: Without declaring the algorithm in the Header, the server would not know which algorithm and key to use to verify the signature.</li>
+<li><strong>Example</strong>:<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Header</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;RS256&quot;</span><span class="punctuation">,</span>  <span class="comment">// The server, upon seeing this, selects public key verification for RSA signature.</span></span><br><span class="line">  <span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JWT&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<p><strong>(2) Preventing Algorithm Confusion Attacks</strong></p>
+<ul>
+<li><strong>Background</strong>: An attacker might tamper with the <code>alg</code> field in the Header to trick the server into using the wrong algorithm for signature verification (for example, changing <code>RS256</code> to <code>HS256</code>).</li>
+<li><strong>Mitigation</strong>:
+<ul>
+<li>The server should strictly validate that the <code>alg</code> field is an expected value (e.g., only allowing <code>RS256</code>).</li>
+<li><strong>Never rely solely on the algorithm declared by the client</strong>, but rather enforce the server’s pre-configured allowed algorithms.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>(3) Clearly Identifying the Token Type</strong></p>
+<ul>
+<li><strong>Purpose</strong>: The <code>typ: &quot;JWT&quot;</code> indicates that this is a standard JWT token, avoiding confusion with other types of tokens (such as encrypted JWE).</li>
+<li><strong>Extensibility</strong>: If new token types (e.g., <code>JWT+XML</code>) are introduced in the future, this field helps distinguish between them.</li>
+</ul>
+<hr>
+<p><strong>2. Why Transmit the Header to the Client?</strong></p>
+<ul>
+<li><strong>Core Logic</strong>: JWT is a <strong>self-contained token</strong>; the server does not need to store additional information to verify it.
+<ul>
+<li><strong>For Signature Verification</strong>: The server needs the <code>alg</code> field from the Header to know how to verify the signature.</li>
+<li><strong>For Decoding the Payload</strong>: The Header might include declarations (such as <code>cty</code> for custom content types) necessary for correctly parsing the Payload.</li>
+</ul>
+</li>
+<li><strong>Stateless Design</strong>: If the Header did not include algorithm information, the server would have to store metadata for every token, defeating the stateless nature of JWT.</li>
+</ul>
+<hr>
+<p><strong>3. Is Verifying Tampering Solely the Server’s Job?</strong></p>
+<ul>
+<li><strong>Correct</strong>: Yes, the client cannot verify the legitimacy of a JWT. It is the server’s responsibility.</li>
+<li><strong>Client’s Role</strong>:
+<ul>
+<li>Simply store and transmit the JWT (e.g., via a Cookie).</li>
+<li>Even if the client decodes the Header and Payload, it cannot ensure the signature’s validity.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>4. Why Must the Header Information be Transmitted?</strong></p>
+<p><strong>(1) Technical Necessity</strong></p>
+<ul>
+<li><strong>Signature Verification Depends on the Header</strong>: The signature is generated based on the entire Header and Payload, so the server must have access to the original Header and Payload to recompute the signature.</li>
+</ul>
+<p><strong>(2) Addressing Security Concerns and Misconceptions</strong></p>
+<ul>
+<li><strong>Misconception</strong>: “Transmitting the algorithm information in the Header poses a security risk.”
+<ul>
+<li><strong>Fact</strong>: An attacker cannot bypass verification by tampering with the <code>alg</code> field as long as the server strictly checks that the signature matches the expected algorithm.</li>
+<li><strong>Security Practice</strong>: The server should configure a whitelist of allowed algorithms (e.g., only <code>RS256</code>), ignoring any unauthorized algorithm declarations from the client.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>5. Is It to Support Multiple Verification Methods?</strong></p>
+<ul>
+<li><strong>Partially Correct</strong>: The <code>alg</code> field in the Header allows the server to support multiple algorithms, but this is not the main purpose.</li>
+<li><strong>Core Purposes</strong>:
+<ol>
+<li><strong>Stateless Verification</strong>: The server does not need prior knowledge of the token’s signing method.</li>
+<li><strong>Algorithm Declaration</strong>: Ensures consistency in the signature generation and verification process.</li>
+<li><strong>Prevention of Algorithm Confusion</strong>: Clearly defines the signature mechanism to prevent ambiguity.</li>
+</ol>
+</li>
+</ul>
+<hr>
+<p><strong>6. Practical Scenarios</strong></p>
+<p><strong>(1) Multi-Tenant Systems</strong></p>
+<ul>
+<li>Different tenants may use different signature algorithms (e.g., Tenant A uses <code>HS256</code>, Tenant B uses <code>RS256</code>).</li>
+<li>The server dynamically selects the appropriate verification method based on the <code>alg</code> field in the Header.</li>
+</ul>
+<p><strong>(2) Algorithm Upgrades</strong></p>
+<ul>
+<li>A legacy system might use <code>HS256</code> while a new system upgrades to <code>RS256</code>.</li>
+<li>The server can handle both old and new tokens via the <code>alg</code> field in the Header, gradually phasing out the old algorithm.</li>
+</ul>
+<hr>
+<p><strong>Summary</strong></p>
+<ul>
+<li><strong>The <code>alg</code> and <code>typ</code> in the Header are essential</strong>: The server requires this information to correctly verify the signature and parse the token.</li>
+<li><strong>Security Responsibility Lies with the Server</strong>: It must strictly validate the algorithm, signature, and claims rather than relying solely on the client-provided information.</li>
+<li><strong>Transmitting the Header Poses No Extra Risk</strong>: As long as the server implements proper verification, an attacker cannot bypass security by tampering with the Header.</li>
+</ul>
+<h1 id="Q7-Can-the-JWT-Header-be-Removed">Q7. Can the JWT Header be Removed?</h1>
+<p>Q:</p>
+<p>If the server only supports JWT with a single encryption algorithm, can we omit the header (disregarding the JWT specification)?</p>
+<p>A:</p>
+<p><strong>Step-by-Step Analysis and Recommendation</strong></p>
+<p><strong>1. Technical Feasibility Analysis</strong></p>
+<p>If the server <strong>only supports one fixed algorithm</strong> (e.g., <code>HS256</code>) and <strong>does not adhere to the JWT specification</strong>, it is theoretically possible to remove the Header field. However, you would need to redesign the token structure. Below is a comparison of two approaches:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Approach</strong></th>
+<th>Standard JWT (with Header)</th>
+<th>Custom Token without Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Structure</strong></td>
+<td><code>Header.Payload.Signature</code></td>
+<td><code>Payload.Signature</code></td>
+</tr>
+<tr>
+<td><strong>Signature Generation Method</strong></td>
+<td><code>HMAC(Header_b64.Payload_b64)</code></td>
+<td><code>HMAC(Payload_b64)</code></td>
+</tr>
+<tr>
+<td><strong>Server Verification</strong></td>
+<td>Reads algorithm from the Header for dynamic verification</td>
+<td>Fixed algorithm (e.g., HS256) for direct verification</td>
+</tr>
+<tr>
+<td><strong>Compatibility</strong></td>
+<td>Compatible with JWT ecosystem tools (libraries, debuggers)</td>
+<td>Requires a fully custom implementation</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>2. Potential Risks and Limitations</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Risk/ Limitation</strong></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Inconsistent Signing Scope</strong></td>
+<td>Without the Header, if additional metadata (e.g., token version) needs to be extended in the future, the signing logic must be redesigned, which may lead to compatibility issues.</td>
+</tr>
+<tr>
+<td><strong>Difficulty in Algorithm Upgrades</strong></td>
+<td>Hardcoding the algorithm means that if you need to switch algorithms (e.g., migrating to <code>RS256</code>), all clients must be forced to upgrade, preventing a smooth transition.</td>
+</tr>
+<tr>
+<td><strong>Ecosystem Incompatibility</strong></td>
+<td>Standard JWT libraries (e.g., <code>jsonwebtoken</code>) cannot be used, so you must implement encoding, decoding, and signature verification yourself, increasing development effort.</td>
+</tr>
+<tr>
+<td><strong>Complexity in Security Auditing</strong></td>
+<td>A custom solution requires an independent security assessment, whereas the security of standard JWT has been widely verified.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Summary</strong></p>
+<ul>
+<li><strong>Omitting the Header is Technically Feasible</strong>: In a scenario where the server strictly uses a fixed algorithm, it is possible.</li>
+<li><strong>Trade-offs</strong>: This sacrifices standardization, flexibility, and compatibility with existing tools, and you must bear the additional security risks.</li>
+<li><strong>Recommended Scenario</strong>: Only consider this for closed, small-scale systems where you are committed to maintaining a custom implementation over the long term.</li>
+</ul>
+<h1 id="Other">Other</h1>
+<p>Two common solutions to the session-sharing problem when deploying web servers in a cluster:</p>
+<ul>
+<li>One solution is to persist session data by writing it into a database or other persistent storage. Various services would then request the data from the persistent layer upon receiving a request. The advantage of this approach is a clear architecture, but the downside is increased engineering effort. Moreover, if the persistent layer fails, it becomes a single point of failure.</li>
+<li>Another solution is for the server not to save session data at all, with all data stored on the client and sent back to the server with every request. JWT is a representative of this approach.</li>
+</ul>
+<h1 id="References">References</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://xiaolincoding.com/interview/network.html#%E5%89%8D%E7%AB%AF%E6%98%AF%E5%A6%82%E4%BD%95%E5%AD%98%E5%82%A8jwt%E7%9A%84">Xiaolin Coding: How is JWT stored on the frontend?</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Gustav
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://gustaavv.github.io/en/2025/03/31/chat-with-LLM-JWT/" title="Chat with LLM: JWT">https://gustaavv.github.io/en/2025/03/31/chat-with-LLM-JWT/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/en/tags/Chat-with-LLM/" rel="tag"><i class="fa fa-tag"></i> Chat with LLM</a>
+              <a href="/en/tags/JWT/" rel="tag"><i class="fa fa-tag"></i> JWT</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_telegram"></a>
+      <a class="a2a_button_wechat"></a>
+      <a class="a2a_button_sina_weibo"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2025/01/15/Algorithm-Problem-007-substring-with-concatenation-of-all-words/" rel="prev" title="Algorithm Problem 007: Substring with Concatenation of All Words">
+                  <i class="fa fa-angle-left"></i> Algorithm Problem 007: Substring with Concatenation of All Words
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2025/06/04/Developer-Diary-1/" rel="next" title="Developer Diary 1">
+                  Developer Diary 1 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Gustav</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>Word count total: </span>
+    <span title="Word count total">39k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>Reading time total &asymp;</span>
+    <span title="Reading time total">2:23</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/gustaavv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/en/js/comments.js"></script><script src="/en/js/utils.js"></script><script src="/en/js/sidebar.js"></script><script src="/en/js/next-boot.js"></script><script src="/en/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/en/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/en/js/third-party/pace.js"></script>
+
+  <script src="/en/js/third-party/addtoany.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/en/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

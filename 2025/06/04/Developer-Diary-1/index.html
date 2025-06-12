@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/en/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/en/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/en/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/en/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="FWtJ63eXspf6fS1eJ3SbRLiQVfYelc2G0J0NYIOmgUo">
+  <meta name="msvalidate.01" content="CAECB021ABB77291B191A2118F7C5255">
+
+<link rel="stylesheet" href="/en/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"gustaavv.github.io","root":"/en/","images":"/en/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#008000","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/en/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/en/js/config.js"></script>
+
+    <meta name="description" content="Introduction I’ve been self-studying a lot of courses and working on many projects recently, so I haven’t had the chance to write blog posts. Since a blog needs frequent updates, I’ve decided to intro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Developer Diary 1">
+<meta property="og:url" content="https://gustaavv.github.io/en/2025/06/04/Developer-Diary-1/index.html">
+<meta property="og:site_name" content="Gustav&#39;s blog">
+<meta property="og:description" content="Introduction I’ve been self-studying a lot of courses and working on many projects recently, so I haven’t had the chance to write blog posts. Since a blog needs frequent updates, I’ve decided to intro">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-06-04T00:22:19.000Z">
+<meta property="article:modified_time" content="2025-06-04T00:22:19.000Z">
+<meta property="article:author" content="Gustav">
+<meta property="article:tag" content="Developer Diary">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://gustaavv.github.io/en/2025/06/04/Developer-Diary-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2025/06/04/Developer-Diary-1/","path":"2025/06/04/Developer-Diary-1/","title":"Developer Diary 1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Developer Diary 1 | Gustav's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBFGGZ14VS"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-SBFGGZ14VS","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/en/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/en/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?7b0efd48ab95cb46e5799442746baf90"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/en/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/en/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Gustav's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/en/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/en/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-switch-to-chinese"><a href="https://gustaavv.github.io/" rel="section"><i class="fa fa-language fa-fw"></i>Switch to Chinese</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Choosing-Third-Party-Libraries"><span class="nav-number">2.</span> <span class="nav-text">Choosing Third-Party Libraries</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go"><span class="nav-number">3.</span> <span class="nav-text">Go</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%80%9CStock-Responses%E2%80%9D"><span class="nav-number">4.</span> <span class="nav-text">“Stock Responses”</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Gustav"
+      src="https://avatars.githubusercontent.com/u/69737612?v=4">
+  <p class="site-author-name" itemprop="name">Gustav</p>
+  <div class="site-description" itemprop="description">Hi, I am Gustav.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/en/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/en/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/en/tags/">
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gustaavv" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gustaavv" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gustaavv.git@yahoo.com" title="E-Mail → mailto:gustaavv.git@yahoo.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<script src="/en/js/switch_language.js"></script>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2025/06/04/Developer-Diary-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
+      <meta itemprop="name" content="Gustav">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gustav's blog">
+      <meta itemprop="description" content="Hi, I am Gustav.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Developer Diary 1 | Gustav's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Developer Diary 1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-06-04 08:22:19" itemprop="dateCreated datePublished" datetime="2025-06-04T08:22:19+08:00">2025-06-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/Developer-Diary/" itemprop="url" rel="index"><span itemprop="name">Developer Diary</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>4 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Introduction">Introduction</h1>
+<p>I’ve been self-studying a lot of courses and working on many projects recently, so I haven’t had the chance to write blog posts. Since a blog needs frequent updates, I’ve decided to introduce another format, Developer Diary, to record my thoughts and observations during development. This post covers: choosing third-party libraries, Go, and “stock responses”.</p>
+<span id="more"></span>
+<h1 id="Choosing-Third-Party-Libraries">Choosing Third-Party Libraries</h1>
+<p>To implement a feature in a project, we usually pick an existing third-party library to avoid reinventing the wheel. But when there are many options, we can suffer from analysis paralysis, not knowing which one to pick. Here are some criteria I consider (in no particular order; weigh them holistically):</p>
+<ul>
+<li>Open source: Generally, open source &gt;&gt; closed source, but not always. Some stagnant open-source libraries may no longer be maintained or could even harbor malicious code. Conversely, a closed-source commercial product might be excellent, affordably priced, and save you a lot of time.</li>
+<li>Star count: This metric can be misleading. On one hand, libraries with more stars tend to be higher quality, as statistic data often bear this out. On the other hand, a high star count might stem from non-technical factors like better marketing or even purchased stars.</li>
+<li>Functionality: Does the library include the features we need? Are its configuration options comprehensive and rich? Are there a lot of bug-report issues?</li>
+<li>Documentation: Is the documentation detailed, comprehensive, up-to-date, and understandable?</li>
+<li>Activity: Judged by commit frequency, issue-closing frequency, PR merge/reject frequency, release frequency, and so on.</li>
+<li>Security: Has the library ever been reported to have a major security vulnerability?</li>
+<li>Sustainability: Will the author continue to develop the library? Unless the author explicitly states that support will end or the project is entering maintenance mode, we need to infer continuity from other aspects, such as other projects of the author.</li>
+<li>Community feedback: Check Reddit, Stack Overflow, Bilibili, and other platforms for discussions. Be mindful of vested interests or astroturfing.</li>
+<li>Related news: Both positive and negative press can be informative; you can even look up news about the author.</li>
+<li>Political content: Any library containing political content is out of consideration.</li>
+</ul>
+<p>Many of these factors fall under the broad umbrellas of “ecosystem” and “community,” but I prefer to spell them out concretely.</p>
+<h1 id="Go">Go</h1>
+<p>The MIT 6.824 course requires projects to be written in Go, so I started learning it. I first encountered Go two years ago and found it quite “bizarre”. But after learning JavaScript and various frontend libraries, my impression of Go changed.</p>
+<p>Go shares many philosophies with JavaScript, e.g., “functions are first-class citizens”, and no native object-oriented support. Back then, coming from Java, I found Go’s approach baffling, as if Go were the sole outlier. After diving into JavaScript, these ideas became much more palatable.</p>
+<p>Another thing I once found odd and hard to accept was Go’s syntax and its underlying design philosophy. Go almost disallows any alternatives: if you have <code>for</code>, there’s no <code>while</code> or <code>do-while</code>; if you have <code>if</code>, the ternary operator <code>bool ? v1 : v2</code> is deemed unnecessary. I understood the benefit of doing so: enforcing a single style for all developers at the language level. But I still wondered: is Go too authoritarian?</p>
+<p>Let’s compare with other languages first. Spring Boot’s philosophy is “convention over configuration,” providing many out-of-the-box features. Only do we follow the conventions can we enjoy a fast development experience. Otherwise, we need to manually configure something. Yet Spring Boot at least allows you override defaults and define your own rules. In contrast, Redux Toolkit and Next.js are very opinionated: we must adhere to their conventions, with almost no room for customization (and even if possible, it’s a huge hassle).</p>
+<p>Let’s return to Go. Having learned RTK and Next.js, I now accept the uniformity of Go’s syntax because I understand that Go is an opinionated programming language. Note that being opinionated isn’t inherently bad. Just as too many third-party library choices can hamper productivity, a well-endorsed set of language rules can reduce the time spent comparing alternatives and boost efficiency.</p>
+<p>These experiences show that learning diverse technologies is always beneficial. It builds your knowledge base and makes you more open to new technologies.</p>
+<h1 id="“Stock-Responses”">“Stock Responses”</h1>
+<p>What are “stock responses”? Here’s DeepSeek’s definition:</p>
+<blockquote>
+<p>In tech industry, <strong>“stock responses”</strong> (八股文) is a <strong>pejorative metaphor</strong> referring to knowledge points, answering patterns, or interview styles that are <strong>rigid, formulaic, divorced from real scenarios, and overly focused on form over substance</strong>.</p>
+<p><strong>Interview stock responses:</strong> Standard Q&amp;A‐style interview questions that candidates are repeatedly asked to memorize verbatim.</p>
+</blockquote>
+<p>Indeed, “stock responses” often get bad press, yet they’re hard to avoid if you want to pass technical interviews. It’s worth noting that the questions themselves shouldn’t be blamed. On the contrary, they serve as an excellent gateway to understanding a domain, since most of them are foundational and low-level.</p>
+<p>Note that good stock responses are those carefully curated by the author, e.g., “Xiaolin coding”, not the copy-and-paste blog posts you find all over the web. The latter are ubiquitous and heavily duplicated.</p>
+<p>My reflection on stock responses arose when working with SQLite transactions. Unfamiliar with SQLite’s transaction model and concurrency model, I worried about deadlocks and scoured the web. Useful resources were scarce, with much duplication that made me doubt their accuracy. The official docs were hard to follow. Ultimately, I resolved my doubts via an LLM but didn’t gain a deep understanding of SQLite’s architecture.</p>
+<p>You might ask: why not just ask the LLM directly? The answer is: if there’s no valuable SQLite material online, how could an LLM be trained to answer SQLite questions accurately? Won’t it hallucinate and give me wrong answers? I’ve experienced hallucinations before when asking about WPF.</p>
+<p>By contrast, there are plenty of MySQL “stock responses” on the Internet. We can study them ourselves or trust LLMs to summarize them reliably. That’s why I hope to see high-quality SQLite stock responses available online.</p>
+<p>Finally, putting aside the pejorative term “stock responses,” I believe “any question that expands the boundaries of our logic is a good one”. After learning how to use a technology and wanting to delve deeper, stock responses in FAQ form offer a path different from official docs or reading source code, which is a good thing. Besides, many people have landed offers thanks to stock responses; there’s no need to burn the bridge behind us.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Gustav
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://gustaavv.github.io/en/2025/06/04/Developer-Diary-1/" title="Developer Diary 1">https://gustaavv.github.io/en/2025/06/04/Developer-Diary-1/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/en/tags/Developer-Diary/" rel="tag"><i class="fa fa-tag"></i> Developer Diary</a>
+              <a href="/en/tags/Go/" rel="tag"><i class="fa fa-tag"></i> Go</a>
+              <a href="/en/tags/JS/" rel="tag"><i class="fa fa-tag"></i> JS</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_telegram"></a>
+      <a class="a2a_button_wechat"></a>
+      <a class="a2a_button_sina_weibo"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2025/03/31/chat-with-LLM-JWT/" rel="prev" title="Chat with LLM: JWT">
+                  <i class="fa fa-angle-left"></i> Chat with LLM: JWT
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/3000/01/01/%E7%BD%AE%E9%A1%B6%E9%80%9A%E7%9F%A5/" rel="next" title="Messages for reader">
+                  Messages for reader <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Gustav</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>Word count total: </span>
+    <span title="Word count total">39k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>Reading time total &asymp;</span>
+    <span title="Reading time total">2:23</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/gustaavv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/en/js/comments.js"></script><script src="/en/js/utils.js"></script><script src="/en/js/sidebar.js"></script><script src="/en/js/next-boot.js"></script><script src="/en/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/en/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/en/js/third-party/pace.js"></script>
+
+  <script src="/en/js/third-party/addtoany.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/en/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

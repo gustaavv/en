@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/en/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/en/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/en/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/en/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="FWtJ63eXspf6fS1eJ3SbRLiQVfYelc2G0J0NYIOmgUo">
+  <meta name="msvalidate.01" content="CAECB021ABB77291B191A2118F7C5255">
+
+<link rel="stylesheet" href="/en/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"gustaavv.github.io","root":"/en/","images":"/en/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#008000","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/en/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/en/js/config.js"></script>
+
+    <meta name="description" content="问题 最近外网爆出了 Intel 13、14 代 i9 打游戏会报显存错误。这个也许只是 CPU 不稳定导致的短时运算错误，不足为惧[1]。但是，B站上有人讨论很多 14 代 i9 在待机模式下蓝屏，甚至 13700K 也出现了这种现象。如果消息准确，那么使用了半年的 14代 i9 就出现了“缩缸”现象（硬件损坏导致的永久性能损失）。理论上，CPU 的寿命至少是 10 年，而且大部分 CPU 都是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录一次 Intel 13700K 降压的操作">
+<meta property="og:url" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/index.html">
+<meta property="og:site_name" content="Gustav&#39;s blog">
+<meta property="og:description" content="问题 最近外网爆出了 Intel 13、14 代 i9 打游戏会报显存错误。这个也许只是 CPU 不稳定导致的短时运算错误，不足为惧[1]。但是，B站上有人讨论很多 14 代 i9 在待机模式下蓝屏，甚至 13700K 也出现了这种现象。如果消息准确，那么使用了半年的 14代 i9 就出现了“缩缸”现象（硬件损坏导致的永久性能损失）。理论上，CPU 的寿命至少是 10 年，而且大部分 CPU 都是">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/MDImgs/Intel-13700K-Undervolting/image-20240601111408430.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/MDImgs/Intel-13700K-Undervolting/image-20240601111910013.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/MDImgs/Intel-13700K-Undervolting/image-20240601112232739.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/MDImgs/Intel-13700K-Undervolting/image-20240601112446574.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/MDImgs/Intel-13700K-Undervolting/image-20240601124657423.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/MDImgs/Intel-13700K-Undervolting/20240601_130522.jpg">
+<meta property="og:image" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/MDImgs/Intel-13700K-Undervolting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(14).png">
+<meta property="article:published_time" content="2024-05-31T23:34:26.000Z">
+<meta property="article:modified_time" content="2024-05-31T23:34:26.000Z">
+<meta property="article:author" content="Gustav">
+<meta property="article:tag" content="CPU">
+<meta property="article:tag" content="BIOS">
+<meta property="article:tag" content="Intel">
+<meta property="article:tag" content="Hardware">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/MDImgs/Intel-13700K-Undervolting/image-20240601111408430.png">
+
+
+<link rel="canonical" href="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/","path":"2024/06/01/Intel-13700K-Undervolting/","title":"记录一次 Intel 13700K 降压的操作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>记录一次 Intel 13700K 降压的操作 | Gustav's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBFGGZ14VS"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-SBFGGZ14VS","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/en/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/en/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?7b0efd48ab95cb46e5799442746baf90"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/en/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/en/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Gustav's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/en/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/en/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-switch-to-chinese"><a href="https://gustaavv.github.io/" rel="section"><i class="fa fa-language fa-fw"></i>Switch to Chinese</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">一些概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XTU"><span class="nav-number">3.</span> <span class="nav-text">XTU</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%8D%E5%8E%8B%E6%96%B9%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">降压方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Watchdog"><span class="nav-number">3.2.</span> <span class="nav-text">Watchdog</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E6%95%B4-BIOS"><span class="nav-number">4.</span> <span class="nav-text">调整 BIOS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%8D%E5%8E%8B%E8%BF%87%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">降压过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%8D%E5%8E%8B%E5%89%8D"><span class="nav-number">5.1.</span> <span class="nav-text">降压前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r23-%E8%B7%91%E4%B8%80%E8%BD%AE"><span class="nav-number">5.2.</span> <span class="nav-text">r23 跑一轮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r23-%E8%B7%91-30-%E5%88%86%E9%92%9F"><span class="nav-number">5.3.</span> <span class="nav-text">r23 跑 30 分钟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E6%B5%8B%E8%AF%95"><span class="nav-number">5.4.</span> <span class="nav-text">日常使用场景测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Gustav"
+      src="https://avatars.githubusercontent.com/u/69737612?v=4">
+  <p class="site-author-name" itemprop="name">Gustav</p>
+  <div class="site-description" itemprop="description">Hi, I am Gustav.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/en/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/en/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/en/tags/">
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gustaavv" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gustaavv" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gustaavv.git@yahoo.com" title="E-Mail → mailto:gustaavv.git@yahoo.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<script src="/en/js/switch_language.js"></script>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
+      <meta itemprop="name" content="Gustav">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gustav's blog">
+      <meta itemprop="description" content="Hi, I am Gustav.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="记录一次 Intel 13700K 降压的操作 | Gustav's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          记录一次 Intel 13700K 降压的操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-06-01 07:34:26" itemprop="dateCreated datePublished" datetime="2024-06-01T07:34:26+08:00">2024-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>7 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="问题">问题</h1>
+<p>最近外网爆出了 Intel 13、14 代 i9 打游戏会报显存错误。这个也许只是 CPU 不稳定导致的<strong>短时</strong>运算错误，不足为惧<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。但是，B站上有人讨论很多 14 代 i9 在待机模式下蓝屏，甚至 13700K 也出现了这种现象。如果消息准确，那么使用了半年的 14代 i9 就出现了“缩缸”现象（硬件损坏导致的<strong>永久</strong>性能损失）。理论上，CPU 的寿命至少是 10 年，而且大部分 CPU 都是不用了、而不是用坏了。我的 CPU 就是 13700K，这让我非常警惕。</p>
+<p>对于这个问题的讨论有两点需要厘清：</p>
+<ol>
+<li>软件报错，比如游戏、压测工具和渲染工具。这一点<strong>占据了极大比例的流量</strong>。目前，无论是 Intel 官方还是第三方网站、博主，给出的解决方案都是限制功耗和降频，使得软件不会报错。Intel 把锅甩给主板厂商，要求它们按照 Intel 标准来设置 BIOS。目前来看，这个所谓的 Intel 标准电压更高、频率更低，跑分更差。要注意，频率降低等于消费者吃亏。因此，<strong>Intel 和主板厂商都有责任</strong>。</li>
+<li>CPU“缩缸”，这是产品缺陷。这一点<strong>只占据很小比例的流量</strong>。显然，Intel 永远不会承认这一点。也许从 23 年 6 月 Intel 质保政策开始收紧时<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>，Intel 已经知道了这一事实。</li>
+</ol>
+<p>我是在 23 年初配的电脑，轻度办公、写一写代码，基本没玩过 3A 大作。最近，我用 CPU-Z 和 R23 测试了性能，和网上的结果<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>差不多。因此，我的 13700K 应该没有“缩缸”。</p>
+<p>话说回来，我倒不是很关心降频，我更关心 CPU 寿命。目前自动核心电压为 1.38 V，R23 跑一次就 100 度。这样的配置，迟早要“缩缸”。因此，本文主要记录我是如何给 CPU 降压的，以及在研究过程中发现的各种问题。</p>
+<span id="more"></span>
+<h1 id="一些概念">一些概念</h1>
+<ul>
+<li>降频：降低 CPU 的频率，比如 13700K 可以跑到 5.3GHz；</li>
+<li>降压：降低 CPU 所需的电压；</li>
+</ul>
+<p>频率需要由电压来保证。高频率需要在高电压下才能稳定，否则 CPU 就会产生错误；但这不意味着低电压就带不动原有的高频率。这也是降压的目的之一。另外，降压也能够避免 CPU 温度达到温度墙（而被强制降频），从而保证高负载下依旧维持高频率。此时 R23 跑分甚至可以更高。</p>
+<h1 id="XTU">XTU</h1>
+<h2 id="降压方式">降压方式</h2>
+<p>最方便的降压降频方法是用 Intel Extreme Tuning Utility，简称 XTU<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>。（这个工具实际上更多地用来超频）。</p>
+<p>用这个工具调整设置后，如果系统蓝屏，则开机时会自动恢复默认配置，防止开不了机的情况。</p>
+<p>同时，XTU 是个软件，点击就可以修改，不需要每次在 BIOS 里调整。</p>
+<p><img src="./MDImgs/Intel-13700K-Undervolting/image-20240601111408430.png" alt="image-20240601111408430"></p>
+<p>具体的降压方法<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>：</p>
+<p>电压偏移每次降低 0.01V 或 0.005V，然后点击 Apply。每降低一次，都跑一次 R23，直到系统出现蓝屏。</p>
+<p>在出现蓝屏的电压偏移再加上 0.01 V，然后跑 R23 30分钟，看看会不会蓝屏。</p>
+<p>不会蓝屏的话，就将当前配置设置为开机自动启用：</p>
+<p><img src="./MDImgs/Intel-13700K-Undervolting/image-20240601111910013.png" alt="image-20240601111910013"></p>
+<h2 id="Watchdog">Watchdog</h2>
+<p>Watchdog 机制是实现超频后 crash safe 的关键。没有这个机制，电脑无法在开机时会自动恢复默认配置。</p>
+<p>不幸的是，XTU 提醒我这个功能没有开启：（Advanced | System information 中查看）</p>
+<p><img src="./MDImgs/Intel-13700K-Undervolting/image-20240601112232739.png" alt="image-20240601112232739"></p>
+<p>但是，在设备管理器中，Watchdog 是存在的（先点击 查看 | 显示隐藏设备，Watchdog 在系统设备中）：</p>
+<p><img src="./MDImgs/Intel-13700K-Undervolting/image-20240601112446574.png" alt="image-20240601112446574"></p>
+<p>经过一番研究，发现华硕 Z790 主板（无论什么具体型号<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>）用 Watchdog 保证 XMP 的稳定性。如果开启了 XMP，那么 XTU 就没法用 Watchdog 了<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>。</p>
+<blockquote>
+<p>早知道不买华硕主板了，现在我得手动调 BIOS 了。</p>
+</blockquote>
+<h1 id="调整-BIOS">调整 BIOS</h1>
+<p>调整 BIOS 的方法看这两个视频<sup class="footnote-ref"><a href="#fn6" id="fnref6:1">[6:1]</a></sup><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>。问题在于，旧 BIOS 本来只有一个地方可以设置 CPU 电压 offset。现在新的华硕主板把它变成了多个配置，又把问题给搞复杂了。</p>
+<p>先说结论：Global Core SVID Voltage 调整为 adaptive mode，然后设置 offset<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>：</p>
+<p><img src="./MDImgs/Intel-13700K-Undervolting/image-20240601124657423.png" alt="image-20240601124657423"></p>
+<p>这等价于 XTU 里面的 Core Voltage Offset<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>。</p>
+<hr>
+<p>这几个电压的关系可以看这两篇帖子（别把自己给看晕了），不过和我们的操作关系不大：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://nga.178.com/read.php?tid=34908324">华硕Z790 APEX，CPU两个关键电压设置的疑问</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.reddit.com/r/overclocking/comments/typcy6/please_help_me_overclock_12700k_with_this_poor/">Please Help Me Overclock 12700K With This Poor Asus Board</a></li>
+</ul>
+<h1 id="降压过程">降压过程</h1>
+<h2 id="降压前">降压前</h2>
+<p>买回来就没升级过 BIOS：</p>
+<p><img src="./MDImgs/Intel-13700K-Undervolting/20240601_130522.jpg" alt="20240601_130522"></p>
+<p>在 CPU 降压前，我的 BIOS 只打开了 XMP 和 iGPU Multi-Monitor（使用独显时开启核显）。</p>
+<p>降压前记得把开启自启动的软件都关掉，说不定系统崩溃时就把它们搞坏了。</p>
+<p>降压时的工具：R23 和 HWMonitor。</p>
+<p>HWMonitor 中需要关注主板 VCORE（CPU 实际电压）、CPU 温度和 CPU 功耗。</p>
+<h2 id="r23-跑一轮">r23 跑一轮</h2>
+<p>测试极限 offset：</p>
+<table>
+<thead>
+<tr>
+<th>offset</th>
+<th>r23 跑分</th>
+<th>最大功耗（W）</th>
+<th>最大电压 (V)</th>
+<th>最大温度（°C）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0</td>
+<td>30425</td>
+<td>243</td>
+<td>1.403</td>
+<td>100</td>
+</tr>
+<tr>
+<td>-0.005</td>
+<td>30488</td>
+<td>240</td>
+<td>1.350</td>
+<td>100</td>
+</tr>
+<tr>
+<td>-0.01</td>
+<td>30788</td>
+<td>237</td>
+<td>1.332</td>
+<td>100</td>
+</tr>
+<tr>
+<td>-0.02</td>
+<td>30713</td>
+<td>232</td>
+<td>1.332</td>
+<td>98</td>
+</tr>
+<tr>
+<td>-0.03</td>
+<td>30752</td>
+<td>228</td>
+<td>1.314</td>
+<td>97</td>
+</tr>
+<tr>
+<td>-0.04</td>
+<td>30668</td>
+<td>224</td>
+<td>1.296</td>
+<td>96</td>
+</tr>
+<tr>
+<td>-0.05</td>
+<td>30744</td>
+<td>220</td>
+<td>1.288</td>
+<td>95</td>
+</tr>
+<tr>
+<td>-0.06</td>
+<td>30416</td>
+<td>218</td>
+<td>1.279</td>
+<td>96</td>
+</tr>
+<tr>
+<td>-0.07</td>
+<td>30867</td>
+<td>212</td>
+<td>1.270</td>
+<td>92</td>
+</tr>
+<tr>
+<td>-0.08</td>
+<td>29622</td>
+<td>207</td>
+<td>1.261</td>
+<td>91</td>
+</tr>
+<tr>
+<td>-0.09</td>
+<td>30745</td>
+<td>204</td>
+<td>1.243</td>
+<td>90</td>
+</tr>
+<tr>
+<td>-0.10</td>
+<td>30442</td>
+<td>202</td>
+<td>1.234</td>
+<td>88</td>
+</tr>
+<tr>
+<td>-0.11</td>
+<td>30694</td>
+<td>196</td>
+<td>1.225</td>
+<td>87</td>
+</tr>
+<tr>
+<td>-0.12</td>
+<td>30739</td>
+<td>193</td>
+<td>1.217</td>
+<td>87</td>
+</tr>
+<tr>
+<td>-0.13</td>
+<td>报错</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>功耗是 package power</p>
+<p>电压是 vcore</p>
+<p>温度是 package temperature</p>
+</blockquote>
+<p>当 offset 来到 <code>-0.13</code> 时，cinebench 报错，意味着需要回退 offset。</p>
+<blockquote>
+<p>无论是 cinebench 报错，还是系统黑屏、蓝屏，都表明当前的 offset 不合格。</p>
+</blockquote>
+<img src="./MDImgs/Intel-13700K-Undervolting/屏幕截图(14).png" alt="屏幕截图(14)" style="zoom: 67%;" />
+<hr>
+<p>从表格中可以看出，随着电压减少，温度降低，r23 跑分反而更高了，因为不会再触发温度墙而导致降频。</p>
+<h2 id="r23-跑-30-分钟">r23 跑 30 分钟</h2>
+<p>测试满足稳定性条件时的 offset：</p>
+<table>
+<thead>
+<tr>
+<th>offset</th>
+<th>cinebench 何时报错</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-0.115</td>
+<td>32 秒</td>
+</tr>
+<tr>
+<td>-0.11</td>
+<td>15 秒</td>
+</tr>
+<tr>
+<td>-0.10</td>
+<td>11 分 13 秒</td>
+</tr>
+<tr>
+<td>-0.09</td>
+<td>18 分</td>
+</tr>
+<tr>
+<td>-0.08</td>
+<td>6 分</td>
+</tr>
+<tr>
+<td>-0.07</td>
+<td>成功</td>
+</tr>
+</tbody>
+</table>
+<p>因此，<code>-0.07</code> 是最极限的 offset。30分钟结束后，r23 跑了 70 轮，得分 30337，最大温度为 97 °C，最大功耗为 217 W。</p>
+<p><code>-0.07</code> 距离单轮 r23 的极限值 <code>-0.12</code> 差了 <code>0.05</code>，看来这颗 13700K 的体质不咋地。</p>
+<h2 id="日常使用场景测试">日常使用场景测试</h2>
+<table>
+<thead>
+<tr>
+<th>使用场景</th>
+<th>是否通过</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>浏览器看视频</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>玩『猎人：荒野的召唤』</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>同时打开多个 IDE 窗口</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>同时打开 4 个虚拟机（先拍了个快照，防止崩溃）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>在虚拟机里打开 bluestacks 模拟器玩手机游戏</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>在后四种场景下，风扇声音明显比之前小，说明成功通过降压实现了降温，保护了 CPU 寿命。</p>
+<p>我又跑了下 CPU-Z 的稳定性测试，发现此时只占用了 180 W，温度不到 90 °C。看来 CPU-Z 的程序并不像 r23 那样会吃满 CPU，不适合作为压测工具。</p>
+<h1 id="总结">总结</h1>
+<p>在这次 CPU 降压的过程中，我研究了很多东西。很显然，Intel 和华硕都有错，不然我也不用折腾了 —— 以后还是买 AMD 的 CPU 吧。感觉降压降的不是 CPU 的电压，而是我的血压🤪。</p>
+<h1 id="参考">参考</h1>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.pcgamer.com/there-are-increased-reports-of-crashing-in-unreal-engine-games-etc-and-epic-is-blaming-intel-chips/">There are increased reports of crashing in Unreal Engine games, etc. and Epic is blaming Intel chips</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Mo4y1u7oj">英特尔盒装CPU拒保？硬件去哪买番外篇！</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://valid.x86.fr/bench/971jbu">CPU-Z Benchmark (x64 - 2017.1)</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://nanoreview.net/en/cpu-list/cinebench-scores">Cinebench R23 Scores</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-intel-xtu.html">Intel® Extreme Tuning Utility (Intel® XTU)</a> <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://youtu.be/CHndRWqOTxs">🔧 Undervolt Your INTEL CPU to increase FPS, Lower TEMPS &amp; Use LESS POWER ✅</a> <a href="#fnref6" class="footnote-backref">↩︎</a> <a href="#fnref6:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.reddit.com/r/ASUS/comments/yhlf3v/help_with_intel_xtu_new_build_issue/">Help with Intel XTU - New Build issue</a> <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://rog-forum.asus.com/t5/intel-700-600-series/asus-z790e-gaming-wifi-ii-with-intel-14900k-watchdog-present/m-p/993333/highlight/true#M21024">Asus Z790E Gaming WiFi II with Intel 14900K Watchdog Present False</a> <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yD4y1V7fd">风冷压13900K，也不是不可以</a> <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1R24y1Q7Tw">华硕主板vid offset超频13700k 13900k（通用主板）</a> <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.reddit.com/r/overclocking/comments/xn49e8/whats_the_difference_between_actual_vrm_core/">What’s the difference between actual VRM core voltage and global core SVID voltage?</a> <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Gustav
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/" title="记录一次 Intel 13700K 降压的操作">https://gustaavv.github.io/en/2024/06/01/Intel-13700K-Undervolting/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/en/tags/CPU/" rel="tag"><i class="fa fa-tag"></i> CPU</a>
+              <a href="/en/tags/BIOS/" rel="tag"><i class="fa fa-tag"></i> BIOS</a>
+              <a href="/en/tags/Intel/" rel="tag"><i class="fa fa-tag"></i> Intel</a>
+              <a href="/en/tags/Hardware/" rel="tag"><i class="fa fa-tag"></i> Hardware</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_telegram"></a>
+      <a class="a2a_button_wechat"></a>
+      <a class="a2a_button_sina_weibo"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2024/05/02/Metabase-install-and-usage/" rel="prev" title="Install and Use Metabase">
+                  <i class="fa fa-angle-left"></i> Install and Use Metabase
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2024/06/03/Docker-Healthcheck/" rel="next" title="Docker: healthcheck and depends_on">
+                  Docker: healthcheck and depends_on <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Gustav</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>Word count total: </span>
+    <span title="Word count total">39k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>Reading time total &asymp;</span>
+    <span title="Reading time total">2:23</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/gustaavv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/en/js/comments.js"></script><script src="/en/js/utils.js"></script><script src="/en/js/sidebar.js"></script><script src="/en/js/next-boot.js"></script><script src="/en/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/en/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/en/js/third-party/pace.js"></script>
+
+  <script src="/en/js/third-party/addtoany.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/en/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

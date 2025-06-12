@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/en/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/en/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/en/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/en/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="FWtJ63eXspf6fS1eJ3SbRLiQVfYelc2G0J0NYIOmgUo">
+  <meta name="msvalidate.01" content="CAECB021ABB77291B191A2118F7C5255">
+
+<link rel="stylesheet" href="/en/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"gustaavv.github.io","root":"/en/","images":"/en/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#008000","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/en/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/en/js/config.js"></script>
+
+    <meta name="description" content="Overview  LeetCode Weekly Contest 370   This article is a summary of the weekly contest. I do not plan to discuss each problem in detail; for some problems, I will only provide a rough outline. The po">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode Weekly Contest 370 Summary">
+<meta property="og:url" content="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/index.html">
+<meta property="og:site_name" content="Gustav&#39;s blog">
+<meta property="og:description" content="Overview  LeetCode Weekly Contest 370   This article is a summary of the weekly contest. I do not plan to discuss each problem in detail; for some problems, I will only provide a rough outline. The po">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/MDImgs/leetcode-370-weekly-contest-summary/graph-3.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/MDImgs/leetcode-370-weekly-contest-summary/graph-4.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/MDImgs/leetcode-370-weekly-contest-summary/graph-13-1.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/MDImgs/leetcode-370-weekly-contest-summary/graph-14-2.png">
+<meta property="og:image" content="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/MDImgs/leetcode-370-weekly-contest-summary/image-20231105135510005.png">
+<meta property="article:published_time" content="2023-11-05T03:43:09.000Z">
+<meta property="article:modified_time" content="2023-11-05T03:43:09.000Z">
+<meta property="article:author" content="Gustav">
+<meta property="article:tag" content="Simulation">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="Tree">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/MDImgs/leetcode-370-weekly-contest-summary/graph-3.png">
+
+
+<link rel="canonical" href="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/","path":"2023/11/05/leetcode-370-weekly-contest-summary/","title":"LeetCode Weekly Contest 370 Summary"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LeetCode Weekly Contest 370 Summary | Gustav's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBFGGZ14VS"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-SBFGGZ14VS","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/en/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/en/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?7b0efd48ab95cb46e5799442746baf90"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/en/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/en/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Gustav's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/en/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/en/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-switch-to-chinese"><a href="https://gustaavv.github.io/" rel="section"><i class="fa fa-language fa-fw"></i>Switch to Chinese</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-Find-Champion-I"><span class="nav-number">2.</span> <span class="nav-text">I. Find Champion I</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#II-Find-Champion-II"><span class="nav-number">3.</span> <span class="nav-text">II. Find Champion II</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#III-Maximum-Score-After-Applying-Operations-on-a-Tree"><span class="nav-number">4.</span> <span class="nav-text">III. Maximum Score After Applying Operations on a Tree</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IV-Maximum-Balanced-Subsequence-Sum"><span class="nav-number">5.</span> <span class="nav-text">IV. Maximum Balanced Subsequence Sum</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Gustav"
+      src="https://avatars.githubusercontent.com/u/69737612?v=4">
+  <p class="site-author-name" itemprop="name">Gustav</p>
+  <div class="site-description" itemprop="description">Hi, I am Gustav.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/en/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/en/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/en/tags/">
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gustaavv" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gustaavv" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gustaavv.git@yahoo.com" title="E-Mail → mailto:gustaavv.git@yahoo.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<script src="/en/js/switch_language.js"></script>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2023/10/29/leetcode-369-weekly-contest-summary/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-29</time>
+        <br>
+      LeetCode Weekly Contest 369 Summary
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2023/11/06/Algorithm-Problem-005-maximum-balanced-subsequence-sum/" rel="bookmark">
+        <time class="popular-posts-time">2023-11-06</time>
+        <br>
+      Algorithm Problem 005: Maximum Balanced Subsequence Sum
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2023/09/21/Algorithm-Problem-001-Calculate-Maximum-Possible-Score-of-an-Array/" rel="bookmark">
+        <time class="popular-posts-time">2023-09-21</time>
+        <br>
+      Algorithm Problem 001: Maximum Possible Score of an Array
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2023/11/01/Algorithm-Problem-004-maximum-employees-to-be-invited-to-a-meeting/" rel="bookmark">
+        <time class="popular-posts-time">2023-11-01</time>
+        <br>
+      Algorithm Problem 004: Maximum Employees to Be Invited to a Meeting
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/en/2023/10/03/Algorithm-Problem-002-spiral-matrix-ii/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-03</time>
+        <br>
+      Algorithm Problem 002: Spiral Matrix II
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/69737612?v=4">
+      <meta itemprop="name" content="Gustav">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gustav's blog">
+      <meta itemprop="description" content="Hi, I am Gustav.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LeetCode Weekly Contest 370 Summary | Gustav's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LeetCode Weekly Contest 370 Summary
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-05 11:43:09" itemprop="dateCreated datePublished" datetime="2023-11-05T11:43:09+08:00">2023-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/Algorithm-Problems/" itemprop="url" rel="index"><span itemprop="name">Algorithm Problems</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/en/categories/Algorithm-Contest/" itemprop="url" rel="index"><span itemprop="name">Algorithm Contest</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>9 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Overview">Overview</h1>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/contest/weekly-contest-370/">LeetCode Weekly Contest 370</a></p>
+</blockquote>
+<blockquote>
+<p>This article is a summary of the weekly contest. I do not plan to discuss each problem in detail; for some problems, I will only provide a rough outline. The point of this article is self-reflection and improvement.</p>
+</blockquote>
+<p>Achieved AC in the first three problems within 23 minutes, resulting in a ranking around 300 - more like a typing contest emphasizing speed rather than a coding contest. Brief description of problem-solving:</p>
+<ul>
+<li>Problem 1: Easy problem but got stuck for 5 minutes 😒;</li>
+<li>Problem 2: Similar to the first one in terms of background, also easy problem, but solved faster 😋;</li>
+<li>Problem 3: A real medium-level problem that required a bit more thought, solved in 15 minutes, not bad 😋;</li>
+<li>Problem 4: Couldn’t solve. If the data range is small, it’s a simple DP problem, but couldn’t find an optimization 😒;</li>
+</ul>
+<span id="more"></span>
+<h1 id="I-Find-Champion-I">I. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-champion-i/">Find Champion I</a></h1>
+<blockquote>
+<p><strong>Problem Description:</strong></p>
+<p>There are <code>n</code> teams numbered from <code>0</code> to <code>n - 1</code> in a tournament.</p>
+<p>Given a <strong>0-indexed</strong> 2D boolean matrix <code>grid</code> of size <code>n * n</code>. For all <code>i, j</code> that <code>0 &lt;= i, j &lt;= n - 1</code> and <code>i != j</code> team <code>i</code> is <strong>stronger</strong> than team <code>j</code> if <code>grid[i][j] == 1</code>, otherwise, team <code>j</code> is <strong>stronger</strong> than team <code>i</code>.</p>
+<p>Team <code>a</code> will be the <strong>champion</strong> of the tournament if there is no team <code>b</code> that is stronger than team <code>a</code>.</p>
+<p>Return <em>the team that will be the champion of the tournament.</em></p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: grid = [[0,1],[0,0]]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: There are two teams in this tournament.</span><br><span class="line">grid[0][1] == 1 means that team 0 is stronger than team 1. So team 0 will be the champion.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Input: grid = [[0,0,1],[1,0,1],[0,0,0]]</span><br><span class="line">Output: 1</span><br><span class="line">Explanation: There are three teams in this tournament.</span><br><span class="line">grid[1][0] == 1 means that team 1 is stronger than team 0.</span><br><span class="line">grid[1][2] == 1 means that team 1 is stronger than team 2.</span><br><span class="line">So team 1 will be the champion.</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>n == grid.length</code></li>
+<li><code>n == grid[i].length</code></li>
+<li><code>2 &lt;= n &lt;= 100</code></li>
+<li><code>grid[i][j]</code> is either <code>0</code> or <code>1</code>.</li>
+<li>For all <code>i grid[i][i]</code> is <code>0.</code></li>
+<li>For all <code>i, j</code> that <code>i != j</code>, <code>grid[i][j] != grid[j][i]</code>.</li>
+<li>The input is generated such that if team <code>a</code> is stronger than team <code>b</code> and team <code>b</code> is stronger than team <code>c</code>, then team <code>a</code> is stronger than team <code>c</code>.</li>
+</ul>
+</blockquote>
+<p>‘Team <code>a</code> will be the <strong>champion</strong> of the tournament if there is no team <code>b</code> that is stronger than team <code>a</code>.’ Use <code>count[i]</code> to represent the number of teams stronger than <code>i</code>. The answer is the <code>i</code> with $count[i] = 0$.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findChampion</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> grid.length;</span><br><span class="line">        <span class="type">int</span>[] count = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i == j) <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="number">1</span>) count[j]++;</span><br><span class="line">                <span class="keyword">else</span> count[i]++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (count[i] == <span class="number">0</span>) <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="II-Find-Champion-II">II. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-champion-ii/">Find Champion II</a></h1>
+<blockquote>
+<p><strong>Problem Description:</strong></p>
+<p>There are <code>n</code> teams numbered from <code>0</code> to <code>n - 1</code> in a tournament; each team is also a node in a <strong>DAG</strong>.</p>
+<p>You are given the integer <code>n</code> and a <strong>0-indexed</strong> 2D integer array <code>edges</code> of length <code>m</code> representing the <strong>DAG</strong>, where <code>edges[i] = [ui, vi]</code> indicates that there is a directed edge from team <code>ui</code> to team <code>vi</code> in the graph.</p>
+<p>A directed edge from <code>a</code> to <code>b</code> in the graph means that team <code>a</code> is <strong>stronger</strong> than team <code>b</code> and team <code>b</code> is <strong>weaker</strong> than team <code>a</code>.</p>
+<p>Team <code>a</code> will be the <strong>champion</strong> of the tournament if there is no team <code>b</code> that is <strong>stronger</strong> than team <code>a</code>.</p>
+<p>Return <em>the team that will be the <strong>champion</strong> of the tournament if there is a <strong>unique</strong> champion, otherwise, return</em> <code>-1</code><em>.</em></p>
+<p><strong>Notes</strong></p>
+<ul>
+<li>A <strong>cycle</strong> is a series of nodes <code>a1, a2, ..., an, an+1</code> such that node <code>a1</code> is the same node as node <code>an+1</code>, the nodes <code>a1, a2, ..., an</code> are distinct, and there is a directed edge from the node <code>ai</code> to node <code>ai+1</code> for every <code>i</code> in the range <code>[1, n]</code>.</li>
+<li>A <strong>DAG</strong> is a directed graph that does not have any <strong>cycle</strong>.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="./MDImgs/leetcode-370-weekly-contest-summary/graph-3.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: n = 3, edges = [[0,1],[1,2]]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: Team 1 is weaker than team 0. Team 2 is weaker than team 1. So the champion is team 0.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<p><img src="./MDImgs/leetcode-370-weekly-contest-summary/graph-4.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: n = 4, edges = [[0,2],[1,3],[1,2]]</span><br><span class="line">Output: -1</span><br><span class="line">Explanation: Team 2 is weaker than team 0 and team 1. Team 3 is weaker than team 1. But team 1 and team 0 are not weaker than any other teams. So the answer is -1.</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 100</code></li>
+<li><code>m == edges.length</code></li>
+<li><code>0 &lt;= m &lt;= n * (n - 1) / 2</code></li>
+<li><code>edges[i].length == 2</code></li>
+<li><code>0 &lt;= edge[i][j] &lt;= n - 1</code></li>
+<li><code>edges[i][0] != edges[i][1]</code></li>
+<li>The input is generated such that if team <code>a</code> is stronger than team <code>b</code>, team <code>b</code> is not stronger than team <code>a</code>.</li>
+<li>The input is generated such that if team <code>a</code> is stronger than team <code>b</code> and team <code>b</code> is stronger than team <code>c</code>, then team <code>a</code> is stronger than team <code>c</code>.</li>
+</ul>
+</blockquote>
+<p>Use directed edges to represent who is stronger, making it easier to understand than the first problem. Edge $(a,b)$ means <code>a</code> is stronger than <code>b</code>, so the teams with the strongest members have an in-degree of 0. Count the in-degrees.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findChampion</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>[][] edges)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] inDeg = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="comment">// Count in-degrees</span></span><br><span class="line">        Arrays.stream(edges).forEach(e -&gt; inDeg[e[<span class="number">1</span>]]++);</span><br><span class="line"></span><br><span class="line">        <span class="type">long</span> <span class="variable">count</span> <span class="operator">=</span> Arrays.stream(inDeg).filter(i -&gt; i == <span class="number">0</span>).count();</span><br><span class="line">        <span class="comment">// Not unique</span></span><br><span class="line">        <span class="keyword">if</span> (count != <span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (inDeg[i] == <span class="number">0</span>) <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="III-Maximum-Score-After-Applying-Operations-on-a-Tree">III. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-score-after-applying-operations-on-a-tree/">Maximum Score After Applying Operations on a Tree</a></h1>
+<blockquote>
+<p><strong>Problem Description:</strong></p>
+<p>There is an undirected tree with <code>n</code> nodes labeled from <code>0</code> to <code>n - 1</code>, and rooted at node <code>0</code>. You are given a 2D integer array <code>edges</code> of length <code>n - 1</code>, where <code>edges[i] = [ai, bi]</code> indicates that there is an edge between nodes <code>ai</code> and <code>bi</code> in the tree.</p>
+<p>You are also given a <strong>0-indexed</strong> integer array <code>values</code> of length <code>n</code>, where <code>values[i]</code> is the <strong>value</strong> associated with the <code>ith</code> node.</p>
+<p>You start with a score of <code>0</code>. In one operation, you can:</p>
+<ul>
+<li>Pick any node <code>i</code>.</li>
+<li>Add <code>values[i]</code> to your score.</li>
+<li>Set <code>values[i]</code> to <code>0</code>.</li>
+</ul>
+<p>A tree is <strong>healthy</strong> if the sum of values on the path from the root to any leaf node is different than zero.</p>
+<p>Return <em>the <strong>maximum score</strong> you can obtain after performing these operations on the tree any number of times so that it remains <strong>healthy</strong>.</em></p>
+<p><strong>Example 1:</strong></p>
+<p><img src="./MDImgs/leetcode-370-weekly-contest-summary/graph-13-1.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: edges = [[0,1],[0,2],[0,3],[2,4],[4,5]], values = [5,2,5,2,1,1]</span><br><span class="line">Output: 11</span><br><span class="line">Explanation: We can choose nodes 1, 2, 3, 4, and 5. The value of the root is non-zero. Hence, the sum of values on the path from the root to any leaf is different than zero. Therefore, the tree is healthy and the score is values[1] + values[2] + values[3] + values[4] + values[5] = 11.</span><br><span class="line">It can be shown that 11 is the maximum score obtainable after any number of operations on the tree.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<p><img src="./MDImgs/leetcode-370-weekly-contest-summary/graph-14-2.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Input: edges = [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]], values = [20,10,9,7,4,3,5]</span><br><span class="line">Output: 40</span><br><span class="line">Explanation: We can choose nodes 0, 2, 3, and 4.</span><br><span class="line">- The sum of values on the path from 0 to 4 is equal to 10.</span><br><span class="line">- The sum of values on the path from 0 to 3 is equal to 10.</span><br><span class="line">- The sum of values on the path from 0 to 5 is equal to 3.</span><br><span class="line">- The sum of values on the path from 0 to 6 is equal to 5.</span><br><span class="line">Therefore, the tree is healthy and the score is values[0] + values[2] + values[3] + values[4] = 40.</span><br><span class="line">It can be shown that 40 is the maximum score obtainable after any number of operations on the tree.</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>2 &lt;= n &lt;= 2 * 104</code></li>
+<li><code>edges.length == n - 1</code></li>
+<li><code>edges[i].length == 2</code></li>
+<li><code>0 &lt;= ai, bi &lt; n</code></li>
+<li><code>values.length == n</code></li>
+<li><code>1 &lt;= values[i] &lt;= 109</code></li>
+<li>The input is generated such that <code>edges</code> represents a valid tree.</li>
+</ul>
+</blockquote>
+<p>$\forall i, values[i] \ge 1$, and ‘the sum of values on the path from the root to any leaf node is different than zero’. Hence, when performing operations, we must <strong>leave one node untouched on each path from the root to a leaf</strong> (Multiple paths may share one untouched node).</p>
+<p>Let the set of all nodes in the graph be $V$, and the set of nodes <strong>left untouched</strong> be $U$. The goal is to maximize the score, which is given by $\sum\limits_{v\in V} v - \sum\limits_{u\in U}u$. $\sum\limits_{v\in V} v$ is simply <code>sum(values)</code>, so to maximize the score, we want to minimize $\sum\limits_{u\in U}u$. Which nodes should we leave untouched?</p>
+<p>For any subtree of the tree, such as the one shown below:</p>
+<p><img src="./MDImgs/leetcode-370-weekly-contest-summary/image-20231105135510005.png" alt="image-20231105135510005"></p>
+<p>Assume we do not operate on the root node 0, then all the remaining nodes can be modified; assume we operate on the root node 0, then there exist nodes in the remaining nodes that cannot be modified. Whatever the remaining nodes are, i.e. leaf nodes or multiple subtrees, it doesn’t affect this conclusion.</p>
+<p>So when should we operate on the root node? Define <strong>the minimum sum</strong> of <strong>unoperated</strong> nodes in a <strong>healthy</strong> subtree rooted at $u$ as $res(u)$. Then, $\forall x, x$ is a child node of $u$, $res(u) = \min\set{values[u], \sum\limits_x res(x)}$</p>
+<p>The meaning of this recursive formula is:</p>
+<ul>
+<li>Either do not operate on the root node $u$, in which case the subtree is healthy, and all descendants can be operated on;</li>
+<li>Or operate on the root node $u$, but all subtrees of $u$ must ensure they are healthy;</li>
+<li>By the definition, we need to obtain <strong>the minimum sum</strong>, so we take the smaller value of the two situations;</li>
+</ul>
+<p>For the example above, $res(1) = 2,res(2) = 2,res(3) = 5$</p>
+<p>$values[0] = 5 &lt; \sum\limits_{x\in\set{1,2,3}}res(x) = 9$, so we do not operate on the root node 0 but operate on all nodes in its subtrees.</p>
+<p>With the recurrence relation for $res(u)$, the value of $\sum\limits_{u\in U}u$ mentioned earlier is $res(0)$, hence the maximum score is <code>sum(values) - res(0)</code>.</p>
+<p>Code:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.IntStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">Node</span><span class="params">(<span class="type">int</span> val, <span class="type">int</span> index)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.val = val;</span><br><span class="line">            <span class="built_in">this</span>.index = index;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;Node&gt; children = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">int</span> val;</span><br><span class="line">        <span class="type">int</span> index;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">maximumScoreAfterOperations</span><span class="params">(<span class="type">int</span>[][] edges, <span class="type">int</span>[] values)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> values.length;</span><br><span class="line">        <span class="comment">// Build the tree, essentially building a graph</span></span><br><span class="line">        Node[] nodes = IntStream.range(<span class="number">0</span>, n).mapToObj(i -&gt; <span class="keyword">new</span> <span class="title class_">Node</span>(values[i], i)).toArray(Node[]::<span class="keyword">new</span>);</span><br><span class="line">        Arrays.stream(edges).forEach(e -&gt; &#123;</span><br><span class="line">            nodes[e[<span class="number">0</span>]].children.add(nodes[e[<span class="number">1</span>]]);</span><br><span class="line">            nodes[e[<span class="number">1</span>]].children.add(nodes[e[<span class="number">0</span>]]);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="type">boolean</span>[] visited = <span class="keyword">new</span> <span class="title class_">boolean</span>[n];</span><br><span class="line">        visited[<span class="number">0</span>] = <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">// values[i] &lt;= 10^9，pay attention to mapToLong</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">sum</span> <span class="operator">=</span> Arrays.stream(values).mapToLong(i -&gt; i).sum();</span><br><span class="line">        <span class="type">long</span> <span class="variable">min</span> <span class="operator">=</span> dfs(nodes[<span class="number">0</span>], visited);</span><br><span class="line">        <span class="keyword">return</span> sum - min;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> root Root node</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> res(root)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> <span class="title function_">dfs</span><span class="params">(Node root, <span class="type">boolean</span>[] visited)</span> &#123;</span><br><span class="line">        <span class="comment">// count # visited neighbors</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// min = sum(res(children))</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">min</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (Node child : root.children) &#123;</span><br><span class="line">            <span class="keyword">if</span> (visited[child.index]) &#123;</span><br><span class="line">                count++;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            visited[child.index] = <span class="literal">true</span>;</span><br><span class="line">            min += dfs(child, visited);</span><br><span class="line">            visited[child.index] = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// this node is a leaf, return its val directly</span></span><br><span class="line">        <span class="keyword">if</span> (count == root.children.size()) &#123;</span><br><span class="line">            <span class="keyword">return</span> root.val;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.min(root.val, min);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="IV-Maximum-Balanced-Subsequence-Sum">IV. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-balanced-subsequence-sum/">Maximum Balanced Subsequence Sum</a></h1>
+<blockquote>
+<p><strong>Problem Description:</strong></p>
+<p>You are given a <strong>0-indexed</strong> integer array <code>nums</code>.</p>
+<p>A <strong>subsequence</strong> of <code>nums</code> having length <code>k</code> and consisting of <strong>indices</strong> <code>i0 &lt; i1 &lt; ... &lt; ik-1</code> is <strong>balanced</strong> if the following holds:</p>
+<ul>
+<li><code>nums[ij] - nums[ij-1] &gt;= ij - ij-1</code>, for every <code>j</code> in the range <code>[1, k - 1]</code>.</li>
+</ul>
+<p>A <strong>subsequence</strong> of <code>nums</code> having length <code>1</code> is considered balanced.</p>
+<p>Return <em>an integer denoting the <strong>maximum</strong> possible <strong>sum of elements</strong> in a <strong>balanced</strong> subsequence of</em> <code>nums</code>.</p>
+<p>A <strong>subsequence</strong> of an array is a new <strong>non-empty</strong> array that is formed from the original array by deleting some (<strong>possibly none</strong>) of the elements without disturbing the relative positions of the remaining elements.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [3,3,5,6]</span><br><span class="line">Output: 14</span><br><span class="line">Explanation: In this example, the subsequence [3,5,6] consisting of indices 0, 2, and 3 can be selected.</span><br><span class="line">nums[2] - nums[0] &gt;= 2 - 0.</span><br><span class="line">nums[3] - nums[2] &gt;= 3 - 2.</span><br><span class="line">Hence, it is a balanced subsequence, and its sum is the maximum among the balanced subsequences of nums.</span><br><span class="line">The subsequence consisting of indices 1, 2, and 3 is also valid.</span><br><span class="line">It can be shown that it is not possible to get a balanced subsequence with a sum greater than 14.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [5,-1,-3,8]</span><br><span class="line">Output: 13</span><br><span class="line">Explanation: In this example, the subsequence [5,8] consisting of indices 0 and 3 can be selected.</span><br><span class="line">nums[3] - nums[0] &gt;= 3 - 0.</span><br><span class="line">Hence, it is a balanced subsequence, and its sum is the maximum among the balanced subsequences of nums.</span><br><span class="line">It can be shown that it is not possible to get a balanced subsequence with a sum greater than 13.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [-2,-1]</span><br><span class="line">Output: -1</span><br><span class="line">Explanation: In this example, the subsequence [-1] can be selected.</span><br><span class="line">It is a balanced subsequence, and its sum is the maximum among the balanced subsequences of nums.</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 105</code></li>
+<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
+</ul>
+</blockquote>
+<p>Let’s change the formulation of the problem: consecutive elements <code>nums[i]</code> and <code>nums[j]</code> in a balanced subsequence must satisfy $i &lt; j$ and $nums[j] - nums[i] \ge j - i$.</p>
+<p>By rearranging the inequality above, we get $nums[j] - j \ge nums[i] - i$, which means the requirement for each element in a balanced subsequence only depends on its own value and index, not those of other elements.</p>
+<p>Therefore, this problem is similar to the Longest Increasing Subsequence, and we can solve it using DP:</p>
+<p>DP Definition: <code>dp[j]</code> represents <strong>the maximum sum</strong> of elements in a <strong>balanced</strong> subsequence <strong>ending at</strong> <code>nums[j]</code>.</p>
+<p>Recurrence relation: $dp[j] = nums[j] + \max\set{dp[i] | (i &lt; j) ∧ (nums[j] - j \ge nums[i] - i)}$</p>
+<p>Code:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">maxBalancedSubsequenceSum</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">long</span> <span class="variable">ans</span> <span class="operator">=</span> Long.MIN_VALUE;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// dp[i]: maximum sum of elements in a subsequence ending at nums[i]</span></span><br><span class="line">        <span class="type">long</span>[] dp = <span class="keyword">new</span> <span class="title class_">long</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            dp[j] = nums[j];</span><br><span class="line">            <span class="type">long</span> <span class="variable">max</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; j; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[j] - j &gt;= nums[i] - i) &#123;</span><br><span class="line">                    max = Math.max(max, dp[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            dp[j] += max;</span><br><span class="line"></span><br><span class="line">            ans = Math.max(ans, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Obviously, this solution has a time complexity of $O(n^2)$, which is bad. Until end of the contest, I couldn’t figure out an optimization strategy.</p>
+<p>I plan to describe in detail how to solve this problem in the next post, based on insights from an expert’s solution. For now, I’ll focus on studying the relevant knowledge.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Gustav
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/" title="LeetCode Weekly Contest 370 Summary">https://gustaavv.github.io/en/2023/11/05/leetcode-370-weekly-contest-summary/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/en/tags/Simulation/" rel="tag"><i class="fa fa-tag"></i> Simulation</a>
+              <a href="/en/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/en/tags/Tree/" rel="tag"><i class="fa fa-tag"></i> Tree</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_telegram"></a>
+      <a class="a2a_button_wechat"></a>
+      <a class="a2a_button_sina_weibo"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2023/11/01/Algorithm-Problem-004-maximum-employees-to-be-invited-to-a-meeting/" rel="prev" title="Algorithm Problem 004: Maximum Employees to Be Invited to a Meeting">
+                  <i class="fa fa-angle-left"></i> Algorithm Problem 004: Maximum Employees to Be Invited to a Meeting
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2023/11/06/Algorithm-Problem-005-maximum-balanced-subsequence-sum/" rel="next" title="Algorithm Problem 005: Maximum Balanced Subsequence Sum">
+                  Algorithm Problem 005: Maximum Balanced Subsequence Sum <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Gustav</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>Word count total: </span>
+    <span title="Word count total">39k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>Reading time total &asymp;</span>
+    <span title="Reading time total">2:23</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/gustaavv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/en/js/comments.js"></script><script src="/en/js/utils.js"></script><script src="/en/js/sidebar.js"></script><script src="/en/js/next-boot.js"></script><script src="/en/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/en/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/en/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/en/js/third-party/pace.js"></script>
+
+  <script src="/en/js/third-party/addtoany.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/en/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
